@@ -5,6 +5,7 @@
   padding: 25px;
   -webkit-box-shadow: 0 0 5px rgba(202,203,203,0.5);
   -moz-box-shadow: 0 0 5px rgba(202,203,204,0.5);
+mobile()
 }
 /*鼠标样式*/
 * {
@@ -30,11 +31,9 @@ span.exturl {
 }
 /*设置返回顶端按钮*/
 .back-to-top.back-to-top-on {
+  margin-right: 8px;
   bottom: 500px;
-}
-.back-to-top {
-  font-size: 20px;
-  right: 70px;
+mobile()
 }
 /* 阅读更多按钮 start */
 .post-body .post-button .btn:hover {
@@ -59,7 +58,7 @@ mobile()
 }
 .posts-collapse a.post-title-link {
   display: inline-block;
-  width: 100%;
+  width: 90%;
 }
 .posts-collapse a.post-title-link:before {
   top: 10px;
@@ -183,4 +182,7 @@ mobile()
 }
 .category-all-page .category-list-count::after {
   content: ' ) ';
+}
+.post .post-body {
+  font-size: 1em;
 }
