@@ -58,7 +58,7 @@ mobile()
 }
 .posts-collapse a.post-title-link {
   display: inline-block;
-  width: 90%;
+  width: 80%;
 }
 .posts-collapse a.post-title-link:before {
   top: 10px;
