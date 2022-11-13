@@ -60,6 +60,9 @@ mobile()
   display: inline-block;
   width: 80%;
 }
+.posts-collapse .post-content .post-header::before {
+  top: 0.95em;
+}
 .posts-collapse a.post-title-link:before {
   top: 10px;
   width: 18px;
@@ -76,6 +79,7 @@ mobile()
   margin-left: 25px;
 }
 .posts-collapse .post-meta-container time {
+  top: 0.4em;
   font-size: 11px;
   line-height: 32px;
   position: absolute;
