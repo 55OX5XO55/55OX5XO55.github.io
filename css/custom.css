@@ -186,3 +186,6 @@ mobile()
 .post .post-body {
   font-size: 1em;
 }
+.search-popup .search-result-list {
+  width: calc(100% - 10px);
+}
