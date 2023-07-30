@@ -4,6 +4,46 @@
   
     
     <entry>
+      <title>docker的使用</title>
+      <link href="/2023/07/30/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Docker/Docker%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+      <url>/2023/07/30/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Docker/Docker%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[<p> 介绍<code>Docker</code>, 使用<code>Docker</code></p><span id="more"></span><h1 id="Docker介绍"><a href="#Docker介绍" class="headerlink" title="Docker介绍"></a><code>Docker</code>介绍</h1><p><code>Docker</code>是基于<code>Go</code>语言实现的开源容器项目. <code>Docker</code>项目已经加入了<code>Linux</code>基金会, 并遵循<code>Apache 2.0</code>协议, 全部开源代码均在<code>https://github.com/docker</code>项目仓库进行维护.</p><h2 id="Dokder的作用"><a href="#Dokder的作用" class="headerlink" title="Dokder的作用"></a><code>Dokder</code>的作用</h2><p>把一个应用组件打包成一个镜像, 让这个镜像可以在任何安装了<code>Docker</code>的环境上运行. 这个应用组件可以是一个<code>Web</code>应用, 一个编译环境, 也可以是一套数据库平台服务, 甚至是一个操作系统或集群. </p><h2 id="Docker的作用原理"><a href="#Docker的作用原理" class="headerlink" title="Docker的作用原理"></a><code>Docker</code>的作用原理</h2><p>创建容器. 让一个应用在容器中运行. 不同的容器相互隔离, 容器之间也可以通过网络相互通信. 容器的创建和停止十分迅速, 几乎跟创建和终止原生应用一致; 另外, 容器自身对系统资源的额外需求也十分有限, 远远低于传统虚拟机. </p><h2 id="Docker与虚拟机比较"><a href="#Docker与虚拟机比较" class="headerlink" title="Docker与虚拟机比较"></a><code>Docker</code>与虚拟机比较</h2><p><code>Docker</code>容器很快, 启动和停止可以在秒级实现, 这相比传统的虚拟机方式(数分钟)要快得多.</p><p><code>Docker</code>容器对系统资源需求henshao, 一台主机可以同时运行数千个<code>Docker</code>容器.</p><p><code>Docker</code>通过类似<code>Git</code>设计理念的操作来方便用户获取, 分发和更新应用镜像, 存储复用, 增量更新.</p><h2 id="Docker中核心概念"><a href="#Docker中核心概念" class="headerlink" title="Docker中核心概念"></a><code>Docker</code>中核心概念</h2><h3 id="Docker镜像"><a href="#Docker镜像" class="headerlink" title="Docker镜像"></a><code>Docker</code>镜像</h3><p><code>Docker</code>镜像类似于虚拟机镜像, 是创建<code>Docker</code>容器的基础. </p><h3 id="Docker容器"><a href="#Docker容器" class="headerlink" title="Docker容器"></a><code>Docker</code>容器</h3><p><code>Docker</code>容器类似于一个轻量级的沙箱, <code>Docker</code>利用容器来运行和隔离应用. 容器是从镜像创建的应用运行实例. 它可以启动, 开始, 停止, 删除, 而这些容器都是彼此相互隔离, 互不可见的. </p><h3 id="Docker仓库"><a href="#Docker仓库" class="headerlink" title="Docker仓库"></a><code>Docker</code>仓库</h3><p><code>Docker</code>仓库类似与代码仓库, 是<code>Docker</code>集中存放镜像文件的场所.</p><h1 id="Docker使用"><a href="#Docker使用" class="headerlink" title="Docker使用"></a><code>Docker</code>使用</h1><h2 id="镜像"><a href="#镜像" class="headerlink" title="镜像"></a>镜像</h2><p><code>Docker</code>运行容器前需要本地存在的镜像, 如果镜像不存在, <code>Docker</code>会尝试从默认镜像仓库下载.</p><h3 id="获得镜像"><a href="#获得镜像" class="headerlink" title="获得镜像"></a>获得镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker [image] pull NAME[:TAG]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">例如</span></span><br><span class="line">docker pull ubuntu:18.04</span><br></pre></td></tr></table></figure><p>NAME是镜像仓库名称(用来区分镜像), TAG是镜像的标签(往往用来表示版本信息). 如果不显示指定TAG, 则默认会选择latest标签, 这回下载仓库中最新版本的镜像. </p><p>镜像文件一般由若干层组成, 每一层有一个唯一的id, 当不同的镜像包活相同的层时, 本地仅存储了层的一份内容, 减少了存储空间. </p><h3 id="列出镜像"><a href="#列出镜像" class="headerlink" title="列出镜像"></a>列出镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker images </span><br><span class="line"></span><br><span class="line">docker image ls</span><br></pre></td></tr></table></figure><p>镜像大小信息只是表示了该镜像的逻辑体积大小, 实际由于相同的镜像层本地只会存储一份, 物理上占用的存储空间会小于各镜像逻辑体积之和.</p><h3 id="创建镜像标签副本"><a href="#创建镜像标签副本" class="headerlink" title="创建镜像标签副本"></a>创建镜像标签副本</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker tag 已存在的镜像名:TAG 新的镜像名:新的TAG</span><br></pre></td></tr></table></figure><h3 id="查看镜像详情"><a href="#查看镜像详情" class="headerlink" title="查看镜像详情"></a>查看镜像详情</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker [image] inspect NAME:TAG</span><br></pre></td></tr></table></figure><h3 id="查看镜像的层数"><a href="#查看镜像的层数" class="headerlink" title="查看镜像的层数"></a>查看镜像的层数</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker [image] history NAME:TAG</span><br></pre></td></tr></table></figure><h3 id="删除镜像"><a href="#删除镜像" class="headerlink" title="删除镜像"></a>删除镜像</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker rmi NAME:TAG [NAME:TAG...]</span><br><span class="line"></span><br><span class="line">docker image rm NAME:TAG [NAME:TAG...]</span><br></pre></td></tr></table></figure><p>这个会只会删除这个TAG, 只有当只有一个镜像时, 才会删除镜像.</p><h3 id="创建镜像"><a href="#创建镜像" class="headerlink" title="创建镜像"></a>创建镜像</h3><h4 id="基于已有容器创建"><a href="#基于已有容器创建" class="headerlink" title="基于已有容器创建"></a>基于已有容器创建</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker [container] commit [-m &quot;提交信息&quot;] CONTAINERID [REPOSITORY[:TAG]]</span><br></pre></td></tr></table></figure><h4 id="基于Dockerfile创建"><a href="#基于Dockerfile创建" class="headerlink" title="基于Dockerfile创建"></a>基于<code>Dockerfile</code>创建</h4><p>基于<code>Dockerfile</code>创建是最常见的方式. <code>Dockerfile</code>是一个文本文件, 利用给定的指令描述基于父镜像创建新镜像的过程.</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM debian:strech-slim</span><br><span class="line"></span><br><span class="line">LABEL version=&quot;1.0&quot; maintainer=&quot;docker user &lt;docker_user@github&gt;&quot;</span><br><span class="line"></span><br><span class="line">RUN apt-get update &amp;&amp; \</span><br><span class="line">apt-get install -y python3 &amp;&amp; \</span><br><span class="line">apt-get clean &amp;&amp; \</span><br><span class="line">rm -rf /var/lib/apt/lists/*使用</span><br></pre></td></tr></table></figure><p>使用<code>dockerfile</code></p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker [image] build -t dockerfile</span><br></pre></td></tr></table></figure><h3 id="存出和载入镜像"><a href="#存出和载入镜像" class="headerlink" title="存出和载入镜像"></a>存出和载入镜像</h3><h4 id="存出镜像"><a href="#存出镜像" class="headerlink" title="存出镜像"></a>存出镜像</h4><p>将镜像保存为一个文件</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker [image] save -o 文件名 NAME:TAG</span><br></pre></td></tr></table></figure><h4 id="载入镜像"><a href="#载入镜像" class="headerlink" title="载入镜像"></a>载入镜像</h4><p>从文件中导入镜像</p><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker [image] load -i 文件名</span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具使用 </category>
+          
+          <category> Docker </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Docker </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Systemd定时器的使用</title>
+      <link href="/2023/05/28/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Systemd/Systemd%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+      <url>/2023/05/28/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Systemd/Systemd%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>在服务器上搭建Git服务</title>
       <link href="/2023/04/30/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BAGit%E6%9C%8D%E5%8A%A1/"/>
       <url>/2023/04/30/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BAGit%E6%9C%8D%E5%8A%A1/</url>
