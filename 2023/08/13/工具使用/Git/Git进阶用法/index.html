@@ -18,27 +18,28 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="醉后不知天在水,满船清梦压星河">
+    <meta name="description" content="Git进阶用法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Systemd定时器的使用">
-<meta property="og:url" content="http://example.com/2023/05/28/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Systemd/Systemd%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:title" content="Git进阶用法">
+<meta property="og:url" content="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/index.html">
 <meta property="og:site_name" content="space">
-<meta property="og:description" content="醉后不知天在水,满船清梦压星河">
+<meta property="og:description" content="Git进阶用法">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-27T17:42:06.000Z">
-<meta property="article:modified_time" content="2023-05-27T17:42:06.605Z">
+<meta property="article:published_time" content="2023-08-13T15:52:21.000Z">
+<meta property="article:modified_time" content="2023-08-16T16:53:55.049Z">
 <meta property="article:author" content="霄剑">
+<meta property="article:tag" content="Git">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2023/05/28/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Systemd/Systemd%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/">
+<link rel="canonical" href="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/05/28/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Systemd/Systemd%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/","path":"2023/05/28/工具使用/Systemd/Systemd定时器的使用/","title":"Systemd定时器的使用"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/","path":"2023/08/13/工具使用/Git/Git进阶用法/","title":"Git进阶用法"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Systemd定时器的使用 | space</title>
+<title>Git进阶用法 | space</title>
   
 
 
@@ -128,7 +129,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -141,6 +142,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84Git"><span class="nav-number">1.</span> <span class="nav-text">服务器上的Git</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84Git"><span class="nav-number">1.1.</span> <span class="nav-text">常用的Git</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -201,7 +203,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/05/28/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Systemd/Systemd%E5%AE%9A%E6%97%B6%E5%99%A8%E7%9A%84%E4%BD%BF%E7%94%A8/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.svg">
@@ -214,12 +216,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Systemd定时器的使用 | space">
+      <meta itemprop="name" content="Git进阶用法 | space">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Systemd定时器的使用
+          Git进阶用法
         </h1>
 
         <div class="post-meta-container">
@@ -230,7 +232,27 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-05-28 01:42:06" itemprop="dateCreated datePublished" datetime="2023-05-28T01:42:06+08:00">2023-05-28</time>
+      <time title="创建时间：2023-08-13 23:52:21" itemprop="dateCreated datePublished" datetime="2023-08-13T23:52:21+08:00">2023-08-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 00:53:55" itemprop="dateModified" datetime="2023-08-17T00:53:55+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
     </span>
 
   
@@ -240,7 +262,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>0</span>
+      <span>214</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -258,7 +280,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        
+        <p><code>Git</code>进阶用法</p>
+<span id="more"></span>
+
+<h1 id="服务器上的Git"><a href="#服务器上的Git" class="headerlink" title="服务器上的Git"></a>服务器上的<code>Git</code></h1><p>一个远程仓库通常只是一个裸仓库<code>--</code>即一个没有当前工作目录的仓库. 因为该仓库仅仅作为合作媒介, 不需要从磁盘检查快照; 存放的只有<code>Git</code>的资料. 简单的说, 裸仓库就是你目录内的<code>.git</code>子目录内容, 不包含其他资料. </p>
+<h2 id="常用的Git"><a href="#常用的Git" class="headerlink" title="常用的Git"></a>常用的<code>Git</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">git merge --squash 分支名</span><br><span class="line"></span><br><span class="line">--squash: 接受被合并的分支上的所有工作, 并将其压缩至一个变更集, 是仓库变成一个未发生合并的状态, 可以引入另外一个分支的所有改动或自己做改动, 然后再commit. 有点像rebase</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从别的拉取</span></span><br><span class="line">git pull &lt;remote&gt; &lt;branchname&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">临时拉取, 不保存远程仓库</span></span><br><span class="line">git pull &lt;url&gt; [branchname]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果不写branchname, 默认是HEAD</span> </span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -270,18 +298,76 @@
 
 
     <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"><i class="fa fa-tag"></i> Git</a>
+          </div>
+	  <script type="text/javascript">
+            var tagsall=document.getElementsByClassName("post-tags")
+            for (var i = tagsall.length - 1; i >= 0; i--){
+                var tags=tagsall[i].getElementsByTagName("a");
+                for (var j = tags.length - 1; j >= 0; j--) {
+                    var golden_ratio = 0.618033988749895;
+                    var s = 0.5;
+                    var v = 0.999;
+                    var h = golden_ratio + Math.random()*0.8 - 0.5;
+                    var h_i = parseInt(h * 6);
+                    var f = h * 6 - h_i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+                    var r, g, b;
+                    switch (h_i) {
+                        case 0:
+                            r = v;
+                            g = t;
+                            b = p;
+                            break;
+                        case 1:
+                            r = q;
+                            g = v;
+                            b = p;
+                            break;
+                        case 2:
+                            r = p;
+                            g = v;
+                            b = t;
+                            break;
+                        case 3 :
+                            r = p;
+                            g = q;
+                            b = v;
+                            break;
+                        case 4:
+                            r = t;
+                            g = p;
+                            b = v;
+                            break;
+                        case 5:
+                            r = v;
+                            g = p;
+                            b = q;
+                            break;
+                        default:
+                            r = 1;
+                            g = 1;
+                            b = 1;
+                      }
+                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
+                }
+            }
+            </script>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/04/30/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BAGit%E6%9C%8D%E5%8A%A1/" rel="prev" title="在服务器上搭建Git服务">
-                  <i class="fa fa-chevron-left"></i> 在服务器上搭建Git服务
+                <a href="/2023/08/06/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="Git的使用">
+                  <i class="fa fa-chevron-left"></i> Git的使用
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/07/30/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Docker/Docker%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="next" title="docker的使用">
-                  docker的使用 <i class="fa fa-chevron-right"></i>
+                <a href="/2023/08/17/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95-1/" rel="next" title="Git进阶用法">
+                  Git进阶用法 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

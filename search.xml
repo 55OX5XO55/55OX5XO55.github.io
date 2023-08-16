@@ -4,6 +4,59 @@
   
     
     <entry>
+      <title>Git进阶用法</title>
+      <link href="/2023/08/17/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95-2/"/>
+      <url>/2023/08/17/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95-2/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Git进阶用法</title>
+      <link href="/2023/08/17/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95-1/"/>
+      <url>/2023/08/17/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95-1/</url>
+      
+        <content type="html"><![CDATA[]]></content>
+      
+      
+      
+    </entry>
+    
+    
+    
+    <entry>
+      <title>Git进阶用法</title>
+      <link href="/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/"/>
+      <url>/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/</url>
+      
+        <content type="html"><![CDATA[<p><code>Git</code>进阶用法</p><span id="more"></span><h1 id="服务器上的Git"><a href="#服务器上的Git" class="headerlink" title="服务器上的Git"></a>服务器上的<code>Git</code></h1><p>一个远程仓库通常只是一个裸仓库<code>--</code>即一个没有当前工作目录的仓库. 因为该仓库仅仅作为合作媒介, 不需要从磁盘检查快照; 存放的只有<code>Git</code>的资料. 简单的说, 裸仓库就是你目录内的<code>.git</code>子目录内容, 不包含其他资料. </p><h2 id="常用的Git"><a href="#常用的Git" class="headerlink" title="常用的Git"></a>常用的<code>Git</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">git merge --squash 分支名</span><br><span class="line"></span><br><span class="line">--squash: 接受被合并的分支上的所有工作, 并将其压缩至一个变更集, 是仓库变成一个未发生合并的状态, 可以引入另外一个分支的所有改动或自己做改动, 然后再commit. 有点像rebase</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从别的拉取</span></span><br><span class="line">git pull &lt;remote&gt; &lt;branchname&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">临时拉取, 不保存远程仓库</span></span><br><span class="line">git pull &lt;url&gt; [branchname]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果不写branchname, 默认是HEAD</span> </span><br></pre></td></tr></table></figure>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具使用 </category>
+          
+          <category> Git </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> Git </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Git的使用</title>
       <link href="/2023/08/06/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
       <url>/2023/08/06/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
