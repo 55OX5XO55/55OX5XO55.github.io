@@ -18,28 +18,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Git进阶用法">
+    <meta name="description" content="程序结构命名Go语言中的函数名, 变量名, 常量名, 类型名, 语句标号和包名等所有的命名, 都遵循一个简单的命名规则: 一个名字必须以一个字母(Unicode字母)或下划线开头, 后面可以跟任意数量的字母, 数字或下滑线. 大写字母和小写字母是不同的: heapSort和HeapSort是两个不同的名字. 名字的长度没有逻辑限制. 在习惯上, Go 语言程序员推荐使用驼峰式命名, 同时缩略词的中">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git进阶用法">
-<meta property="og:url" content="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="程序结构">
+<meta property="og:url" content="http://example.com/2023/08/20/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/index.html">
 <meta property="og:site_name" content="space">
-<meta property="og:description" content="Git进阶用法">
+<meta property="og:description" content="程序结构命名Go语言中的函数名, 变量名, 常量名, 类型名, 语句标号和包名等所有的命名, 都遵循一个简单的命名规则: 一个名字必须以一个字母(Unicode字母)或下划线开头, 后面可以跟任意数量的字母, 数字或下滑线. 大写字母和小写字母是不同的: heapSort和HeapSort是两个不同的名字. 名字的长度没有逻辑限制. 在习惯上, Go 语言程序员推荐使用驼峰式命名, 同时缩略词的中">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-13T15:52:21.000Z">
-<meta property="article:modified_time" content="2023-08-17T15:34:04.297Z">
+<meta property="article:published_time" content="2023-08-20T14:35:04.000Z">
+<meta property="article:modified_time" content="2023-08-21T15:39:34.227Z">
 <meta property="article:author" content="霄剑">
-<meta property="article:tag" content="Git">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Go程序设计语言">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">
+<link rel="canonical" href="http://example.com/2023/08/20/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/","path":"2023/08/13/工具使用/Git/Git进阶用法/","title":"Git进阶用法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/08/20/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/","path":"2023/08/20/编程语言/Go/Go程序设计语言/程序结构/","title":"程序结构"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Git进阶用法 | space</title>
+<title>程序结构 | space</title>
   
 
 
@@ -142,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84Git"><span class="nav-number">1.</span> <span class="nav-text">服务器上的Git</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84Git"><span class="nav-number">1.1.</span> <span class="nav-text">常用的Git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">Git工具</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84"><span class="nav-number">1.</span> <span class="nav-text">程序结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8D"><span class="nav-number">1.1.</span> <span class="nav-text">命名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A3%B0%E6%98%8E"><span class="nav-number">1.2.</span> <span class="nav-text">声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.</span> <span class="nav-text">变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9F%AD%E5%8F%98%E9%87%8F%E5%A3%B0%E6%98%8E"><span class="nav-number">1.3.1.</span> <span class="nav-text">短变量声明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">1.3.2.</span> <span class="nav-text">指针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new%E5%87%BD%E6%95%B0"><span class="nav-number">1.3.3.</span> <span class="nav-text">new函数</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用的函数</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -203,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/20/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.svg">
@@ -216,12 +217,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Git进阶用法 | space">
+      <meta itemprop="name" content="程序结构 | space">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Git进阶用法
+          程序结构
         </h1>
 
         <div class="post-meta-container">
@@ -232,14 +233,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-08-13 23:52:21" itemprop="dateCreated datePublished" datetime="2023-08-13T23:52:21+08:00">2023-08-13</time>
+      <time title="创建时间：2023-08-20 22:35:04" itemprop="dateCreated datePublished" datetime="2023-08-20T22:35:04+08:00">2023-08-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-17 23:34:04" itemprop="dateModified" datetime="2023-08-17T23:34:04+08:00">2023-08-17</time>
+      <time title="修改时间：2023-08-21 23:39:34" itemprop="dateModified" datetime="2023-08-21T23:39:34+08:00">2023-08-21</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -247,11 +248,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
         </span>
     </span>
 
@@ -262,14 +263,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>358</span>
+      <span>1.3k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>5 分钟</span>
     </span>
 </div>
 
@@ -280,13 +281,33 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><code>Git</code>进阶用法</p>
-<span id="more"></span>
+        <h1 id="程序结构"><a href="#程序结构" class="headerlink" title="程序结构"></a>程序结构</h1><h2 id="命名"><a href="#命名" class="headerlink" title="命名"></a>命名</h2><p><code>Go</code>语言中的函数名, 变量名, 常量名, 类型名, 语句标号和包名等所有的命名, 都遵循一个简单的命名规则: 一个名字必须以一个字母(<code>Unicode</code>字母)或下划线开头, 后面可以跟任意数量的字母, 数字或下滑线. 大写字母和小写字母是不同的: <code>heapSort</code>和<code>HeapSort</code>是两个不同的名字. 名字的长度没有逻辑限制. 在习惯上, <code>Go</code> 语言程序员推荐使用驼峰式命名, 同时缩略词的中每个字母大小写保持一致. </p>
+<p><code>Go</code>语言中关键字有25个:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">break default func interface select</span><br><span class="line">case defer go map struct</span><br><span class="line">chan else goto package switch</span><br><span class="line">const fallthrough if range type</span><br><span class="line">continue for import return var</span><br></pre></td></tr></table></figure>
 
-<h1 id="服务器上的Git"><a href="#服务器上的Git" class="headerlink" title="服务器上的Git"></a>服务器上的<code>Git</code></h1><p>一个远程仓库通常只是一个裸仓库<code>--</code>即一个没有当前工作目录的仓库. 因为该仓库仅仅作为合作媒介, 不需要从磁盘检查快照; 存放的只有<code>Git</code>的资料. 简单的说, 裸仓库就是你目录内的<code>.git</code>子目录内容, 不包含其他资料. </p>
-<h2 id="常用的Git"><a href="#常用的Git" class="headerlink" title="常用的Git"></a>常用的<code>Git</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">git merge --squash 分支名</span><br><span class="line"></span><br><span class="line">--squash: 接受被合并的分支上的所有工作, 并将其压缩至一个变更集, 是仓库变成一个未发生合并的状态, 可以引入另外一个分支的所有改动或自己做改动, 然后再commit. 有点像rebase</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从别的拉取</span></span><br><span class="line">git pull &lt;remote&gt; &lt;branchname&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">临时拉取, 不保存远程仓库</span></span><br><span class="line">git pull &lt;url&gt; [branchname]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果不写branchname, 默认是HEAD</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看在branch1, 但不在branch2的提交, 等价于branch2..branch1</span></span><br><span class="line">git log branch1 [-p] --not branch2</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">找出两个分支的公共祖先</span></span><br><span class="line">git merge-base &lt;branch1&gt; &lt;branch2&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">branch2与公共祖先的差别</span></span><br><span class="line">git diff &lt;branch1&gt;...&lt;branch2&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">拣选操作, Git中的拣选类似于对特定的某次提交的变基. 它会提取该提交的补丁, 之后尝试将其重新应用到当前分支上</span></span><br><span class="line">git cherry-pick &lt;commit&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将Git项目打包, 注意不会包含.git文件夹</span></span><br><span class="line">git archive master --prefix=&#x27;project/&#x27; | gzip &gt; `git describe master`.tar.gz</span><br><span class="line">git archive master --prefix=&#x27;project/&#x27; --format=zip &gt; `git describe master`.zip</span><br></pre></td></tr></table></figure>
+<p><code>Go</code>大约有30多个预定义的名字:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">内建常量: true false iota nil</span><br><span class="line"></span><br><span class="line">内建类型: int int8 int16 int32 int64</span><br><span class="line">		uint uint8 uint16 uint32 uint64 uintptr</span><br><span class="line">		float32 float64 complex128 complex64</span><br><span class="line">		bool type rune string error</span><br><span class="line">		</span><br><span class="line">内建函数: make len cap new append copy close delete</span><br><span class="line">		complex real imag panic recover</span><br></pre></td></tr></table></figure>
 
-<h1 id="Git工具"><a href="#Git工具" class="headerlink" title="Git工具"></a><code>Git</code>工具</h1>
+<p>如果一个名字是在函数内部定义, 那么它就只能在函数内部有效. 如果是在函数外部定义, 那么将在当前包的所有文件中都可以访问. 名字的开头字母的大小写决定了名字在包外的可见性. 如果一个名字是大写字母开头的, 那么它将是导出的, 也就是说可以被外部的包访问.</p>
+<h2 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h2><p><code>Go</code>语言主要有四种类型的声明语句: <code>var</code>, <code>const</code>, <code>type</code>和<code>func</code>, 分别对应变量, 常量, 类型和函数实体对象的声明. 程序中包一级的声明一般按照类型, 变量, 常量, 函数的声明语句.</p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p><code>var</code>声明语句可以创建要给特定类型的变量. 一般声明语法如下:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var 变量名称 类型 = 表达式</span><br></pre></td></tr></table></figure>
+
+<p>如果省略的是类型信息, 那么将根据初始化表达式来推导变量的类型信息. 如果初始化表达式被省略, 那么将用零值初始化该变量. 数值类型变量对应的零值是<code>0</code>, 布尔类型变量对应的零值是<code>false</code>, 字符串类型对应的零值是空字符串, 接口或引用类型(包括<code>slice</code>, <code>map</code>, <code>chan</code>和函数)变量对应的零值是<code>nil</code>. 数组或结构体等聚合类型对应的零值是每个元素或字段都是对应该类型的零值. </p>
+<p>在包级别声明的变量会在<code>main</code>入口函数执行前完成初始化, 局部变量将在声明语句被执行到的时候完成初始化.</p>
+<h3 id="短变量声明"><a href="#短变量声明" class="headerlink" title="短变量声明"></a>短变量声明</h3><p>在函数内部, 有一种称为短变量声明语句的形式可用于声明和初始化局部变量. 它以<code>名字:=表达式</code>形式声明变量, 变量的类型根据表达式来自动推导. </p>
+<p>因为简单和灵活的特点, 短变量声明被广泛用于局部变量的声明和初始化. <code>var</code>形式的声明语句往往是用于需要显式指定变量类型的地方, 或者因为变量稍后会被重新赋值而初始值无关紧要的地方.</p>
+<p>如果有一些已经在相同的词法域声明过了, 那么短变量声明语句对这些已经声明过的变量就只有赋值行为. 短变量声明语句中至少要声明一个新的变量. </p>
+<h3 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h3><p>一个指针的值是是一个变量的地址. 并不是每一个值都会有一个内存地址, 但是对于每个变量必然有对应的内存地址. 通过指针, 我们可以直接读或更新对应变量的值, 而不需要知道变量的名字. </p>
+<p>如果指针对应的数据类型是<code>*int</code>, 指针被称之为”指向<code>int</code>类型的指针”. 如果指针名字为<code>p</code>, 那么可以说”<code>p</code>指针指向变量<code>x</code>“ , 或者说”<code>p</code>指针保存了<code>x</code>变量的内存地址”. </p>
+<p>任何类型的指针的零值都是<code>nil</code>. 如果<code>p != nil</code>测试为真, 那么<code>p</code>是指向某个有效变量. 指针之间也是可以进行相等测试的, 只有当它们指向同一个变量或全部都是<code>nil</code>时才相等. </p>
+<p>在<code>Go</code>语言中, 返回函数中局部变量的地址也是安全的.   </p>
+<h3 id="new函数"><a href="#new函数" class="headerlink" title="new函数"></a><code>new</code>函数</h3><p>另一个创建变量的方式是调用内建的<code>new</code>函数. 表达式<code>new(T)</code>将创建要给<code>T</code>类型的匿名变量, 初始为<code>T</code>类型的零值, 然后返回变量地址, 返回的指针类型为<code>*T</code>. </p>
+<p>用<code>new</code>创建变量和普通变量声明语句方式创建变量没有什么区别, 除了不需要声明一个临时变量. </p>
+<p>请谨慎使用大小为<code>0</code>的类型, 因为如果类型的大小为<code>0</code>的话, 可能导致<code>Go</code>语言的自动垃圾回收器有不同的行为. </p>
+<h1 id="常用的函数"><a href="#常用的函数" class="headerlink" title="常用的函数"></a>常用的函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">读入命令行参数</span></span><br><span class="line">flag.Bool()</span><br><span class="line">flag.String()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用于更新每个标志参数对应变量的值(之前是默认值)</span></span><br><span class="line">flag.parse()</span><br></pre></td></tr></table></figure>
+
+
     </div>
 
     
@@ -299,7 +320,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Git/" rel="tag"><i class="fa fa-tag"></i> Git</a>
+              <a href="/tags/Go/" rel="tag"><i class="fa fa-tag"></i> Go</a>
+              <a href="/tags/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> Go程序设计语言</a>
           </div>
 	  <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -361,14 +383,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/08/06/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="Git的使用">
-                  <i class="fa fa-chevron-left"></i> Git的使用
+                <a href="/2023/08/19/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Raspberry/Raspberry%E5%88%9D%E5%A7%8B%E5%8C%96/" rel="prev" title="Raspberry初始化">
+                  <i class="fa fa-chevron-left"></i> Raspberry初始化
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/08/17/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%85%A5%E9%97%A8/" rel="next" title="入门">
-                  入门 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
