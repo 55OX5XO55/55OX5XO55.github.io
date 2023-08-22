@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-21 23:39:34" itemprop="dateModified" datetime="2023-08-21T23:39:34+08:00">2023-08-21</time>
+      <time title="修改时间：2023-08-22 23:14:29" itemprop="dateModified" datetime="2023-08-22T23:14:29+08:00">2023-08-22</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -257,14 +257,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>2.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>8 分钟</span>
     </span>
 </div>
 
@@ -299,7 +299,16 @@
 <h3 id="new函数"><a href="#new函数" class="headerlink" title="new函数"></a><code>new</code>函数</h3><p>另一个创建变量的方式是调用内建的<code>new</code>函数. 表达式<code>new(T)</code>将创建要给<code>T</code>类型的匿名变量, 初始为<code>T</code>类型的零值, 然后返回变量地址, 返回的指针类型为<code>*T</code>. </p>
 <p>用<code>new</code>创建变量和普通变量声明语句方式创建变量没有什么区别, 除了不需要声明一个临时变量. </p>
 <p>请谨慎使用大小为<code>0</code>的类型, 因为如果类型的大小为<code>0</code>的话, 可能导致<code>Go</code>语言的自动垃圾回收器有不同的行为. </p>
-<h1 id="常用的函数"><a href="#常用的函数" class="headerlink" title="常用的函数"></a>常用的函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">读入命令行参数</span></span><br><span class="line">flag.Bool()</span><br><span class="line">flag.String()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用于更新每个标志参数对应变量的值(之前是默认值)</span></span><br><span class="line">flag.parse()</span><br></pre></td></tr></table></figure>
+<h3 id="变量的生命周期"><a href="#变量的生命周期" class="headerlink" title="变量的生命周期"></a>变量的生命周期</h3><p>变量的生命周期指的是在程序运行期间变量有效存在的时间间隔. 对于在包一级声明的变量来说, 它们的生命周期和整个程序的运行周期是一致的. 而相比之下, 在局部变量的生命周期则是动态的: 从每次创建一个新变量的声明语句开始, 直到该变量不再被引用为止,  然后变量的存储空间可能被回收. 函数的参数变量和返回值都是局部变量. 它们在函数每次被调用的时候创建. </p>
+<p>函数的有右小括弧也可以另起一行缩进, 同时为了防止编译器在行尾自动插入分号而导致的编译错误, 可以在末尾的参数变量后面显式插入逗号. </p>
+<p><code>Go</code>语言的自动垃圾收集器是如何知道一个变量时何时可以被回收的呢? 基本的实现思路是, 从每个包级的变量和每个当前运行函数的每一个局部变量开始, 通过指针或引用的访问路径遍历, 是否可以找到该变量. 如果不存在这样的访问路径, 那么说明该变量时不可达的. </p>
+<p>编译器会自动选择在栈上还是在堆上分配局部变量的存储空间, 这个选择并不是由用<code>var</code>还是<code>new</code>声明变量的方式决定的. </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> global *<span class="type">int</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">f</span><span class="params">()</span></span> &#123;</span><br><span class="line">    <span class="keyword">var</span> x <span class="type">int</span></span><br><span class="line">    x = <span class="number">1</span></span><br><span class="line">    global = &amp;x</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">g</span><span class="params">()</span></span> &#123;</span><br><span class="line">    y := <span class="built_in">new</span>(<span class="type">int</span>)</span><br><span class="line">    *y = <span class="number">1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>f</code>函数里的<code>x</code>变量必须在堆上分配, 因为它在函数退出后依然可以通过包一级的<code>global</code>变量找到, 虽然它是在函数内部定义的; 用<code>Go</code>语言的术语来说, 这个<code>x</code>局部变量从函数<code>f</code>中逃逸了. 相反, 当<code>g</code>函数返回时, 变量<code>*y</code>将是不可达的, 也就是说可以马上被回收. 因此, <code>*y</code>并没有从函数<code>g</code>中逃逸, 编译器可以选择在栈上分配<code>*y</code>的存储空间(译注: 也可以选择在堆上分配, 然后由<code>Go</code>语言的<code>GC</code>回收这个变量的内存空间), 虽然这里用的是<code>new</code>方式. 其实在任何时候, 你并不需要为了编写正确的代码而要考虑变量的逃逸行为, 要记住的是, 逃逸的变量需要额外分配内存, 同时对性能的优化可能产生细微的影响. </p>
+<p><code>Go</code>语言的自动垃圾收集器对编写正确的代码是一个巨大的帮助, 但也不是说你完全不用考虑内存了. 你虽然不需要显式地分配和释放内存, 但是要编写高效的程序你依然需要了解变量的生命周期. 例如, 如果将指向短生命周期对象保存到具有长生命周期的对象中, 特别是保存到全局变量时, 会阻止对短生命周期对象的垃圾回收(从而可能影响程序的性能). </p>
+<h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>使用赋值语句可以更新一个变量的值.</p>
+<h3 id="元组赋值"><a href="#元组赋值" class="headerlink" title="元组赋值"></a>元组赋值</h3><h1 id="常用的函数"><a href="#常用的函数" class="headerlink" title="常用的函数"></a>常用的函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">读入命令行参数</span></span><br><span class="line">flag.Bool()</span><br><span class="line">flag.String()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用于更新每个标志参数对应变量的值(之前是默认值)</span></span><br><span class="line">flag.parse()</span><br></pre></td></tr></table></figure>
 
 
       
@@ -1372,7 +1381,7 @@
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">39 分钟</span>
+    <span title="站点阅读时长">42 分钟</span>
   </span>
 </div>
 
