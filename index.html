@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-22 23:14:29" itemprop="dateModified" datetime="2023-08-22T23:14:29+08:00">2023-08-22</time>
+      <time title="修改时间：2023-08-23 23:28:30" itemprop="dateModified" datetime="2023-08-23T23:28:30+08:00">2023-08-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -257,14 +257,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.1k</span>
+      <span>3.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>8 分钟</span>
+      <span>12 分钟</span>
     </span>
 </div>
 
@@ -308,7 +308,26 @@
 <p><code>f</code>函数里的<code>x</code>变量必须在堆上分配, 因为它在函数退出后依然可以通过包一级的<code>global</code>变量找到, 虽然它是在函数内部定义的; 用<code>Go</code>语言的术语来说, 这个<code>x</code>局部变量从函数<code>f</code>中逃逸了. 相反, 当<code>g</code>函数返回时, 变量<code>*y</code>将是不可达的, 也就是说可以马上被回收. 因此, <code>*y</code>并没有从函数<code>g</code>中逃逸, 编译器可以选择在栈上分配<code>*y</code>的存储空间(译注: 也可以选择在堆上分配, 然后由<code>Go</code>语言的<code>GC</code>回收这个变量的内存空间), 虽然这里用的是<code>new</code>方式. 其实在任何时候, 你并不需要为了编写正确的代码而要考虑变量的逃逸行为, 要记住的是, 逃逸的变量需要额外分配内存, 同时对性能的优化可能产生细微的影响. </p>
 <p><code>Go</code>语言的自动垃圾收集器对编写正确的代码是一个巨大的帮助, 但也不是说你完全不用考虑内存了. 你虽然不需要显式地分配和释放内存, 但是要编写高效的程序你依然需要了解变量的生命周期. 例如, 如果将指向短生命周期对象保存到具有长生命周期的对象中, 特别是保存到全局变量时, 会阻止对短生命周期对象的垃圾回收(从而可能影响程序的性能). </p>
 <h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>使用赋值语句可以更新一个变量的值.</p>
-<h3 id="元组赋值"><a href="#元组赋值" class="headerlink" title="元组赋值"></a>元组赋值</h3><h1 id="常用的函数"><a href="#常用的函数" class="headerlink" title="常用的函数"></a>常用的函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">读入命令行参数</span></span><br><span class="line">flag.Bool()</span><br><span class="line">flag.String()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用于更新每个标志参数对应变量的值(之前是默认值)</span></span><br><span class="line">flag.parse()</span><br></pre></td></tr></table></figure>
+<h3 id="元组赋值"><a href="#元组赋值" class="headerlink" title="元组赋值"></a>元组赋值</h3><p>元组赋值是另一种形式的赋值语句, 它允许同时更新多个变量的值. 在赋值之前, 赋值语句右边的所有表达式将会先进行求值, 然后再统一更新左边对应变量的值. 这对于处理有些同时出现在元组赋值语句左右两边的变量很有帮助, 例如我们可以这样交换两个变量的值: </p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">x, y = y, x</span><br><span class="line">a[i], a[j] = a[j], a[i]</span><br></pre></td></tr></table></figure>
+
+<p>有些表达式会产生多个值, 比如调用一个有多个返回值的函数. 当这样一个函数调用出现在元组赋值右边的表达式中时(右边不能再有其它表达式), 左边变量的数目必须和右边一致. </p>
+<p>通常, 这类函数会用额外的返回值来表达某种错误类型, 例如<code>os.Open</code>是用额外的返回值返回一个<code>error</code>类型的错误, 还有一些是用来返回布尔值, 通常被称为<code>ok</code>. </p>
+<p>和变量声明一样, 我们可以用下划线空白标识符<code>_</code>来丢弃不需要的值. </p>
+<h3 id="可赋值性"><a href="#可赋值性" class="headerlink" title="可赋值性"></a>可赋值性</h3><p>赋值语句是显式的赋值语句, 但是程序中还有很多地方会发生隐式的赋值行为: 函数调用会隐式地将调用参数的值赋值给函数的参数变量, 一个返回语句将隐式地将返回操作的值赋值给结果变量, 一个复合类型的字面字面量也会产生赋值行为.</p>
+<p>不管是隐式还是显式地赋值, 在赋值语句左边的变量和右边最终求得的值必须有相同的数据类型. 更直白地说, 只有右边的值对于左边地变量时可赋值的, 赋值语句才是允许的. </p>
+<p>对于两个值是否可以用<code>==</code>或<code>!=</code>进行相等比较的能力也和可赋值能力有关系: 对于任何类型的值的相等比较, 第二个值必须是对第一个变量值类型对应的变量是可赋值的, 反之亦然. </p>
+<h2 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h2><p>变量或表达式的类型定义了对应存储值的属性特征, 例如数值在内存中的存储大小(或者是元素的<code>bit</code>个数), 它们在内部是如何表达的, 是否支持一些操作符, 以及它们自己关联的方法集等.</p>
+<p>一个类型声明语句创建了一个新的类型名称, 和现有类型就有相同的底层结构. 新命名提供了一种方式, 用来分隔不同概念的类型, 这样即使它们底层类型相同也是不兼容的. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type 类型名称 底层类型</span><br></pre></td></tr></table></figure>
+
+<p>由于对于中文汉字, <code>Unicode</code>标志都是作为小写字母处理, 因此中文的命名默认不能导出.</p>
+<p>对于每一个类型<code>T</code>, 都有一个对应的类型转换操作<code>T(x)</code>, 用于将<code>x</code>转为<code>T</code>类型(如果<code>T</code>是指针类型, 可能会需要用小括弧包括<code>T</code>, 比如<code>(*int)(0)</code>). 只有当两个类型的底层基础类型相同时, 才能允许这种转型操作, 或者是两者都是指向相同底层结构的指针类型, 这些转换只改变类型而不会影响值本身. </p>
+<p>底层数据类型决定了内部结构和表达方式, 也决定是否可以像底层类型一样对内置运算符的支持.</p>
+<p>通过<code>==</code>和<code>&lt;</code>之类的比较操作符, 命名类型的值可以与其相同类型的值或者底层类型相同的未命名类型的值相比较. </p>
+<h2 id="包和文件"><a href="#包和文件" class="headerlink" title="包和文件"></a>包和文件</h2><p><code>Go</code>语言中的包和其他语言的库或模块的概念类似, 目的都是为了支持模块化, 封装, 单独编译和代码重用. 每个包都对应一个独立的命名空间. </p>
+<p>在每个源文件的包声明前紧跟着的注释是包注释. 通常, 包注释的第一句应该是包的功能概要说明. 一个包通常只有一个源文件有包注释. </p>
+<h1 id="常用的函数"><a href="#常用的函数" class="headerlink" title="常用的函数"></a>常用的函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">读入命令行参数</span></span><br><span class="line">flag.Bool()</span><br><span class="line">flag.String()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用于更新每个标志参数对应变量的值(之前是默认值)</span></span><br><span class="line">flag.parse()</span><br></pre></td></tr></table></figure>
 
 
       
@@ -1374,14 +1393,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">11k</span>
+    <span title="站点总字数">13k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">42 分钟</span>
+    <span title="站点阅读时长">46 分钟</span>
   </span>
 </div>
 
