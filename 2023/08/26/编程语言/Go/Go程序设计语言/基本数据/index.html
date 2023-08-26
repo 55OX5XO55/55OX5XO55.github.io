@@ -18,28 +18,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Git进阶用法">
+    <meta name="description" content="基本数据毫无疑问, 计算机底层全是位, 而实际操作则是基于大小固定的单元中的数值, 称为字, 这些值可解释为整数, 浮点数, 位集或内存地址等, 进而构成更大的聚合体, 以表示数据包, 像素, 文件, 诗集, 以及其他种种.  Go的数据类型分为四大类: 基础类型, 聚合类型, 引用类型和接口类型. 基础类型, 包括数字, 字符串和布尔型. 聚合类型包括, 数组和结构体. 引用类型, 包括指针,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Git进阶用法">
-<meta property="og:url" content="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/index.html">
+<meta property="og:title" content="基本数据">
+<meta property="og:url" content="http://example.com/2023/08/26/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE/index.html">
 <meta property="og:site_name" content="space">
-<meta property="og:description" content="Git进阶用法">
+<meta property="og:description" content="基本数据毫无疑问, 计算机底层全是位, 而实际操作则是基于大小固定的单元中的数值, 称为字, 这些值可解释为整数, 浮点数, 位集或内存地址等, 进而构成更大的聚合体, 以表示数据包, 像素, 文件, 诗集, 以及其他种种.  Go的数据类型分为四大类: 基础类型, 聚合类型, 引用类型和接口类型. 基础类型, 包括数字, 字符串和布尔型. 聚合类型包括, 数组和结构体. 引用类型, 包括指针,">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-08-13T15:52:21.000Z">
-<meta property="article:modified_time" content="2023-08-17T15:34:04.297Z">
+<meta property="article:published_time" content="2023-08-26T12:59:44.000Z">
+<meta property="article:modified_time" content="2023-08-26T16:27:01.694Z">
 <meta property="article:author" content="霄剑">
-<meta property="article:tag" content="Git">
+<meta property="article:tag" content="Go">
+<meta property="article:tag" content="Go程序设计语言">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">
+<link rel="canonical" href="http://example.com/2023/08/26/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/","path":"2023/08/13/工具使用/Git/Git进阶用法/","title":"Git进阶用法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/08/26/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE/","path":"2023/08/26/编程语言/Go/Go程序设计语言/基本数据/","title":"基本数据"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Git进阶用法 | space</title>
+<title>基本数据 | space</title>
   
 
 
@@ -142,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E7%9A%84Git"><span class="nav-number">1.</span> <span class="nav-text">服务器上的Git</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84Git"><span class="nav-number">1.1.</span> <span class="nav-text">常用的Git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Git%E5%B7%A5%E5%85%B7"><span class="nav-number">2.</span> <span class="nav-text">Git工具</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE"><span class="nav-number">1.</span> <span class="nav-text">基本数据</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E5%9E%8B"><span class="nav-number">1.1.</span> <span class="nav-text">整型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="nav-number">1.2.</span> <span class="nav-text">浮点数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">常用的方法</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -203,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E8%BF%9B%E9%98%B6%E7%94%A8%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/26/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.svg">
@@ -216,12 +217,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Git进阶用法 | space">
+      <meta itemprop="name" content="基本数据 | space">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Git进阶用法
+          基本数据
         </h1>
 
         <div class="post-meta-container">
@@ -232,14 +233,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2023-08-13 23:52:21" itemprop="dateCreated datePublished" datetime="2023-08-13T23:52:21+08:00">2023-08-13</time>
+      <time title="创建时间：2023-08-26 20:59:44" itemprop="dateCreated datePublished" datetime="2023-08-26T20:59:44+08:00">2023-08-26</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-17 23:34:04" itemprop="dateModified" datetime="2023-08-17T23:34:04+08:00">2023-08-17</time>
+      <time title="修改时间：2023-08-27 00:27:01" itemprop="dateModified" datetime="2023-08-27T00:27:01+08:00">2023-08-27</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -247,11 +248,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
         </span>
     </span>
 
@@ -262,14 +263,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>358</span>
+      <span>1.6k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>6 分钟</span>
     </span>
 </div>
 
@@ -280,13 +281,34 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p><code>Git</code>进阶用法</p>
-<span id="more"></span>
+        <h1 id="基本数据"><a href="#基本数据" class="headerlink" title="基本数据"></a>基本数据</h1><p>毫无疑问, 计算机底层全是位, 而实际操作则是基于大小固定的单元中的数值, 称为字, 这些值可解释为整数, 浮点数, 位集或内存地址等, 进而构成更大的聚合体, 以表示数据包, 像素, 文件, 诗集, 以及其他种种. </p>
+<p><code>Go</code>的数据类型分为四大类: 基础类型, 聚合类型, 引用类型和接口类型. 基础类型, 包括数字, 字符串和布尔型. 聚合类型包括, 数组和结构体. 引用类型, 包括指针, <code>slice</code>, <code>map</code>, 函数, 以及通道, 它们的共同点都是全部间接指向程序变量或状态, 这意味着对任一引用类型数据的修改都会影响所有该引用的拷贝. </p>
+<h2 id="整型"><a href="#整型" class="headerlink" title="整型"></a>整型</h2><p><code>Go</code>语言的数值类型包括几种不同大小的整数, 浮点数和复数. 各种数值类型分别有自己的大小, 对正负号支持也各异. </p>
+<p><code>Go</code>同时具备有符号整数和无符号整数. 有符号整数分为四种大小: 8位, 16位, 32位, 64位, 用<code>int8</code>, <code>int16</code>, <code>int32</code>, <code>int64</code>表示, 对应的无符号整数是<code>uint8</code>, <code>uint16</code>, <code>uint32</code>, <code>uint64</code>.</p>
+<p>此外还有两种类型<code>int</code>和<code>uint</code>. 在特定平台上, 其大小和原生的有符号数<code>\</code>无符号整数相同, 或等于该平台上运算效率最高的值. <code>int</code>是目前使用最广泛的数值类型. 者两种类型大小相等, 都是32位或64位, 版不能认为它们就一定是32位, 或一个就是64位; 即使在同样的硬件平台上, 不同的编译器也可能选用不同的大小. </p>
+<p><code>rune</code>类型是<code>int32</code>类型的同义词, 常常用于指明一个值是<code>Unicode</code>码点. 这两个名称可互换使用. 同样, <code>byte</code>类型是<code>uint8</code>类型的同义词, 强调一个值是原始数据, 而非量值. </p>
+<p>最后, 还有一种无符号整数<code>uintptr</code>, 其大小并不明确, 但足以完整存放指针. <code>uintptr</code>类型仅仅用于底层编码, 例如在<code>Go</code>程序与<code>C</code>程序库或操作系统接口相互交互的地方. </p>
+<p><code>int</code>, <code>uint</code>和<code>uintptr</code>都是不同类型的兄弟类型, 也必须进行显式地类型操作转换. </p>
+<p>有符号数以补码表示. </p>
+<p>算术运算符<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>可应用于整数, 浮点数和复数, 而取模运算符<code>%</code>仅能用于整数. 取模运算符<code>%</code>的行为因编程语言而异. 就<code>Go</code>而言, 取模余数的正负号总是与被除数一致, 于是<code>-5%3</code>和<code>-5%-3</code>都得<code>-2</code>. 除法运算<code>(/)</code>的行为取决于操作数是否都为整形, 整数相除, 商会舍弃掉小数部分.</p>
+<p>不论是有符号数还是无符号数, 若表达算术运算结果所需的位超出该类型的范围, 就称为溢出. 溢出的高位部分会无提示地丢弃.</p>
+<p>实际上, 全部基本类型的值(布尔值, 数值, 字符串)都可以比较, 这意味着两个相同类型的值可用<code>==</code>和<code>!=</code>运算符比较. 整数, 浮点数和字符串还能根据比较运算符排序. </p>
+<p>如果作为二元运算符, 运算符<code>^</code>表示按位”异或”<code>(XOR)</code>; 若作为一元前缀运算符, 则它表示按位取反或按位取补, 运算结果就是操作数逐位取反. 运算符<code>&amp;^</code>是按位清除<code>(AND NOT)</code>: 表达式<code>z=x&amp;^y</code>中, 若y的某位是1, 则z的对应位等于0; 否则, 他就等于x的对应位. </p>
+<p>在位移运算符<code>x&lt;&lt;n</code>和<code>x&gt;&gt;n</code>中, 操作数你决定位移量, 而且n必须为无符号型; 操作数x可以是有符号型也可以是无符号型. 算术上, 左移运算<code>x&lt;&lt;n</code>等价于x乘以$2^n$; 而右移运算<code>x&gt;&gt;n</code>等价于x除以<code>2^n</code>, 向下取整. </p>
+<p>左移以0填补右边空位, 无符号数右移同样以0填补左边空位, 但是有符号数的右移操作是按符号位的值填补空位. 因此, 当进行位运算的时候, 尽量使用无符号数. </p>
+<p>因此, 无符号整数往往只用于位运算符和特定算术运算符, 如实现位集时, 解析二进制格式的文件, 或散列和加密. 一般而言, 无符号整数极少用于表示非负值. </p>
+<p>通常, 将某种类型的值转换成另一种, 需要显式转换. 对于算术和逻辑(不含移位)的二元运算符, 其操作数的类型必须相同. 虽然这有时会导致表示式相对冗长, 但是一整类错误得以避免, 程序也更容易理解. </p>
+<p>浮点型转成整形, 会舍弃小数部分, 趋零截尾(正值先下取整, 负值先上取整). 如果有些转换的操作数的值超出了目标类型的取值范围, 就应当避免这种转换, 因为其行为依赖具体实现. </p>
+<p>任何大小的整数字面值都能写成十进制数, 也能写成八进制数(以0开头), 或十六进制(以0x或0x)开头.当前, 八进制数似乎仅有一种用途, 表示<code>POSIX</code>文件系统的权限, 而十六进制数广泛用于强调其位模式, 而非数值大小. </p>
+<p>字符面值通过一对单引号直接包含字符. 用<code>%c</code>输出文字符号, 如果希望输出带有单引号则用<code>%q</code>. </p>
+<h2 id="浮点数"><a href="#浮点数" class="headerlink" title="浮点数"></a>浮点数</h2><p><code>Go</code>具有两种大小的浮点数<code>float32</code>和<code>float64</code>. 这两个类型的值可从超细微到超宏大. <code>math</code>包给出了浮点值的极限. </p>
+<p>十进制下, <code>float32</code>的有效数字大约是6位, <code>float64</code>的有效数字大约15位. 绝大多数情况下, 应优先选用<code>float64</code>, 因为除非格外小心, 否则<code>float32</code>的运算会迅速累积误差. 另外, <code>float32</code>能精确表示的正整数范围有限. </p>
+<p>小数点前的数字可以省略<code>(.707)</code>, 后面的也可以省去<code>(1.)</code>. 非常小或非常大的数字最好使用科学计数法表示, 此方法在数量级指数前写字母<code>e</code>或<code>E</code>. </p>
+<h1 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">打印8位的表示</span></span><br><span class="line">fmt.Printf(&quot;%08b\n&quot;, x)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将一个参数打印多次, <span class="comment">#用来告知是打印前缀</span></span></span><br><span class="line">fmt.Printf(&quot;%d %[1]o %#[1]o %[1]x %#[1]x %#[1]X&quot;)</span><br></pre></td></tr></table></figure>
 
-<h1 id="服务器上的Git"><a href="#服务器上的Git" class="headerlink" title="服务器上的Git"></a>服务器上的<code>Git</code></h1><p>一个远程仓库通常只是一个裸仓库<code>--</code>即一个没有当前工作目录的仓库. 因为该仓库仅仅作为合作媒介, 不需要从磁盘检查快照; 存放的只有<code>Git</code>的资料. 简单的说, 裸仓库就是你目录内的<code>.git</code>子目录内容, 不包含其他资料. </p>
-<h2 id="常用的Git"><a href="#常用的Git" class="headerlink" title="常用的Git"></a>常用的<code>Git</code></h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">git merge --squash 分支名</span><br><span class="line"></span><br><span class="line">--squash: 接受被合并的分支上的所有工作, 并将其压缩至一个变更集, 是仓库变成一个未发生合并的状态, 可以引入另外一个分支的所有改动或自己做改动, 然后再commit. 有点像rebase</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从别的拉取</span></span><br><span class="line">git pull &lt;remote&gt; &lt;branchname&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">临时拉取, 不保存远程仓库</span></span><br><span class="line">git pull &lt;url&gt; [branchname]</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">如果不写branchname, 默认是HEAD</span> </span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看在branch1, 但不在branch2的提交, 等价于branch2..branch1</span></span><br><span class="line">git log branch1 [-p] --not branch2</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">找出两个分支的公共祖先</span></span><br><span class="line">git merge-base &lt;branch1&gt; &lt;branch2&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">branch2与公共祖先的差别</span></span><br><span class="line">git diff &lt;branch1&gt;...&lt;branch2&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">拣选操作, Git中的拣选类似于对特定的某次提交的变基. 它会提取该提交的补丁, 之后尝试将其重新应用到当前分支上</span></span><br><span class="line">git cherry-pick &lt;commit&gt;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将Git项目打包, 注意不会包含.git文件夹</span></span><br><span class="line">git archive master --prefix=&#x27;project/&#x27; | gzip &gt; `git describe master`.tar.gz</span><br><span class="line">git archive master --prefix=&#x27;project/&#x27; --format=zip &gt; `git describe master`.zip</span><br></pre></td></tr></table></figure>
 
-<h1 id="Git工具"><a href="#Git工具" class="headerlink" title="Git工具"></a><code>Git</code>工具</h1>
+
+
     </div>
 
     
@@ -299,7 +321,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Git/" rel="tag"><i class="fa fa-tag"></i> Git</a>
+              <a href="/tags/Go/" rel="tag"><i class="fa fa-tag"></i> Go</a>
+              <a href="/tags/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> Go程序设计语言</a>
           </div>
 	  <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -361,14 +384,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/08/06/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/Git%E7%9A%84%E4%BD%BF%E7%94%A8/" rel="prev" title="Git的使用">
-                  <i class="fa fa-chevron-left"></i> Git的使用
+                <a href="/2023/08/20/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E7%A8%8B%E5%BA%8F%E7%BB%93%E6%9E%84/" rel="prev" title="程序结构">
+                  <i class="fa fa-chevron-left"></i> 程序结构
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/08/17/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%85%A5%E9%97%A8/" rel="next" title="入门">
-                  入门 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
