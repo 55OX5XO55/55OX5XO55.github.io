@@ -26,7 +26,7 @@
 <meta property="og:description" content="复合数据类型复合数据类型是由基本数据类型以各种方式组合而构成的. 数组和结构体都是聚合类型, 它们的值由内存中的一组变量构成. 数组的元素具有相同的类型, 而结构体中元素类型则可以不同. 数组和结构体的长度都是固定的, 反之, slice和map都是动态数据结构, 它们的长度都是元素添加到结构体中时可以动态增长.  数组数组是具有固定长度且拥有零个或多个相同数据类型元素的序列. 由于数组的长度固定">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-29T12:31:33.000Z">
-<meta property="article:modified_time" content="2023-08-30T15:37:06.385Z">
+<meta property="article:modified_time" content="2023-08-31T14:04:49.464Z">
 <meta property="article:author" content="霄剑">
 <meta property="article:tag" content="Go">
 <meta property="article:tag" content="Go程序设计语言">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">复合数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slice"><span class="nav-number">1.2.</span> <span class="nav-text">slice</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#append%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">append函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slice%E5%86%85%E5%AD%98%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.2.</span> <span class="nav-text">slice内存技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-number">1.3.</span> <span class="nav-text">map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-number">2.0.1.</span> <span class="nav-text">结构体字面量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%AF%94%E8%BE%83"><span class="nav-number">2.0.2.</span> <span class="nav-text">结构体比较</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">常用函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">技巧</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">复合数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-number">1.1.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#slice"><span class="nav-number">1.2.</span> <span class="nav-text">slice</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#append%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">append函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#slice%E5%86%85%E5%AD%98%E6%8A%80%E5%B7%A7"><span class="nav-number">1.2.2.</span> <span class="nav-text">slice内存技巧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#map"><span class="nav-number">1.3.</span> <span class="nav-text">map</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%AD%97%E9%9D%A2%E9%87%8F"><span class="nav-number">2.0.1.</span> <span class="nav-text">结构体字面量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E6%AF%94%E8%BE%83"><span class="nav-number">2.0.2.</span> <span class="nav-text">结构体比较</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93%E5%B5%8C%E5%A5%97%E5%92%8C%E5%8C%BF%E5%90%8D%E6%88%90%E5%91%98"><span class="nav-number">2.0.3.</span> <span class="nav-text">结构体嵌套和匿名成员</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSON"><span class="nav-number">2.1.</span> <span class="nav-text">JSON</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E6%9C%AC%E5%92%8CHTML%E6%A8%A1%E7%89%88"><span class="nav-number">2.2.</span> <span class="nav-text">文本和HTML模版</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">3.</span> <span class="nav-text">常用函数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8A%80%E5%B7%A7"><span class="nav-number">4.</span> <span class="nav-text">技巧</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-30 23:37:06" itemprop="dateModified" datetime="2023-08-30T23:37:06+08:00">2023-08-30</time>
+      <time title="修改时间：2023-08-31 22:04:49" itemprop="dateModified" datetime="2023-08-31T22:04:49+08:00">2023-08-31</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.2k</span>
+      <span>3.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
+      <span>14 分钟</span>
     </span>
 </div>
 
@@ -342,7 +342,14 @@
 <p>这两种初始化方式不可以混合使用, 另外也无法使用第一种初始化方式来绕过不可导出的变量无法在其他包中使用的规则. </p>
 <p>如果考虑效率的haunted, 较大的结构体通常会使用指针的方式传入和返回. </p>
 <p>如果要在函数内部修改结构体成员的话, 用指针传入是必须的; 因为在<code>Go</code>语言中, 所有的函数参数都是值拷贝传入的, 函数参数将不再是函数调用时的原始变量. </p>
-<h3 id="结构体比较"><a href="#结构体比较" class="headerlink" title="结构体比较"></a>结构体比较</h3><h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 解码UTF-8编码, 并返回三个值, 解码的字符, UTF-8编码中字节的长度和错误值. 这里唯一可能出现的错误是文件结束(EOF), 如果输入的不是合法的UTF-8字符, 那么返回的字符是unicode.ReplacementChar并且长度是1</span><br><span class="line">in.ReadRune()</span><br></pre></td></tr></table></figure>
+<h3 id="结构体比较"><a href="#结构体比较" class="headerlink" title="结构体比较"></a>结构体比较</h3><p>如果结构体的所有成员变量都是可以比较的, 那么这个结构体就是可比较的. 两个结构体的比较可以使用<code>==</code>或者<code>!=</code>. 其中<code>==</code>操作按照顺序比较两个结构体变量的成员变量. </p>
+<h3 id="结构体嵌套和匿名成员"><a href="#结构体嵌套和匿名成员" class="headerlink" title="结构体嵌套和匿名成员"></a>结构体嵌套和匿名成员</h3><p><code>Go</code>允许我们定义不带名称的结构体成员, 只需要指定类型即可; 这种结构体成员称做匿名成员. 这个结构体成员的类型必须是一个命名类型或指向命名类型的指针. 正因为有了这种结构体嵌套的功能, 我们才能直接访问到我们需要的变量而不是指定一大串中间变量. </p>
+<p>匿名成员的名称其实是对应类型的名字, 只是这些名字在点号访问时时可选的. 结构体字面值并没有简短表示匿名成员的语法. </p>
+<p>因为”匿名成员”拥有隐式的名字, 所以你不能在一个结构体里面定义两个相同类型的匿名成员, 否则会引起冲突. 由于匿名成员的名字是由它们的类型决定的, 因此它们的可导出性也是由它们的类型决定的. </p>
+<p>以快捷方式访问匿名成员的内部变量同样适用于访问匿名成员的内部方法. 因此, 外围的结构体类型获取的不仅是匿名成员的内部变量, 还有相关的方法. </p>
+<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a><code>JSON</code></h2><p><code>javaScript</code>对象表示法(<code>JSON</code>)是一种发送和接收格式化信息的标准. <code>JSON</code>是<code>JavaScript</code>值的<code>Unicode</code>编码, 这些值包括字符串, 数字, 布尔值, 数组和对象. <code>JSON</code>里面的<code>\Uhhhh</code>转义数字来表示一个<code>UTF-16</code>编码(译注: <code>UTF-16</code>和<code>UTF-8</code>一样是一种变长的编码, 但是有大端和小端之分). </p>
+<h2 id="文本和HTML模版"><a href="#文本和HTML模版" class="headerlink" title="文本和HTML模版"></a>文本和<code>HTML</code>模版</h2><p>通常情况下, <code>Printf</code>函数就够用了, 但是有的情况下格式化会很复杂, 并且要求格式和代码彻底分离. 这个可以通过<code>text/template</code>包和<code>/html/template</code>包里面的方法来实现, 这两个包提供了一种机制, 可以将程序变量的值植入到文本或者是<code>HTML</code>模版中. </p>
+<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 解码UTF-8编码, 并返回三个值, 解码的字符, UTF-8编码中字节的长度和错误值. 这里唯一可能出现的错误是文件结束(EOF), 如果输入的不是合法的UTF-8字符, 那么返回的字符是unicode.ReplacementChar并且长度是1</span><br><span class="line">in.ReadRune()</span><br><span class="line"></span><br><span class="line">// 副词#使得%v用和`Go`语言类似的语法打印. 对于结构体类型来说, 将包含每个成员的名字</span><br><span class="line">fmt.Printf(&quot;%#v&quot;, w)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">marshal编组, 将go对象编组为JSON对象, 这个是紧凑形式, 格式化方法, json.MarshlIndent(movies, <span class="string">&quot;&quot;</span>, <span class="string">&quot;    &quot;</span>), 只有可以导出的成员可以转换为JSON字段</span></span><br><span class="line">json.marshal(movies)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">unmarshal解码, 将JSON转换为go对象. 通过合理地定义go的数据结构, 我们可以选择将哪部分JSON数据解码到结构体中, 哪些数据可以丢弃, 解码忽略大小写</span></span><br><span class="line">json.Unmarsh</span><br></pre></td></tr></table></figure>
 
 
 
@@ -460,14 +467,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">22k</span>
+    <span title="站点总字数">23k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:20</span>
+    <span title="站点阅读时长">1:23</span>
   </span>
 </div>
 
