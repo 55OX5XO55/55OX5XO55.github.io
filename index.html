@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-01 00:08:18" itemprop="dateModified" datetime="2023-09-01T00:08:18+08:00">2023-09-01</time>
+      <time title="修改时间：2023-09-02 00:13:49" itemprop="dateModified" datetime="2023-09-02T00:13:49+08:00">2023-09-02</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -257,14 +257,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>959</span>
+      <span>2.5k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>9 分钟</span>
     </span>
 </div>
 
@@ -292,7 +292,44 @@
 <h2 id="错误"><a href="#错误" class="headerlink" title="错误"></a>错误</h2><p>如果当函数函数调用发生错误时返回一个附加的结果作为错误值, 习惯上将错误值作为最后一个结果返回. 如果错误只有一种情况, 结果通常设置为布尔类型. 更多时候, 尤其对于<code>I/O</code>操作, 错误的原因可能多种多样, 而调用者则需要一些详细的信息. 在这种情况下, 错误的结果类型往往是<code>error</code>. </p>
 <p><code>error</code>是内置的接口类型. 非空的错误类型有一个错误消息字符串, 可以通过调用它的<code>Error</code>方法或者通过调用<code>fmt.Println(err)</code>或<code>fmt.Print(&quot;%v&quot;, err)</code>直接输出错误消息. </p>
 <p>在<code>Go</code>中, 函数运行失败时会返回错误信息, 这些错误信息被认为时一种预期的值而非异常, 这使得<code>Go</code>有区别于那些将函数运行失败看作异常的语言. 虽然<code>Go</code>有各种异常机制, 但这些机制仅被使用在处理那些未被预料到的错误, 即bug, 而不是那些键壮程序中应该被避免的程序错误. </p>
-<h3 id="错误处理策略"><a href="#错误处理策略" class="headerlink" title="错误处理策略"></a>错误处理策略</h3>
+<h3 id="错误处理策略"><a href="#错误处理策略" class="headerlink" title="错误处理策略"></a>错误处理策略</h3><p>当一个函数调用返回一个错误时, 调用者应负责检查错误并采取合适的处理应对. </p>
+<p>首先也还是最常见的情形是将错误传递下去, 使得子例程中发生的错误变为主调例程的错误. 我们为原始错误消息不断添加额外的上下文信息来建立一个可读的错误描述. 当错误最终被程序的<code>main</code>函数处理时, 它应该能够提供一个根本问题到总体故障的清晰因果链. </p>
+<p>因为错误消息频繁地串联起来, 所以消息字符串首字母不应该大写, 而且应该避免换行.</p>
+<p>一般而言, 被调用函数<code>f(x)</code>会将调用信息和参数信息作为发生错误时的上下文放在错误信息中并返回给调用者, 调用者需要添加一些错误信息中不包含的信息. </p>
+<p>第二种错误处理策略. 对于不固定或者不可预测的错误, 在短暂的间隔后对操作进行重试是合乎情理的, 超出一定的重试次数和限定的时间后在报错退出. </p>
+<p>第三, 如果依旧不能顺利进行下去, 调用者能够输出错误然后优雅地停止程序, 但一般这样的处理应该留给主程序部分. 通常库函数应当将错误传递给调用者, 除非这个错误表示一个内部一致性错误, 这意味着库内部存在<code>bug</code>. </p>
+<p>一个更方便的方法是通过调用<code>log.Fatalf</code>实现相同的效果. 就和所有日志函数一样, 它默认会将时间和日期作为前缀添加到错误消息前. </p>
+<p>第四, 在一些错误情况下, 只记录下错误信息然后程序继续运行. 可以使用<code>log.Printf</code>或者直接输出到标准错误流.  <code>log</code>包中所有函数会为没有换行符的字符串增加换行符. </p>
+<p>第五, 在某些罕见的情况下我们可以直接安全地忽略掉整个错误. 要习惯考虑到每个函数调用可能发生的出错情况, 当你有意地忽略一个错误的时候, 清晰地注释一下你的意图. </p>
+<p>如果某个错误会导致函数返回, 那么成功的逻辑代码不应该放在<code>else</code>语句中, 而应直接放在函数体中. </p>
+<h3 id="文件结尾错误-EOF"><a href="#文件结尾错误-EOF" class="headerlink" title="文件结尾错误(EOF)"></a>文件结尾错误<code>(EOF)</code></h3><p><code>Io</code>包保证任何由文件结束引起的读取失败都返回同一个错误<code>(io.EOF)</code>. </p>
+<h2 id="函数值"><a href="#函数值" class="headerlink" title="函数值"></a>函数值</h2><p>在<code>Go</code>中, 函数被看作第一类值: 函数像其他值一样, 拥有类型, 可以被赋值给其他变量, 传递给其他变量, 传递给函数, 从函数返回. 对函数值的调用类似函数调用. </p>
+<p>函数类型的零值是<code>nil</code>, 调用一个空的函数变量将导致<code>panic</code>错误. 函数变量可以和<code>nil</code>比较, 但它们本省不可比较, 所以不可以相互进行比较或者作为键值出现在<code>map</code>中. </p>
+<h2 id="匿名函数"><a href="#匿名函数" class="headerlink" title="匿名函数"></a>匿名函数</h2><p>命名函数只能在包级别的作用域进行声明, 但我们能够使用函数字面量在任何表达式内指定函数变量. 函数字面量就像函数声明, 但在<code>func</code>关键字后面没有函数名称. 它是一个表达式, 它的值称作匿名函数. </p>
+<p>函数字面量在我们需要的时候才定义. </p>
+<p>更重要的是, 以这种方式定义的函数能够获取到整个词法环境, 因此里层的函数可以使用外层函数中的变量. </p>
+<p>函数值不仅仅是一串代码, 还记录了状态. 存在变量引用. 这就是函数值属于引用类型和函数值不可比较的原因. <code>Go</code>使用闭包技术实现函数值, <code>Go</code>程序员也把函数值叫做闭包. </p>
+<p>当一个匿名函数需要进行递归, 必须先声明变量然后将匿名函数赋值给这个变量. </p>
+<h3 id="警告-捕获迭代变量"><a href="#警告-捕获迭代变量" class="headerlink" title="警告: 捕获迭代变量"></a>警告: 捕获迭代变量</h3><p>为什么在循环体内将循环变量赋给一个新的局部变量, 而不是直接使用循环变量. </p>
+<p>问题的原因在于循环变量的作用域. <code>for</code>循环引入了新的语法块, 循环变量在这个词法块中被声明. 在该循环中生成的所有函数值都共享相同的函数变量. 需要注意, 函数值中记录的是循环变量的内存地址, 而不是循环变量某一时刻的值. </p>
+<p>这样的隐患不仅仅存在于使用<code>range</code>的<code>for</code>循环中. 在普通<code>for</code>循环中也存在. </p>
+<p>在<code>go</code>语句和<code>defer</code>语句中会经常遇到此类问题. 者不是<code>go</code>或<code>defer</code>本身导致的, 而是因为它们都会等待循环结束后, 在执行函数值. </p>
+<h2 id="变长函数"><a href="#变长函数" class="headerlink" title="变长函数"></a>变长函数</h2><p>变长函数被调用的时候可以有可变的参数个数. 最令人熟知的例子就是<code>fmt.Printf</code>与其变种. <code>Prinf</code>需要在开头提供一个固定的参数, 后续便可以就收任意数目的参数. </p>
+<p>在参数列表最后的类型名称之前使用省略号<code>...</code>表示声明一个变长函数, 调用这个函数的时候可以传递该类型任意数目的参数. </p>
+<p>调用者隐式地创建一个数组, 并将原始参数复制到数组中, 再把数组的一个切片作为参数传递给被调用函数. 如果原始参数已经是切片类型, 我们如何传值? 只需要在<code>slice</code>后加<code>...</code>. </p>
+<p>虽然在可变参数函数内部, 尽管可变参数的行为很像切片类型, 但实际上, 可变参数函数和以切片作为参数的函数是不同的. </p>
+<p>可变参数函数经常被用于格式化字符串. <code>interface&#123;&#125;</code>表示函数的最后一个参数可以接收任意类型. </p>
+<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(&quot;%*s&quot;, 数量, &quot;字符&quot;)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">字符串排序</span></span><br><span class="line">sort.String()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
       
     </div>
 
@@ -1592,14 +1629,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">24k</span>
+    <span title="站点总字数">25k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:26</span>
+    <span title="站点阅读时长">1:32</span>
   </span>
 </div>
 
