@@ -26,7 +26,7 @@
 <meta property="og:description" content="函数函数声明每个函数声明都包含一个名字, 一个形参列表, 要给可选的返回列表以及函数体: 123func name(parameter-list) (result-list) &amp;#123;	body&amp;#125;  返回值也可以像形参一样命名. 这个时候, 每个命名的返回值会声明为一个局部变量, 并根据变量类型初始化为相应的0值.  函数的类型称作函数签名. 当两个函数拥有相同的形参列表和返回列表时">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-31T14:05:37.000Z">
-<meta property="article:modified_time" content="2023-09-01T16:13:49.491Z">
+<meta property="article:modified_time" content="2023-09-02T16:39:15.055Z">
 <meta property="article:author" content="霄剑">
 <meta property="article:tag" content="Go">
 <meta property="article:tag" content="Go程序设计语言">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">函数声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">1.2.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">1.3.</span> <span class="nav-text">多返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF"><span class="nav-number">1.4.</span> <span class="nav-text">错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="nav-number">1.4.1.</span> <span class="nav-text">错误处理策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E5%B0%BE%E9%94%99%E8%AF%AF-EOF"><span class="nav-number">1.4.2.</span> <span class="nav-text">文件结尾错误(EOF)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%80%BC"><span class="nav-number">1.5.</span> <span class="nav-text">函数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">匿名函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AD%A6%E5%91%8A-%E6%8D%95%E8%8E%B7%E8%BF%AD%E4%BB%A3%E5%8F%98%E9%87%8F"><span class="nav-number">1.6.1.</span> <span class="nav-text">警告: 捕获迭代变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%95%BF%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">变长函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用函数</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.</span> <span class="nav-text">函数</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">函数声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%92%E5%BD%92"><span class="nav-number">1.2.</span> <span class="nav-text">递归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">1.3.</span> <span class="nav-text">多返回值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF"><span class="nav-number">1.4.</span> <span class="nav-text">错误</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86%E7%AD%96%E7%95%A5"><span class="nav-number">1.4.1.</span> <span class="nav-text">错误处理策略</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%BB%93%E5%B0%BE%E9%94%99%E8%AF%AF-EOF"><span class="nav-number">1.4.2.</span> <span class="nav-text">文件结尾错误(EOF)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E5%80%BC"><span class="nav-number">1.5.</span> <span class="nav-text">函数值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8C%BF%E5%90%8D%E5%87%BD%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">匿名函数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AD%A6%E5%91%8A-%E6%8D%95%E8%8E%B7%E8%BF%AD%E4%BB%A3%E5%8F%98%E9%87%8F"><span class="nav-number">1.6.1.</span> <span class="nav-text">警告: 捕获迭代变量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%95%BF%E5%87%BD%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">变长函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%B6%E8%BF%9F%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8"><span class="nav-number">1.8.</span> <span class="nav-text">延迟函数调用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Panic%E5%BC%82%E5%B8%B8"><span class="nav-number">1.9.</span> <span class="nav-text">Panic异常</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Recover%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8"><span class="nav-number">1.10.</span> <span class="nav-text">Recover捕获异常</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">常用函数</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-02 00:13:49" itemprop="dateModified" datetime="2023-09-02T00:13:49+08:00">2023-09-02</time>
+      <time title="修改时间：2023-09-03 00:39:15" itemprop="dateModified" datetime="2023-09-03T00:39:15+08:00">2023-09-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>2.5k</span>
+      <span>4.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>9 分钟</span>
+      <span>15 分钟</span>
     </span>
 </div>
 
@@ -325,7 +325,24 @@
 <p>调用者隐式地创建一个数组, 并将原始参数复制到数组中, 再把数组的一个切片作为参数传递给被调用函数. 如果原始参数已经是切片类型, 我们如何传值? 只需要在<code>slice</code>后加<code>...</code>. </p>
 <p>虽然在可变参数函数内部, 尽管可变参数的行为很像切片类型, 但实际上, 可变参数函数和以切片作为参数的函数是不同的. </p>
 <p>可变参数函数经常被用于格式化字符串. <code>interface&#123;&#125;</code>表示函数的最后一个参数可以接收任意类型. </p>
-<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(&quot;%*s&quot;, 数量, &quot;字符&quot;)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">字符串排序</span></span><br><span class="line">sort.String()</span><br></pre></td></tr></table></figure>
+<h2 id="延迟函数调用"><a href="#延迟函数调用" class="headerlink" title="延迟函数调用"></a>延迟函数调用</h2><p>语法上, 一个<code>defer</code>语句就是一个普通的函数或方法调用, 在调用之前加上关键字<code>defer</code>. 函数和参数表达式会在语句执行时求值, 但是无论是正常情况下, 执行<code>reutrn</code>或函数执行完毕, 还是不正常的情况下, 比如发生宕机, 实际的调用推迟到包含<code>defer</code>语句的函数结束后才执行. <code>defer</code>语句没有限制使用次数; 执行的时候以调用<code>defer</code>语句的顺序倒序进行. </p>
+<p><code>defer</code>语句经常被用于处理成对的操作, 如打开, 关闭, 连接, 断开连接, 加锁, 释放锁. 通过<code>defer</code>机制, 无论函数逻辑多复杂, 都能保证在任何执行路径下, 资源被释放. 释放资源的<code>defer</code>应该直接跟在请求资源的语句后. </p>
+<p>调试复杂程序时, <code>defer</code>机制也常被用于记录何时进入和退出函数. <code>defer</code>后面的函数返回一个函数. 返回函数的函数会在入口执行, 返回的函数会在出口执行. </p>
+<p>我们知道, <code>defer</code>语句中的函数会在<code>return</code>语句更新返回值变量后在执行, 又因为在函数定义的匿名函数可以访问函数包括返回变量在内的所有变量, 所以, 对匿名函数采用<code>defer</code>机制, 可以使其观察函数的返回值. 被延迟执行的匿名函数甚至可以修改函数返回给调用者的返回值. </p>
+<p>在循环体中的<code>defer</code>语句需要特别注意, 因为只有在函数执行完毕之后, 这些函数被延迟的函数才会被执行, 有些需要在一次循环结束后关闭, 这时可以把循环体变成一个函数, 在这个函数中使用<code>defer</code>. </p>
+<p>如果试图使用延迟调用去关闭一个本地文件就会有些问题. 在许多文件系统中, 尤其是<code>NFS</code>, 写错误往往不是立即返回而是推迟到文件关闭的时候. 如果没有检查文件关闭时的反馈信息, 可能会导致数据丢失, 而我们还认为写入操作成功. </p>
+<h2 id="Panic异常"><a href="#Panic异常" class="headerlink" title="Panic异常"></a><code>Panic</code>异常</h2><p><code>Go</code>的类型系统会在编译时捕获很多错误, 但有些错误只能在运行时检查, 如数组访问越界, 空指针引用等. 这些运行时错误会引起<code>panic</code>异常. </p>
+<p>一般而言, 当<code>panic</code>异常发生时, 程序会中断运行, 并立即执行在该<code>goroutine</code>中被延迟的函数(<code>defer</code>机制). 随后, 程序崩溃并输出日志信息. 日志信息包括<code>panic value</code>和函数调用的堆栈很跟踪信息. <code>panic value</code>通常是某种错误信息. 对于每个<code>goroutine</code>, 日志信息中都会有与之相对的, 发生<code>panic</code>时的函数调用堆栈跟踪信息. </p>
+<p>不是所有的<code>panic</code>异常都来自运行时, 直接调用内置的<code>panic</code>函数也会引发<code>panic</code>异常; <code>panic</code>函数接受任何值作为参数. 当某些不应该发生的场景发生时, 我们就应该调用<code>panic</code>.</p>
+<p>断言函数必须满足的前置条件时明智的做法, 但者很容易被滥用. 除非你能提供更多的错误信息, 或者能更快的发现错误, 否则不需要使用断言, 编译器在运行时会帮你检查代码. </p>
+<p>虽然<code>Go</code>的<code>panic</code>机制类似于其他语言的异常, 但<code>panic</code>的适用场景有些不同. 由于<code>panic</code>会引起程序的崩溃, 因此<code>panic</code>一般用于严重的错误, 如程序内部的逻辑不一致. 勤奋的程序员认为任何崩溃都表明程序中存在漏洞, 所以对于大部分漏洞, 我们应该使用<code>Go</code>提供的错误机制, 而不是<code>panic</code>, 尽量避免程序崩溃. 在健壮的程序中, 任何可以预料到的错误, 如不正确的输入, 错误的配置或是失败的<code>I/O</code>操作都应该被优雅地处理, 最好的处理方式, 就是使用<code>Go</code>的错误机制. </p>
+<p>当调用者明确的知道正确的输入不会引起函数错误是, 要求调用者检查这个错误时不必要和累赘的. 我们应该假设函数的输入一直合法, 就如前面的断言一样: 当调用者输入了不该出现的输入时, 触发<code>panic</code>异常. 函数名中的<code>Must</code>前缀是一种针对此类函数的命名约定. </p>
+<h2 id="Recover捕获异常"><a href="#Recover捕获异常" class="headerlink" title="Recover捕获异常"></a><code>Recover</code>捕获异常</h2><p>通常来说, 不应该对<code>panic</code>异常做任何处理, 但有时, 也许我们可以从异常中恢复, 至少可以在程序崩溃前, 做一些操作. </p>
+<p>如果在<code>deferred</code>函数中调用了内置函数<code>recover</code>, 并且定义该<code>defer</code>语句的函数发生了<code>panic</code>会使程序从<code>panic</code>中恢复, 并返回<code>panic value</code>. 导致<code>panic</code>异常的函数不会继续运行, 但能正常返回. 在未发生<code>panic</code>时调用<code>recover</code>, <code>recover</code>会返回<code>nil</code>. </p>
+<p>不加区分的恢复所有的<code>panic</code>异常, 不是可取的做法; 因为在<code>panic</code>之后, 无法保证包级变量的状态仍然和我们预期一致. </p>
+<p>作为被广泛遵守的规范, 你不应该试图去恢复其他包引起的<code>panic</code>. 公有的<code>API</code>应该将函数的运行失败作为<code>error</code>返回, 而不是<code>panic</code>. 同样的, 你不应该恢复一个由他人开发的函数引起的<code>panic</code>, 比如说调用者传入的回调函数, 因为你无法确保这样做是安全的. </p>
+<p>只恢复应该恢复的<code>panic</code>异常, 此外, 这些异常所占的比例应该尽可能的低. 为了标识某个<code>panic</code>是否应该被恢复, 我们可以将<code>panic value</code>设置成特殊类型. 在<code>recover</code>时对<code>panic value</code>进行检查, 如果发现<code>panic value</code>是特殊类型, 就将这个<code>panic</code>作为<code>error</code>, 如果不是, 则按照正常的<code>panic</code>进行处理. </p>
+<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fmt.Printf(&quot;%*s&quot;, 数量, &quot;字符&quot;)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">字符串排序</span></span><br><span class="line">sort.String()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">runtime包允许程序员输出堆栈信息</span></span><br><span class="line">runtime.Stack()</span><br></pre></td></tr></table></figure>
 
 
 
@@ -448,14 +465,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">25k</span>
+    <span title="站点总字数">27k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:32</span>
+    <span title="站点阅读时长">1:38</span>
   </span>
 </div>
 
