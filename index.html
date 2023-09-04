@@ -234,7 +234,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-04 01:11:49" itemprop="dateModified" datetime="2023-09-04T01:11:49+08:00">2023-09-04</time>
+      <time title="修改时间：2023-09-04 23:21:30" itemprop="dateModified" datetime="2023-09-04T23:21:30+08:00">2023-09-04</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -292,7 +292,8 @@
 <p>接口值可以用<code>==</code>和<code>!=</code>操作符来做比较. 如果两个接口值都是<code>nil</code>或者二者的动态类型完全一致且二者动态值相等(使用动态类型的<code>==</code>操作符来比较), 那么两个接口值相等. 应为接口值是可以比较的, 所以它们可以作为<code>map</code>的键, 也可以作为<code>switch</code>语句的操作数. </p>
 <p>然而, 如果两个接口值的动态类型相同, 但是这个动态类型时不可比较的(比如切片), 将它们进行比较就是失败且<code>panic</code>. </p>
 <p>考虑到这点, 接口类型时非常与众不同的. 其它类型那么是安全地可比较类型(如基本类型和指针)要么是完全不可比较的类型(如切片, 映射类型, 和函数), 但是在比较接口值或者包含了接口值的聚合类型时, 我们必须要意识到潜在的<code>panic</code>. 同样的风险也存在与使用接口作为<code>map</code>的键或者<code>switch</code>的操作数. 只能比较你非常确定的动态值是可比较类型的接口值. </p>
-<h3 id="警告-一个包含nil指针的接口不是nil接口"><a href="#警告-一个包含nil指针的接口不是nil接口" class="headerlink" title="警告: 一个包含nil指针的接口不是nil接口"></a>警告: 一个包含<code>nil</code>指针的接口不是<code>nil</code>接口</h3><h1 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从输入s中解析出一个变量.</span> </span><br><span class="line">fmt.Sscanf()</span><br></pre></td></tr></table></figure>
+<h3 id="警告-一个包含nil指针的接口不是nil接口"><a href="#警告-一个包含nil指针的接口不是nil接口" class="headerlink" title="警告: 一个包含nil指针的接口不是nil接口"></a>警告: 一个包含<code>nil</code>指针的接口不是<code>nil</code>接口</h3><p>空的接口值(其中不包含任何信息)与仅仅动态值为<code>nil</code>的接口值是不一样的. </p>
+<h1 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从输入s中解析出一个变量.</span> </span><br><span class="line">fmt.Sscanf()</span><br></pre></td></tr></table></figure>
 
 
       
