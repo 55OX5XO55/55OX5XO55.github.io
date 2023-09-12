@@ -393,7 +393,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-09 00:09:01" itemprop="dateModified" datetime="2023-09-09T00:09:01+08:00">2023-09-09</time>
+      <time title="修改时间：2023-09-12 23:21:13" itemprop="dateModified" datetime="2023-09-12T23:21:13+08:00">2023-09-12</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -416,14 +416,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.3k</span>
+      <span>1.9k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>5 分钟</span>
+      <span>7 分钟</span>
     </span>
 </div>
 
@@ -454,7 +454,18 @@
 <h3 id="警告-一个包含nil指针的接口不是nil接口"><a href="#警告-一个包含nil指针的接口不是nil接口" class="headerlink" title="警告: 一个包含nil指针的接口不是nil接口"></a>警告: 一个包含<code>nil</code>指针的接口不是<code>nil</code>接口</h3><p>空的接口值(其中不包含任何信息)与仅仅动态值为<code>nil</code>的接口值是不一样的. </p>
 <h2 id="sort-Interface接口"><a href="#sort-Interface接口" class="headerlink" title="sort.Interface接口"></a><code>sort.Interface</code>接口</h2><p>需要实现<code>sort.Interface</code>接口, 然后使用<code>sort.Sort</code>进行排序, 检查是否有序<code>sort.IsSorted</code>. </p>
 <h2 id="http-Handler接口"><a href="#http-Handler接口" class="headerlink" title="http.Handler接口"></a><code>http.Handler</code>接口</h2><p>了解<code>ServerMux</code>. </p>
-<h2 id="error接口"><a href="#error接口" class="headerlink" title="error接口"></a><code>error</code>接口</h2><h1 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从输入s中解析出一个变量.</span> </span><br><span class="line">fmt.Sscanf()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">字符串排序</span></span><br><span class="line">sort.Strings()</span><br></pre></td></tr></table></figure>
+<h2 id="error接口"><a href="#error接口" class="headerlink" title="error接口"></a><code>error</code>接口</h2><p><code>error</code>类型就是一个<code>interface</code>类型, 这个类型有一个返回错误信息的单一方法:</p>
+<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> <span class="type">error</span> <span class="keyword">interface</span> &#123;</span><br><span class="line">    Error() <span class="type">string</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="类型断言"><a href="#类型断言" class="headerlink" title="类型断言"></a>类型断言</h2><p>类型断言是一个使用在接口值上的操作. 语法它看起来像<code>x.(T)</code>, 其中<code>x</code>是一个接口类型的表达式, 而<code>T</code>是一个类型(称为断言类型). 一个类型断言检查它操作对象的动态类型是否和断言的类型匹配. </p>
+<p>这里有两种情况. 第一种, 如果断言的类型<code>T</code>是一个具体的类型, 然后断言类型检查<code>x</code>的动态类型是否和<code>T</code>相同. 如果检查成功了, 这个断言的结果是<code>x</code>的动态值, 当然的类型是<code>T</code>. 如果检查失败, 这个检查失败, 将会抛出<code>panic</code>. </p>
+<p>第二种情况, 如果断言的类型<code>T</code>是一个接口类型, 然后断言检查是否<code>x</code>的动态类型满足<code>T</code>. 如果检查成功, 这个结果是一个有相同类型和值部分的接口值, 但是结果类型为<code>T</code>. </p>
+<p>如果断言操作的对象是一个<code>nil</code>接口值, 那么不论被断言的类型是什么类型断言都会失败. 我们几乎不需要对一个更少限制的接口类型做断言, 因为它表现得就像赋值操作一样, 除了对于<code>nil</code>接口值的情况. </p>
+<p>如果类型断言出现在一个预期有两个结果的赋值操作中, 这个操作不会在失败的时候发生<code>panic</code>, 但是用第二个布尔值来表示转换成功或失败. 失败时, 第一个值是被断言类型的零值. </p>
+<h2 id="基于类型断言区别错误类型"><a href="#基于类型断言区别错误类型" class="headerlink" title="基于类型断言区别错误类型"></a>基于类型断言区别错误类型</h2><p>通过检查错误消息是否含有特定的子字符串从而来区分错误的类型是非常不成熟的. 一个更可靠的方式是使用一个专门的类型来描述结构化的错误. </p>
+<h2 id="类型开关"><a href="#类型开关" class="headerlink" title="类型开关"></a>类型开关</h2><figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> x.(<span class="keyword">type</span>) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="literal">nil</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="type">int</span>, <span class="type">uint</span>:</span><br><span class="line">    <span class="keyword">case</span> <span class="type">bool</span>:</span><br><span class="line">	<span class="keyword">case</span> <span class="type">string</span>:	</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="常用的方法"><a href="#常用的方法" class="headerlink" title="常用的方法"></a>常用的方法</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">从输入s中解析出一个变量.</span> </span><br><span class="line">fmt.Sscanf()</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">字符串排序</span></span><br><span class="line">sort.Strings()</span><br></pre></td></tr></table></figure>
 
 
       
@@ -1722,14 +1733,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">32k</span>
+    <span title="站点总字数">33k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">1:57</span>
+    <span title="站点阅读时长">1:59</span>
   </span>
 </div>
 
