@@ -26,7 +26,7 @@
 <meta property="og:description" content="Kubernete介绍Kubernetes使开发者可以自主部署应用, 并且控制部署的频率, 完全脱离运维团队的版主. Kubernetes同时能够让运维团队监控整个系统, 并且在硬件故障时重新调度应用. 系统管理员的工作重心, 从监管应用转移到了监管Kubernetes, 以及剩余的系统资源, 因为Kubernetes会帮助监管所有的应用.  Kubernetes系统的需求从单体应用到微服务单体应">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-09-18T15:11:17.000Z">
-<meta property="article:modified_time" content="2023-09-19T16:41:18.975Z">
+<meta property="article:modified_time" content="2023-09-20T13:51:17.875Z">
 <meta property="article:author" content="霄剑">
 <meta property="article:tag" content="kubernetes">
 <meta property="article:tag" content="kubernetes in Action">
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernete%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Kubernete介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%9C%80%E6%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">Kubernetes系统的需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E5%88%B0%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">从单体应用到微服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E5%BA%94%E7%94%A8%E6%8B%86%E8%A7%A3%E4%B8%BA%E5%A4%9A%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">将应用拆解为多个微服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%89%A9%E5%AE%B9"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">微服务的扩容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">部署微服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8F%90%E4%BE%9B%E4%B8%80%E4%B8%AA%E4%B8%80%E8%87%B4%E7%9A%84%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.2.</span> <span class="nav-text">为应用程序提供一个一致的环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%88%E5%90%91%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98-DevOps%E5%92%8C%E6%97%A0%E8%BF%90%E7%BB%B4"><span class="nav-number">1.1.3.</span> <span class="nav-text">迈向持续交付: DevOps和无运维</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.</span> <span class="nav-text">介绍容器技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%B9%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">什么是容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8Linux%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E9%9A%94%E7%A6%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">用Linux容器技术隔离组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E5%AE%B9%E5%99%A8"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">比较虚拟机和容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%AE%9E%E7%8E%B0%E9%9A%94%E7%A6%BB%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">容器实现隔离机制介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8Linux%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E9%9A%94%E7%A6%BB%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">用Linux命名空间隔离进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%8F%AF%E7%94%A8%E8%B5%84%E6%BA%90"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">限制进程的可用资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%AE%B9%E5%99%A8%E5%B9%B3%E5%8F%B0%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.2.</span> <span class="nav-text">Docker容器平台介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Docker的概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">镜像层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E5%8F%AF%E7%A7%BB%E6%A4%8D%E6%80%A7%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">容器镜像可移植性的限制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.</span> <span class="nav-text">Kubernetes介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%9C%B0%E4%BA%86%E8%A7%A3Kubernetes"><span class="nav-number">1.3.1.</span> <span class="nav-text">深入浅出地了解Kubernetes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kubenetes%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Kubenetes的核心功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.2.</span> <span class="nav-text">Kubernetes集群架构</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Kubernete%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.</span> <span class="nav-text">Kubernete介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%9C%80%E6%B1%82"><span class="nav-number">1.1.</span> <span class="nav-text">Kubernetes系统的需求</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8E%E5%8D%95%E4%BD%93%E5%BA%94%E7%94%A8%E5%88%B0%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">从单体应用到微服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E5%BA%94%E7%94%A8%E6%8B%86%E8%A7%A3%E4%B8%BA%E5%A4%9A%E4%B8%AA%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">将应用拆解为多个微服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E6%89%A9%E5%AE%B9"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">微服务的扩容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E5%BE%AE%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">部署微服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%8F%90%E4%BE%9B%E4%B8%80%E4%B8%AA%E4%B8%80%E8%87%B4%E7%9A%84%E7%8E%AF%E5%A2%83"><span class="nav-number">1.1.2.</span> <span class="nav-text">为应用程序提供一个一致的环境</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%88%E5%90%91%E6%8C%81%E7%BB%AD%E4%BA%A4%E4%BB%98-DevOps%E5%92%8C%E6%97%A0%E8%BF%90%E7%BB%B4"><span class="nav-number">1.1.3.</span> <span class="nav-text">迈向持续交付: DevOps和无运维</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF"><span class="nav-number">1.2.</span> <span class="nav-text">介绍容器技术</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%AE%B9%E5%99%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">什么是容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8Linux%E5%AE%B9%E5%99%A8%E6%8A%80%E6%9C%AF%E9%9A%94%E7%A6%BB%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">用Linux容器技术隔离组件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%AF%94%E8%BE%83%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%92%8C%E5%AE%B9%E5%99%A8"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">比较虚拟机和容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%AE%9E%E7%8E%B0%E9%9A%94%E7%A6%BB%E6%9C%BA%E5%88%B6%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">容器实现隔离机制介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8Linux%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E9%9A%94%E7%A6%BB%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">用Linux命名空间隔离进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%90%E5%88%B6%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%8F%AF%E7%94%A8%E8%B5%84%E6%BA%90"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">限制进程的可用资源</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Docker%E5%AE%B9%E5%99%A8%E5%B9%B3%E5%8F%B0%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.2.2.</span> <span class="nav-text">Docker容器平台介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Docker%E7%9A%84%E6%A6%82%E5%BF%B5"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">Docker的概念</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E5%B1%82"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">镜像层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E9%95%9C%E5%83%8F%E5%8F%AF%E7%A7%BB%E6%A4%8D%E6%80%A7%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">1.2.2.3.</span> <span class="nav-text">容器镜像可移植性的限制</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kubernetes%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.</span> <span class="nav-text">Kubernetes介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA%E5%9C%B0%E4%BA%86%E8%A7%A3Kubernetes"><span class="nav-number">1.3.1.</span> <span class="nav-text">深入浅出地了解Kubernetes</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Kubenetes%E7%9A%84%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">Kubenetes的核心功能</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Kubernetes%E9%9B%86%E7%BE%A4%E6%9E%B6%E6%9E%84"><span class="nav-number">1.3.2.</span> <span class="nav-text">Kubernetes集群架构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E9%9D%A2%E6%9D%BF"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">控制面板</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E8%8A%82%E7%82%B9"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">工作节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Kubernetes%E4%B8%AD%E8%BF%90%E8%A1%8C%E5%BA%94%E7%94%A8"><span class="nav-number">1.3.3.</span> <span class="nav-text">在Kubernetes中运行应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%8F%E8%BF%B0%E4%BF%A1%E6%81%AF%E6%80%8E%E6%A0%B7%E6%88%90%E4%B8%BA%E4%B8%80%E4%B8%AA%E8%BF%90%E8%A1%8C%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">描述信息怎样成为一个运行的容器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%9D%E6%8C%81%E5%AE%B9%E5%99%A8%E8%BF%90%E8%A1%8C"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">保持容器运行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E5%89%AF%E6%9C%AC%E6%95%B0%E9%87%8F"><span class="nav-number">1.3.3.3.</span> <span class="nav-text">扩展副本数量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%91%BD%E4%B8%AD%E7%A7%BB%E5%8A%A8%E7%9B%AE%E6%A0%87"><span class="nav-number">1.3.3.4.</span> <span class="nav-text">命中移动目标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Kubernetes%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="nav-number">1.3.4.</span> <span class="nav-text">使用Kubernetes的好处</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E5%8C%96%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E9%83%A8%E7%BD%B2"><span class="nav-number">1.3.4.1.</span> <span class="nav-text">简化应用程序部署</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5%E5%92%8C%E8%87%AA%E4%BF%AE%E5%A4%8D"><span class="nav-number">1.3.4.2.</span> <span class="nav-text">健康检查和自修复</span></a></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -240,7 +240,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-20 00:41:18" itemprop="dateModified" datetime="2023-09-20T00:41:18+08:00">2023-09-20</time>
+      <time title="修改时间：2023-09-20 21:51:17" itemprop="dateModified" datetime="2023-09-20T21:51:17+08:00">2023-09-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -263,14 +263,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>3.1k</span>
+      <span>4.2k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>11 分钟</span>
+      <span>15 分钟</span>
     </span>
 </div>
 
@@ -325,7 +325,36 @@
 <h2 id="Kubernetes介绍"><a href="#Kubernetes介绍" class="headerlink" title="Kubernetes介绍"></a><code>Kubernetes</code>介绍</h2><h3 id="深入浅出地了解Kubernetes"><a href="#深入浅出地了解Kubernetes" class="headerlink" title="深入浅出地了解Kubernetes"></a>深入浅出地了解<code>Kubernetes</code></h3><p><code>Kubernets</code>是一个软件系统, 它允许你在其上很容易地部署和管理容器化的应用. <code>Kubernetes</code>使你在数以千计的电脑节点上运行软件时就像所有节点是单个大节点一样. </p>
 <h4 id="Kubenetes的核心功能"><a href="#Kubenetes的核心功能" class="headerlink" title="Kubenetes的核心功能"></a><code>Kubenetes</code>的核心功能</h4><p>整个系统由一个主节点和若干个工作节点组成. 开发者把一个应用列表提交到主节点, <code>Kubernetes</code>会将它们部署到集群的工作节点. </p>
 <p>开发者能指定一些应用必须一起运行, <code>Kubernets</code>将会在一个工作节点上部署它们. 其他的将被分散部署到集群中, 但是不管部署在哪儿, 它们都能以相同的方式相互通信. </p>
-<h3 id="Kubernetes集群架构"><a href="#Kubernetes集群架构" class="headerlink" title="Kubernetes集群架构"></a><code>Kubernetes</code>集群架构</h3>
+<h3 id="Kubernetes集群架构"><a href="#Kubernetes集群架构" class="headerlink" title="Kubernetes集群架构"></a><code>Kubernetes</code>集群架构</h3><p>在硬件级别, 一个<code>Kubernetes</code>集群由很多节点组成, 这些节点被分成以下两种类型:</p>
+<ol>
+<li>主节点: 它承载着<code>Kubernetes</code>控制和管理整个集群系统地控制面板</li>
+<li>工作节点: 它们运行用户实际部署的应用</li>
+</ol>
+<h4 id="控制面板"><a href="#控制面板" class="headerlink" title="控制面板"></a>控制面板</h4><p>控制面板用于控制集群并使它工作. 它包含多个组件, 组件可以运行在单个主节点或者通过副本分别部署在多个主节点以确保高可用性. 这些组件是:</p>
+<ol>
+<li><code>Kubernetes API</code>服务器, 你和其他控制面板组件都要和它通信.</li>
+<li><code>Scheduler</code>, 它调度你的应用(为应用的每个部署组件分配一个工作节点).</li>
+<li><code>Controller Mananger</code>, 它执行集群基本的工作, 如复制组件, 持续跟踪工作节点, 处理节点失败等. </li>
+<li><code>etcd</code>, 一个可靠的分布式数据存储, 它能持久化存储集群配置.</li>
+</ol>
+<p>控制面板的组件持有并控制集群状态, 但是它们不运行你的应用程序. 这是由工作节点完成的. </p>
+<h4 id="工作节点"><a href="#工作节点" class="headerlink" title="工作节点"></a>工作节点</h4><p>工作节点是运行容器化应用的机器. 运行, 监控和管理应用服务的任务是由以下组件完成的: </p>
+<ol>
+<li><code>Docker</code>, <code>rtk</code>或其他的容器类型</li>
+<li><code>Kubelet</code>, 它与API服务器通信, 并管理它所在节点的容器</li>
+<li><code>Kubernetes Service Proxy(kube-proxy)</code>, 它负责组件之间的负载均衡网络流量</li>
+</ol>
+<h3 id="在Kubernetes中运行应用"><a href="#在Kubernetes中运行应用" class="headerlink" title="在Kubernetes中运行应用"></a>在<code>Kubernetes</code>中运行应用</h3><h4 id="描述信息怎样成为一个运行的容器"><a href="#描述信息怎样成为一个运行的容器" class="headerlink" title="描述信息怎样成为一个运行的容器"></a>描述信息怎样成为一个运行的容器</h4><p>当<code>API</code>服务器处理应用描述时, 调度器选择可用的工作节点. 选择时基于所需要的计算资源, 以及调度时每个节点未分配的资源. 然后, 那些节点上的<code>Kubelet</code>指示容器运行时拉取所需要的镜像并运行容器. </p>
+<h4 id="保持容器运行"><a href="#保持容器运行" class="headerlink" title="保持容器运行"></a>保持容器运行</h4><p>一旦应用程序运行起来, <code>Kubernetes</code>就会不断地确认应用程序的部署状态始终与你提供的描述相匹配. 如果实例之一停止了正常工作, 比如进程崩溃或停止响应时, <code>Kubernetes</code>将自动重启它. </p>
+<p>同理, 如果整个工作节点死亡或无法访问, <code>Kubernetes</code>将为在故障节点上运行的所有容器选择新节点, 并在新选择地节点上运行它们. </p>
+<h4 id="扩展副本数量"><a href="#扩展副本数量" class="headerlink" title="扩展副本数量"></a>扩展副本数量</h4><p>当应用程序运行时, 可以决定要增加或减少副本量, 而<code>Kubernetes</code>将分别增加附加的或停止多余的副本. 甚至可以把决定最佳副本数目的工作交给<code>Kubernetes</code>. 它可以根据实时指标(CPU负载, 内存消耗, 每秒查询或应用程序公开的任何其他指标)自动调整副本数. </p>
+<h4 id="命中移动目标"><a href="#命中移动目标" class="headerlink" title="命中移动目标"></a>命中移动目标</h4><p><code>Kubernetes</code>可能需要在集群中迁移你的容器. 当它们运行的节点失败时, 或者为了给其他容器腾出地方而从节点移除时, 就会发生这种情况.</p>
+<p>为了让客户能够轻松找到提供特定服务的容器, 可以告诉<code>Kubernetes</code>哪些容器提供相同的服务, 而<code>Kubernetes</code>将通过一个静态IP地址暴露所有容器, 并将该地址暴露给集群中运行的所有应用程序. 这是通过环境变量完成的, 但是客户端也可以通过良好的DNS查找服务器IP. 服务的IP地址保持不变, 因此客户端始终可以连接到它的容器, 即使它们在集群中移动. </p>
+<h3 id="使用Kubernetes的好处"><a href="#使用Kubernetes的好处" class="headerlink" title="使用Kubernetes的好处"></a>使用<code>Kubernetes</code>的好处</h3><p>如果在所有服务器上都部署了<code>Kubernetes</code>, 那么运维团队就不需要在部署应用程序. </p>
+<h4 id="简化应用程序部署"><a href="#简化应用程序部署" class="headerlink" title="简化应用程序部署"></a>简化应用程序部署</h4><p>由于<code>Kubernetes</code>将其所有工作节点作为一个部署平台, 因此应用程序开发人员可以开始自己开始部署应用程序, 不需要了解组成集群的服务器. </p>
+<h4 id="健康检查和自修复"><a href="#健康检查和自修复" class="headerlink" title="健康检查和自修复"></a>健康检查和自修复</h4><p>当服务器发生故障时, 拥有一个允许在任何时候跨集群迁移应用程序的系统也很有价值. </p>
+<p><code>Kubernetes</code>监控你的应用程序组件和它们运行的节点, 并在节点出现故障时自动将它们重新调度到其他节点. 这使运维团队不必手动迁移应用程序组件, 并允许团队立即专注与修复节点本身, 并将其修好送回到可用的硬件资源池中. </p>
+
     </div>
 
     
@@ -438,14 +467,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">36k</span>
+    <span title="站点总字数">37k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:11</span>
+    <span title="站点阅读时长">2:15</span>
   </span>
 </div>
 
