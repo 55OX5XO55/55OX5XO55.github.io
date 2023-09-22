@@ -18,29 +18,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="方法尽管没有被大众所接受的明确的OOP的定义, 从我们的理解来讲, 一个对象其实也就是一个简单的值或者一个变量, 这个对象中会包含一些方法, 而一个方法则是一个一个和特殊类型关联的函数. 一个面向对象的程序会使用方法来表达其属性和对应的操作, 这样使用这个对象的用户就不需要直接去操作对象, 而是借助方法来做这些事情.  方法声明在函数声明时, 在其名字之前放上一个变量, 即是一个方法. 这个附加的">
+    <meta name="description" content="开始使用Kubernetes和Docker在Kubernetes上运行第一个应用部署Node.js应用部署应用程序最简单的方式是使用kubectl run命令, 该命令可以创建所有必要的组件而无需JSON或YAML.  介绍pod一个pod是一组紧密相关的容器, 它们总是运行在同一个工作节点上, 以及同一个Linux命名空间中. 每个pod就像一个独立的逻辑机器, 拥有自己的IP, 主机名, 进程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="方法">
-<meta property="og:url" content="http://example.com/2023/09/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:title" content="开始使用Kubernetes和Docker">
+<meta property="og:url" content="http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Kubernetes%E5%92%8CDocker/index.html">
 <meta property="og:site_name" content="space">
-<meta property="og:description" content="方法尽管没有被大众所接受的明确的OOP的定义, 从我们的理解来讲, 一个对象其实也就是一个简单的值或者一个变量, 这个对象中会包含一些方法, 而一个方法则是一个一个和特殊类型关联的函数. 一个面向对象的程序会使用方法来表达其属性和对应的操作, 这样使用这个对象的用户就不需要直接去操作对象, 而是借助方法来做这些事情.  方法声明在函数声明时, 在其名字之前放上一个变量, 即是一个方法. 这个附加的">
+<meta property="og:description" content="开始使用Kubernetes和Docker在Kubernetes上运行第一个应用部署Node.js应用部署应用程序最简单的方式是使用kubectl run命令, 该命令可以创建所有必要的组件而无需JSON或YAML.  介绍pod一个pod是一组紧密相关的容器, 它们总是运行在同一个工作节点上, 以及同一个Linux命名空间中. 每个pod就像一个独立的逻辑机器, 拥有自己的IP, 主机名, 进程">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-09-02T16:40:36.000Z">
-<meta property="article:modified_time" content="2023-09-03T13:34:38.115Z">
+<meta property="article:published_time" content="2023-09-20T13:54:21.000Z">
+<meta property="article:modified_time" content="2023-09-22T16:19:32.614Z">
 <meta property="article:author" content="霄剑">
-<meta property="article:tag" content="Go">
-<meta property="article:tag" content="Go程序设计语言">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="kubernetes in Action">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2023/09/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E6%96%B9%E6%B3%95/">
+<link rel="canonical" href="http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Kubernetes%E5%92%8CDocker/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E6%96%B9%E6%B3%95/","path":"2023/09/03/编程语言/Go/Go程序设计语言/方法/","title":"方法"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Kubernetes%E5%92%8CDocker/","path":"2023/09/20/工具使用/Kubernetes/Kubernetes_In_Action/开始使用Kubernetes和Docker/","title":"开始使用Kubernetes和Docker"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>方法 | space</title>
+<title>开始使用Kubernetes和Docker | space</title>
   
 
 
@@ -143,7 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%A3%B0%E6%98%8E"><span class="nav-number">1.1.</span> <span class="nav-text">方法声明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E4%BA%8E%E6%8C%87%E9%92%88%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">基于指针对象的方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Nil%E4%B9%9F%E6%98%AF%E4%B8%80%E4%B8%AA%E5%90%88%E6%B3%95%E6%8E%A5%E6%94%B6%E5%99%A8%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.2.1.</span> <span class="nav-text">Nil也是一个合法接收器类型</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%B5%8C%E5%85%A5%E7%BB%93%E6%9E%84%E4%BD%93%E6%9D%A5%E6%89%A9%E5%B1%95%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.</span> <span class="nav-text">通过嵌入结构体来扩展类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%B3%95%E5%80%BC%E5%92%8C%E6%96%B9%E6%B3%95%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="nav-number">1.4.</span> <span class="nav-text">方法值和方法表达式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B-BIT%E6%95%B0%E7%BB%84"><span class="nav-number">1.5.</span> <span class="nav-text">实例: BIT数组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%81%E8%A3%85"><span class="nav-number">1.6.</span> <span class="nav-text">封装</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Kubernetes%E5%92%8CDocker"><span class="nav-number">1.</span> <span class="nav-text">开始使用Kubernetes和Docker</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8Kubernetes%E4%B8%8A%E8%BF%90%E8%A1%8C%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.</span> <span class="nav-text">在Kubernetes上运行第一个应用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2Node-js%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.1.</span> <span class="nav-text">部署Node.js应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8Dpod"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">介绍pod</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E5%87%BApod"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">列出pod</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AEWEB%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.2.</span> <span class="nav-text">访问WEB应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E6%9C%8D%E5%8A%A1%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">创建一个服务对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E5%87%BA%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">列出服务</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%84%E9%80%BB%E8%BE%91%E9%83%A8%E5%88%86"><span class="nav-number">1.1.3.</span> <span class="nav-text">系统的逻辑部分</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%B0%B4%E5%B9%B3%E4%BC%B8%E7%BC%A9%E5%BA%94%E7%94%A8"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">水平伸缩应用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%97%E5%87%BApod%E6%97%B6%E6%98%BE%E7%A4%BApod-IP%E5%92%8Cpod%E7%9A%84%E8%8A%82%E7%82%B9"><span class="nav-number">1.1.3.2.</span> <span class="nav-text">列出pod时显示pod IP和pod的节点</span></a></li></ol></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -204,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E6%96%B9%E6%B3%95/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Kubernetes%E5%92%8CDocker/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.svg">
@@ -217,12 +217,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="方法 | space">
+      <meta itemprop="name" content="开始使用Kubernetes和Docker | space">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          方法
+          开始使用Kubernetes和Docker
         </h1>
 
         <div class="post-meta-container">
@@ -232,9 +232,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2023-09-03 00:40:36 / 修改时间：21:34:38" itemprop="dateCreated datePublished" datetime="2023-09-03T00:40:36+08:00">2023-09-03</time>
+      <time title="创建时间：2023-09-20 21:54:21" itemprop="dateCreated datePublished" datetime="2023-09-20T21:54:21+08:00">2023-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-23 00:19:32" itemprop="dateModified" datetime="2023-09-23T00:19:32+08:00">2023-09-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -242,11 +248,11 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
         </span>
     </span>
 
@@ -257,14 +263,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.5k</span>
+      <span>545</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>6 分钟</span>
+      <span>2 分钟</span>
     </span>
 </div>
 
@@ -275,28 +281,22 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h1 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h1><p>尽管没有被大众所接受的明确的<code>OOP</code>的定义, 从我们的理解来讲, 一个对象其实也就是一个简单的值或者一个变量, 这个对象中会包含一些方法, 而一个方法则是一个一个和特殊类型关联的函数. 一个面向对象的程序会使用方法来表达其属性和对应的操作, 这样使用这个对象的用户就不需要直接去操作对象, 而是借助方法来做这些事情. </p>
-<h2 id="方法声明"><a href="#方法声明" class="headerlink" title="方法声明"></a>方法声明</h2><p>在函数声明时, 在其名字之前放上一个变量, 即是一个方法. 这个附加的参数会将该函数附加到这种类型上, 即相当于为这种类型定义了一个独占的方法. </p>
-<p>函数名字前的变量称为方法的接受器, 早期的面向对象语言留下的遗产将调用一个方法称为”向一个对像发送消息”. </p>
-<p>在<code>Go</code>语言中, 我们并不会像其它语言那样用<code>this</code>或者<code>self</code>作为接收器; 我们可以任意选择接收器的名字. 由于接受器的名字会经常被使用到, 所以保持其在方法间传递时的一致性或简短性是不错的注意. 这里的建议是可以使用其类型的第一个字母的小写. </p>
-<p>方法可以被声明到任意类型, 只要不是一个指针类型或者<code>interface</code>. </p>
-<h2 id="基于指针对象的方法"><a href="#基于指针对象的方法" class="headerlink" title="基于指针对象的方法"></a>基于指针对象的方法</h2><p>当接收器变量本身比较大或我们希望更新接受器对象, 我们可以用其指针而不是对象来声明方法. </p>
-<p>在声明方法时, 如果一个类型名本身是一个指针的话, 是不允许其出现在接收器中的. </p>
-<p>不管你的<code>method</code>的<code>receiver</code>是指针类型还是非指针类型, 都是可以通过指针&#x2F;非指针类型进行调用的, 编译器会帮你做类型转换. </p>
-<p>在声明一个<code>method</code>的<code>receiver</code>该是指针还是非指针类型时, 你需要考虑两方面的内部, 第一方面是这个对象本身是不是特别大, 如果声明为非指针变量时, 调用会产生一次拷贝; 第二方面是如果你用指针类型作为<code>receiver</code>, 那么你一定要注意, 这种指针类型指向的始终是一个块内存地址. </p>
-<h3 id="Nil也是一个合法接收器类型"><a href="#Nil也是一个合法接收器类型" class="headerlink" title="Nil也是一个合法接收器类型"></a><code>Nil</code>也是一个合法接收器类型</h3><p>就像一些函数允许<code>nil</code>指针作为参数一样, 方法理论上也可以用<code>nil</code>作为其接收器, 尤其当<code>nil</code>对于对象来说是合法的零值, 比如<code>map</code>或者<code>slice</code>. </p>
-<p>当你定义一个允许<code>nil</code>作为接收器值的方法的类型时, 在类型前面的注释中指出<code>nil</code>变量代表的意义是很有必要的. </p>
-<h2 id="通过嵌入结构体来扩展类型"><a href="#通过嵌入结构体来扩展类型" class="headerlink" title="通过嵌入结构体来扩展类型"></a>通过嵌入结构体来扩展类型</h2><p>嵌套类型, 不是<code>is a</code>关系, 而是<code>has a</code>关系, 内嵌字段会指导编译器去生成额外的包装方法来委托已经声明好的方法. </p>
-<p>在类型中内嵌的匿名字段也可能是一个命名类型的指针, 这种情况下字段和方法会被间接地引入到当前的类型(访问需要通过该指针指向的对象去取). 添加这一层间接关系让我们可以共享通用的结构并动态地改变对象间的关系. </p>
-<p>方法只能在命名类型或指向类型的指针上定义, 但是多亏了内嵌, 有些时候我们给匿名<code>struct</code>类型来定义方法也有了手段. </p>
-<h2 id="方法值和方法表达式"><a href="#方法值和方法表达式" class="headerlink" title="方法值和方法表达式"></a>方法值和方法表达式</h2><p>我们经常选择一个方法, 并且在同一个表达式里执行, 比如常见的<code>p.Distance()</code>形式, 实际上将其分成两步来执行也是可能的. <code>p.Distance</code>叫作”选择器”, 选择器会返回一个方法”值”, 一个将方法<code>Point.Distance</code>绑定到特定接收器变量的函数. 这个函数可以不通过指定其接收器即可被调用; 即调用时不需要指定接收器, 只要传入函数的参数即可. </p>
-<p>在一个包的<code>API</code>需要一个函数值, 且调用方希望操作的是某一个绑定了对象的方法的化, 方法”值”会非常实用. </p>
-<p>当<code>T</code>是一个类型时, 方法表达式可能会写作<code>T.f</code>或者<code>(*T).f</code>, 会返回一个函数”值”, 这种函数会将其第一个参数用作接收器, 所以可以用不写选择器的方式来进行调用. </p>
-<h2 id="实例-BIT数组"><a href="#实例-BIT数组" class="headerlink" title="实例: BIT数组"></a>实例: <code>BIT</code>数组</h2><p><code>Go</code>语言里的集合一般会用<code>map[T]bool</code>这种形式来表示, <code>T</code>代表元素类型. </p>
-<p>一个<code>bit</code>数组通常会用一个无符号数或者称之为”字”的<code>slice</code>来表示, 每个元素的每一位都表示集合里的一个值. 当集合的第<code>i</code>位被设置时, 我们才说这个集合包含元素<code>i</code>. </p>
-<h2 id="封装"><a href="#封装" class="headerlink" title="封装"></a>封装</h2><p>一个对象的变量或者方法如果对调用方是不可见的话, 一般就定义为”封装”. 封装有时候也叫作信息隐藏, 同时也是面向对象编程最关键的一个方面. </p>
-<p><code>Go</code>语言只有一种控制可见性的手段: 大写手写字母的标识符会从定义它们的包中被导出, 小写字母的则不会. 这种限制包内成员的方式同样适用于<code>struct</code>或者一个类型的方法. 因而如果我们想要封装一个对象, 我们必须将其定义为一个<code>struct</code>. </p>
-<p>这种基于名字的手段使得语言中最小的封装单元是<code>package</code>, 而不是像其它语言一样的类型. 一个<code>struct</code>类型的字段对同一个包的所有代码都有可见性, 无论你的代码是写在一个函数还是一个方法里. </p>
+        <h1 id="开始使用Kubernetes和Docker"><a href="#开始使用Kubernetes和Docker" class="headerlink" title="开始使用Kubernetes和Docker"></a>开始使用<code>Kubernetes</code>和<code>Docker</code></h1><h2 id="在Kubernetes上运行第一个应用"><a href="#在Kubernetes上运行第一个应用" class="headerlink" title="在Kubernetes上运行第一个应用"></a>在<code>Kubernetes</code>上运行第一个应用</h2><h3 id="部署Node-js应用"><a href="#部署Node-js应用" class="headerlink" title="部署Node.js应用"></a>部署<code>Node.js</code>应用</h3><p>部署应用程序最简单的方式是使用<code>kubectl run</code>命令, 该命令可以创建所有必要的组件而无需<code>JSON</code>或<code>YAML</code>. </p>
+<h4 id="介绍pod"><a href="#介绍pod" class="headerlink" title="介绍pod"></a>介绍<code>pod</code></h4><p>一个<code>pod</code>是一组紧密相关的容器, 它们总是运行在同一个工作节点上, 以及同一个<code>Linux</code>命名空间中. 每个<code>pod</code>就像一个独立的逻辑机器, 拥有自己的IP, 主机名, 进程等, 运行一个独立的应用程序. </p>
+<h4 id="列出pod"><a href="#列出pod" class="headerlink" title="列出pod"></a>列出<code>pod</code></h4><p>不能列出单个容器, 因为它们不是独立的<code>Kubernetes</code>对象, 但是可以列出<code>pod</code>. 要查看有关<code>pod</code>的更多信息, 还可以使用<code>kubectl describe pod</code>命令. </p>
+<h3 id="访问WEB应用"><a href="#访问WEB应用" class="headerlink" title="访问WEB应用"></a>访问<code>WEB</code>应用</h3><p>每个<code>pod</code>都有自己的IP地址, 但是这个地址是集群内部的, 不能从集群外部访问. 要让<code>pod</code>能够从外部访问, 需要通过服务对象公开它, 要创建一个特殊的<code>LoadBalancer</code>类型的服务. 因为如果你创景一个常规服务(一个<code>ClusterIP</code>服务), 比如<code>pod</code>, 它也只能从集群内部访问. 通过创建<code>LoaBalancer</code>类型的服务, 将创建一个外部的负载均衡, 通过负载均衡的公共IP访问<code>pod</code>. </p>
+<h4 id="创建一个服务对象"><a href="#创建一个服务对象" class="headerlink" title="创建一个服务对象"></a>创建一个服务对象</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl expose &lt;需要暴露的pod类型&gt; &lt;需要暴露的pod名称&gt; --type=&lt;暴露的类型&gt; --name=&lt;暴露的名称&gt; </span><br></pre></td></tr></table></figure>
+
+<h4 id="列出服务"><a href="#列出服务" class="headerlink" title="列出服务"></a>列出服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get services</span><br></pre></td></tr></table></figure>
+
+<h3 id="系统的逻辑部分"><a href="#系统的逻辑部分" class="headerlink" title="系统的逻辑部分"></a>系统的逻辑部分</h3><p>一个服务被创建时, 它会得到一个静态的<code>IP</code>, 在服务的生命周期中这个IP不会发生改变. 客户端应该通过固定IP地址连接到服务, 而不是直接连接<code>pod</code>. </p>
+<p>服务表示一组或多组提供相同服务的<code>pod</code>的静态地址. 到达服务<code>IP</code>和端口的请求将被转发到属于该服务的一个容器的<code>IP</code>和端口</p>
+<h4 id="水平伸缩应用"><a href="#水平伸缩应用" class="headerlink" title="水平伸缩应用"></a>水平伸缩应用</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl scale &lt;需要暴露的pod类型&gt; &lt;需要暴露的pod名称&gt; --replicas=&lt;数量&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="列出pod时显示pod-IP和pod的节点"><a href="#列出pod时显示pod-IP和pod的节点" class="headerlink" title="列出pod时显示pod IP和pod的节点"></a>列出<code>pod</code>时显示<code>pod IP</code>和<code>pod</code>的节点</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -o wide</span><br></pre></td></tr></table></figure>
+
+
+
 
     </div>
 
@@ -310,8 +310,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Go/" rel="tag"><i class="fa fa-tag"></i> Go</a>
-              <a href="/tags/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/" rel="tag"><i class="fa fa-tag"></i> Go程序设计语言</a>
+              <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag"></i> kubernetes</a>
+              <a href="/tags/kubernetes-in-Action/" rel="tag"><i class="fa fa-tag"></i> kubernetes in Action</a>
           </div>
 	  <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -373,13 +373,13 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2023/08/31/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%87%BD%E6%95%B0/" rel="prev" title="函数">
-                  <i class="fa fa-chevron-left"></i> 函数
+                <a href="/2023/09/18/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/Kubernetes%E4%BB%8B%E7%BB%8D/" rel="prev" title="Kubernetes介绍">
+                  <i class="fa fa-chevron-left"></i> Kubernetes介绍
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/09/03/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E6%8E%A5%E5%8F%A3/" rel="next" title="接口">
-                  接口 <i class="fa fa-chevron-right"></i>
+                <a href="/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E8%BF%90%E8%A1%8C%E4%BA%8EKubernetes%E4%B8%AD%E7%9A%84%E5%AE%B9%E5%99%A8/" rel="next" title="运行于Kubernetes中的容器">
+                  运行于Kubernetes中的容器 <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>

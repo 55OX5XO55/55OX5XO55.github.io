@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#70B7FD"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-space.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-space.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-space.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab-space.svg" color="#70B7FD">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="运行于Kubernetes中的容器介绍pod在实际应用中我们不会单独部署容器, 更多的是针对一组pod的容器进行部署和操作.  为何需要pod为何多个容器比单个容器包含多个进程要好容积被设计为每个容器只运行一个进程(除非进程本身产生进程). 如果在单个容器中运行多个不相关的进程, 那么保持所有进程运行, 管理它们的日志等将会是我们的责任.  了解pod同一pod中容器之间的部分隔离容器之间彼此是完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="运行于Kubernetes中的容器">
+<meta property="og:url" content="http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E8%BF%90%E8%A1%8C%E4%BA%8EKubernetes%E4%B8%AD%E7%9A%84%E5%AE%B9%E5%99%A8/index.html">
+<meta property="og:site_name" content="space">
+<meta property="og:description" content="运行于Kubernetes中的容器介绍pod在实际应用中我们不会单独部署容器, 更多的是针对一组pod的容器进行部署和操作.  为何需要pod为何多个容器比单个容器包含多个进程要好容积被设计为每个容器只运行一个进程(除非进程本身产生进程). 如果在单个容器中运行多个不相关的进程, 那么保持所有进程运行, 管理它们的日志等将会是我们的责任.  了解pod同一pod中容器之间的部分隔离容器之间彼此是完">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-20T14:50:03.000Z">
+<meta property="article:modified_time" content="2023-09-22T16:19:29.024Z">
+<meta property="article:author" content="霄剑">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="kubernetes in Action">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E8%BF%90%E8%A1%8C%E4%BA%8EKubernetes%E4%B8%AD%E7%9A%84%E5%AE%B9%E5%99%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E8%BF%90%E8%A1%8C%E4%BA%8EKubernetes%E4%B8%AD%E7%9A%84%E5%AE%B9%E5%99%A8/","path":"2023/09/20/工具使用/Kubernetes/Kubernetes_In_Action/运行于Kubernetes中的容器/","title":"运行于Kubernetes中的容器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>运行于Kubernetes中的容器 | space</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<script async src="/live2d/autoload.js"> </script>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">space</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">20</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E4%BA%8EKubernetes%E4%B8%AD%E7%9A%84%E5%AE%B9%E5%99%A8"><span class="nav-number">1.</span> <span class="nav-text">运行于Kubernetes中的容器</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8Dpod"><span class="nav-number">1.1.</span> <span class="nav-text">介绍pod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E9%9C%80%E8%A6%81pod"><span class="nav-number">1.1.1.</span> <span class="nav-text">为何需要pod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BD%95%E5%A4%9A%E4%B8%AA%E5%AE%B9%E5%99%A8%E6%AF%94%E5%8D%95%E4%B8%AA%E5%AE%B9%E5%99%A8%E5%8C%85%E5%90%AB%E5%A4%9A%E4%B8%AA%E8%BF%9B%E7%A8%8B%E8%A6%81%E5%A5%BD"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">为何多个容器比单个容器包含多个进程要好</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3pod"><span class="nav-number">1.1.2.</span> <span class="nav-text">了解pod</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E4%B8%80pod%E4%B8%AD%E5%AE%B9%E5%99%A8%E4%B9%8B%E9%97%B4%E7%9A%84%E9%83%A8%E5%88%86%E9%9A%94%E7%A6%BB"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">同一pod中容器之间的部分隔离</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%B9%E5%99%A8%E5%A6%82%E4%BD%95%E5%85%B1%E4%BA%AB%E7%9B%B8%E5%90%8C%E7%9A%84IP%E5%92%8C%E7%AB%AF%E5%8F%A3%E7%A9%BA%E9%97%B4"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">容器如何共享相同的IP和端口空间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%B9%B3%E5%9D%A6pod%E9%97%B4%E7%BD%91%E7%BB%9C"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">介绍平坦pod间网络</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87pod%E5%90%88%E7%90%86%E7%AE%A1%E7%90%86%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.3.</span> <span class="nav-text">通过pod合理管理容器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%B3%E5%AE%9A%E4%BD%95%E6%97%B6%E5%9C%A8pod%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E5%AE%B9%E5%99%A8"><span class="nav-number">1.1.3.1.</span> <span class="nav-text">决定何时在pod中使用多个容器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5YAML%E6%88%96JSON%E6%8F%8F%E8%BF%B0%E6%96%87%E4%BB%B6%E5%88%9B%E5%BB%BApod"><span class="nav-number">1.2.</span> <span class="nav-text">以YAML或JSON描述文件创建pod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E7%8E%B0%E6%9C%89pod%E7%9A%84YAML%E6%8F%8F%E8%BF%B0%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.1.</span> <span class="nav-text">检查现有pod的YAML描述文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8Dpod%E5%AE%9A%E4%B9%89%E7%9A%84%E4%B8%BB%E8%A6%81%E9%83%A8%E5%88%86"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">介绍pod定义的主要部分</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BApod%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84YAML%E6%8F%8F%E8%BF%B0%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">为pod创建一个简单的YAML描述文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8kubectl-explain%E6%9D%A5%E5%8F%91%E7%8E%B0%E5%8F%AF%E8%83%BD%E7%9A%84API%E5%AF%B9%E8%B1%A1%E5%AD%97%E6%AE%B5"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">使用kubectl explain来发现可能的API对象字段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8kubectl-create%E6%9D%A5%E5%88%9B%E5%BB%BApod"><span class="nav-number">1.2.3.</span> <span class="nav-text">使用kubectl create来创建pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E6%97%A5%E5%BF%97"><span class="nav-number">1.2.4.</span> <span class="nav-text">查看应用程序日志</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8kubectl-logs%E5%91%BD%E4%BB%A4%E8%8E%B7%E5%8F%96pod%E6%97%A5%E5%BF%97"><span class="nav-number">1.2.4.1.</span> <span class="nav-text">使用kubectl logs命令获取pod日志</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%A4%9A%E5%AE%B9%E5%99%A8pod%E7%9A%84%E6%97%A5%E5%BF%97%E6%97%B6%E6%8C%87%E5%AE%9A%E5%AE%B9%E5%99%A8%E5%90%8D%E7%A7%B0"><span class="nav-number">1.2.4.2.</span> <span class="nav-text">获取多容器pod的日志时指定容器名称</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%91pod%E5%8F%91%E9%80%81%E8%AF%B7%E6%B1%82"><span class="nav-number">1.2.5.</span> <span class="nav-text">向pod发送请求</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%B0%86%E6%9C%AC%E5%9C%B0%E7%BD%91%E7%BB%9C%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91%E5%88%B0pod%E4%B8%AD%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.2.5.1.</span> <span class="nav-text">将本地网络端口转发到pod中的端口</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%87%E7%AD%BE%E7%BB%84%E7%BB%87pod"><span class="nav-number">1.3.</span> <span class="nav-text">使用标签组织pod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.1.</span> <span class="nav-text">介绍标签</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BApod%E6%97%B6%E6%8C%87%E5%AE%9A%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.2.</span> <span class="nav-text">创建pod时指定标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E6%89%80%E6%9C%89%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">显示所有标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%98%BE%E7%A4%BA%E7%89%B9%E5%AE%9A%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">显示特定标签</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E7%8E%B0%E6%9C%89pod%E7%9A%84%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.3.</span> <span class="nav-text">修改现有pod的标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.3.1.</span> <span class="nav-text">创建标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E6%A0%87%E7%AD%BE"><span class="nav-number">1.3.3.2.</span> <span class="nav-text">修改标签</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8%E5%88%97%E5%87%BApod%E5%AD%90%E9%9B%86"><span class="nav-number">1.4.</span> <span class="nav-text">通过标签选择器列出pod子集</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8%E5%88%97%E5%87%BApod"><span class="nav-number">1.4.1.</span> <span class="nav-text">使用标签选择器列出pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E6%A0%87%E7%AD%BE%E9%80%89%E6%8B%A9%E5%99%A8%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%A4%9A%E4%B8%AA%E6%9D%A1%E4%BB%B6"><span class="nav-number">1.4.2.</span> <span class="nav-text">在标签选择器中使用多个条件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%87%E7%AD%BE%E5%92%8C%E9%80%89%E6%8B%A9%E5%99%A8%E6%9D%A5%E7%BA%A6%E6%9D%9Fpod%E8%B0%83%E5%BA%A6"><span class="nav-number">1.5.</span> <span class="nav-text">使用标签和选择器来约束pod调度</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%A0%87%E7%AD%BE%E5%88%86%E7%B1%BB%E5%B7%A5%E4%BD%9C%E8%8A%82%E7%82%B9"><span class="nav-number">1.5.1.</span> <span class="nav-text">使用标签分类工作节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%86pod%E8%B0%83%E5%BA%A6%E5%88%B0%E7%89%B9%E5%AE%9A%E8%8A%82%E7%82%B9"><span class="nav-number">1.5.2.</span> <span class="nav-text">将pod调度到特定节点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6%E5%88%B0%E4%B8%80%E4%B8%AA%E7%89%B9%E5%AE%9A%E8%8A%82%E7%82%B9"><span class="nav-number">1.5.3.</span> <span class="nav-text">调度到一个特定节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%A8%E8%A7%A3pod"><span class="nav-number">1.6.</span> <span class="nav-text">注解pod</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E6%89%BE%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.6.1.</span> <span class="nav-text">查找对象的注解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0%E5%92%8C%E4%BF%AE%E6%94%B9%E6%B3%A8%E8%A7%A3"><span class="nav-number">1.6.2.</span> <span class="nav-text">添加和修改注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%AF%B9%E8%B5%84%E6%BA%90%E8%BF%9B%E8%A1%8C%E5%88%86%E7%BB%84"><span class="nav-number">1.7.</span> <span class="nav-text">使用命名空间对资源进行分组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E7%8E%B0%E5%85%B6%E4%BB%96%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E5%8F%8A%E5%85%B6pod"><span class="nav-number">1.7.1.</span> <span class="nav-text">发现其他命名空间及其pod</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4"><span class="nav-number">1.7.2.</span> <span class="nav-text">创建一个命名空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%A1%E7%90%86%E5%85%B6%E4%BB%96%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="nav-number">1.7.3.</span> <span class="nav-text">管理其他命名空间中的对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E7%A9%BA%E9%97%B4%E6%8F%90%E4%BE%9B%E7%9A%84%E9%9A%94%E7%A6%BB"><span class="nav-number">1.7.4.</span> <span class="nav-text">命名空间提供的隔离</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="霄剑"
+      src="/images/avatar.svg">
+  <p class="site-author-name" itemprop="name">霄剑</p>
+  <div class="site-description" itemprop="description">醉后不知天在水,满船清梦压星河</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">20</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/55OX5XO55" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;55OX5XO55" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2606863445@qq.com" title="E-Mail → 2606863445@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E8%BF%90%E8%A1%8C%E4%BA%8EKubernetes%E4%B8%AD%E7%9A%84%E5%AE%B9%E5%99%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.svg">
+      <meta itemprop="name" content="霄剑">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="space">
+      <meta itemprop="description" content="醉后不知天在水,满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="运行于Kubernetes中的容器 | space">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          运行于Kubernetes中的容器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-20 22:50:03" itemprop="dateCreated datePublished" datetime="2023-09-20T22:50:03+08:00">2023-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-23 00:19:29" itemprop="dateModified" datetime="2023-09-23T00:19:29+08:00">2023-09-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>3.2k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>12 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="运行于Kubernetes中的容器"><a href="#运行于Kubernetes中的容器" class="headerlink" title="运行于Kubernetes中的容器"></a>运行于<code>Kubernetes</code>中的容器</h1><h2 id="介绍pod"><a href="#介绍pod" class="headerlink" title="介绍pod"></a>介绍<code>pod</code></h2><p>在实际应用中我们不会单独部署容器, 更多的是针对一组<code>pod</code>的容器进行部署和操作. </p>
+<h3 id="为何需要pod"><a href="#为何需要pod" class="headerlink" title="为何需要pod"></a>为何需要<code>pod</code></h3><h4 id="为何多个容器比单个容器包含多个进程要好"><a href="#为何多个容器比单个容器包含多个进程要好" class="headerlink" title="为何多个容器比单个容器包含多个进程要好"></a>为何多个容器比单个容器包含多个进程要好</h4><p>容积被设计为每个容器只运行一个进程(除非进程本身产生进程). 如果在单个容器中运行多个不相关的进程, 那么保持所有进程运行, 管理它们的日志等将会是我们的责任. </p>
+<h3 id="了解pod"><a href="#了解pod" class="headerlink" title="了解pod"></a>了解<code>pod</code></h3><h4 id="同一pod中容器之间的部分隔离"><a href="#同一pod中容器之间的部分隔离" class="headerlink" title="同一pod中容器之间的部分隔离"></a>同一<code>pod</code>中容器之间的部分隔离</h4><p>容器之间彼此是完全隔离的, 但是此时我们期望的是隔离容器组, 而不是单个容器, 并让每个容器组内的容器共享一些资源, 而不是全部. <code>Kubernetes</code>通过配置<code>Docker</code>来让一个<code>pod</code>内的所有容器共享相同的<code>Linux</code>命名空间, 而不是每个容器都有自己的一组命名空间. </p>
+<h4 id="容器如何共享相同的IP和端口空间"><a href="#容器如何共享相同的IP和端口空间" class="headerlink" title="容器如何共享相同的IP和端口空间"></a>容器如何共享相同的IP和端口空间</h4><p>由于一个<code>pod</code>中的容器运行于相同的<code>Network</code>命名空间中, 因此它们共享相同的<code>IP</code>地址和端口空间. 有可能会产生端口冲突, 但这只涉及同一个<code>pod</code>中的容器. </p>
+<h4 id="介绍平坦pod间网络"><a href="#介绍平坦pod间网络" class="headerlink" title="介绍平坦pod间网络"></a>介绍平坦<code>pod</code>间网络</h4><p><code>Kubernetes</code>集群中的所有<code>pod</code>都在同一个共享网络地址空间中, 这意味着每个<code>pod</code>都可以通过其他<code>pod</code>的<code>IP</code>地址来实现相互访问. </p>
+<h3 id="通过pod合理管理容器"><a href="#通过pod合理管理容器" class="headerlink" title="通过pod合理管理容器"></a>通过<code>pod</code>合理管理容器</h3><p>将多层应用分散到多个<code>pod</code>中, 同时基于扩缩容考虑而分割到多个<code>pod</code>中. 当应用可能由一个主进程和一个或多个辅助进程时, 才有可能将多个容器添加到单个<code>pod</code>中. </p>
+<h4 id="决定何时在pod中使用多个容器"><a href="#决定何时在pod中使用多个容器" class="headerlink" title="决定何时在pod中使用多个容器"></a>决定何时在<code>pod</code>中使用多个容器</h4><p>当决定是将两个容器放入到一个<code>pod</code>还是两个独立的<code>pod</code>时, 我们可以问自己以下几个问题: </p>
+<ol>
+<li>它们需要一起运行还是可以在不同的主机上运行?</li>
+<li>它们代表的是一个整体还是相互独立的组件?</li>
+<li>它们必须一起进行扩缩容还是可以分别进行?</li>
+</ol>
+<h2 id="以YAML或JSON描述文件创建pod"><a href="#以YAML或JSON描述文件创建pod" class="headerlink" title="以YAML或JSON描述文件创建pod"></a>以<code>YAML</code>或<code>JSON</code>描述文件创建<code>pod</code></h2><p><code>pod</code>和其他<code>Kubernetes</code>资源通常是通过向<code>Kubernetes REST API</code>提供<code>JSON</code>或<code>YAML</code>描述文件来创建的. 此外还有其他更简单的创建资源的方法, 比如<code>kubectl run</code>命令, 但这些方法通常只允许你配置一组有限的属性. </p>
+<h3 id="检查现有pod的YAML描述文件"><a href="#检查现有pod的YAML描述文件" class="headerlink" title="检查现有pod的YAML描述文件"></a>检查现有<code>pod</code>的<code>YAML</code>描述文件</h3><p>获得<code>pod</code>的<code>yaml</code>信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods &lt;pod名称&gt; -o yaml</span><br></pre></td></tr></table></figure>
+
+<h4 id="介绍pod定义的主要部分"><a href="#介绍pod定义的主要部分" class="headerlink" title="介绍pod定义的主要部分"></a>介绍<code>pod</code>定义的主要部分</h4><p><code>pod</code>定义由这么几个部分组成: 首先是<code>YAML</code>中使用的<code>Kubernetes API</code>版本和<code>YAML</code>描述的资源类型; 其次是几乎在所有<code>Kubernetes</code>资源中都可以找到的三大重要部分:</p>
+<ol>
+<li><code>metedata</code>包括名称, 命名空间, 标签和关于该容器的其他信息</li>
+<li><code>spec</code>包含<code>pod</code>内容的实际说明, 例如<code>pod</code>的容器, 卷和其他数据.</li>
+<li><code>status</code>包含运行中的<code>pod</code>的当前信息, 例如<code>pod</code>所处的条件, 每个容器的描述和状态, 以及内部<code>IP</code>和其他基本信息.</li>
+</ol>
+<h3 id="为pod创建一个简单的YAML描述文件"><a href="#为pod创建一个简单的YAML描述文件" class="headerlink" title="为pod创建一个简单的YAML描述文件"></a>为<code>pod</code>创建一个简单的<code>YAML</code>描述文件</h3><h4 id="使用kubectl-explain来发现可能的API对象字段"><a href="#使用kubectl-explain来发现可能的API对象字段" class="headerlink" title="使用kubectl explain来发现可能的API对象字段"></a>使用<code>kubectl explain</code>来发现可能的<code>API</code>对象字段</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl explain pods</span><br><span class="line"></span><br><span class="line">kubectl explain pod.spec</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用kubectl-create来创建pod"><a href="#使用kubectl-create来创建pod" class="headerlink" title="使用kubectl create来创建pod"></a>使用<code>kubectl create</code>来创建<code>pod</code></h3><p><code>kubectl create -f</code>命令用于从<code>yaml</code>或<code>json</code>文件中创建任何资源(不只是<code>pod</code>).</p>
+<h3 id="查看应用程序日志"><a href="#查看应用程序日志" class="headerlink" title="查看应用程序日志"></a>查看应用程序日志</h3><p>容器化的应用程序通常会将日志记录到标准输出和标准错误流, 而不是将其写入文件. </p>
+<p>容器运行时将这些流重定向到文件, 并允许我们运行以下命令来获取容器的日志:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker logs &lt;container id&gt;</span><br></pre></td></tr></table></figure>
+
+<p>使用<code>ssh</code>命令登录到<code>pod</code>正在运行的节点, 并使用<code>docker logs</code>命令查看其日志, 但<code>Kubernetes</code>提供了一种更为简单的方法. </p>
+<h4 id="使用kubectl-logs命令获取pod日志"><a href="#使用kubectl-logs命令获取pod日志" class="headerlink" title="使用kubectl logs命令获取pod日志"></a>使用<code>kubectl logs</code>命令获取<code>pod</code>日志</h4><p>为了查看<code>pod</code>的日志(更准确地说是容器的日志), 只需要在本地机器上运行以下命令(不需要<code>ssh</code>到任何地方): </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs &lt;pod名称&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="获取多容器pod的日志时指定容器名称"><a href="#获取多容器pod的日志时指定容器名称" class="headerlink" title="获取多容器pod的日志时指定容器名称"></a>获取多容器<code>pod</code>的日志时指定容器名称</h4><p>如果我们的<code>pod</code>包含多个容器, 在运行<code>kubectl logs</code>命令时则必须通过包含<code>-c &lt;容器名称&gt;</code>选项来显示指定容器名称. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl logs &lt;pod名称&gt; -c &lt;容器名称&gt;</span><br></pre></td></tr></table></figure>
+
+<p>我们只能获取仍然存在的<code>pod</code>的日志. 当一个<code>pod</code>被删除时, 它的日志也会被删除. 如果希望在<code>pod</code>删除之后仍然可以获取其日志, 我们需要设置中心化的, 集群范围的日志系统, 将所有日志存储到中心存储中. </p>
+<h3 id="向pod发送请求"><a href="#向pod发送请求" class="headerlink" title="向pod发送请求"></a>向<code>pod</code>发送请求</h3><h4 id="将本地网络端口转发到pod中的端口"><a href="#将本地网络端口转发到pod中的端口" class="headerlink" title="将本地网络端口转发到pod中的端口"></a>将本地网络端口转发到<code>pod</code>中的端口</h4><p>如果想要在不通过<code>service</code>的情况下与某个特定的<code>pod</code>进行通信(出于调试或其他原因), <code>Kubernetes</code>将允许我们配置端口转发到该<code>pod</code>. 可以通过<code>kubectl port-forward</code>命令完成上述操作. 例如以下命名会将机器的本地端口<code>8888</code>转发到目标<code>pod</code>的端口<code>8080</code>: </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl port-forward &lt;pod名称&gt; 8888:8080</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用标签组织pod"><a href="#使用标签组织pod" class="headerlink" title="使用标签组织pod"></a>使用标签组织<code>pod</code></h2><p>我们需要一种能够基于任意标准将上述<code>pod</code>组织成更小群体的方式. 此外, 我们希望通过一次操作对属于某个组的所有<code>pod</code>进行操作, 而不必单独为每个<code>pod</code>执行操作. </p>
+<p>通过标签来组织<code>pod</code>和所有其他<code>Kubernetes</code>对象. </p>
+<h3 id="介绍标签"><a href="#介绍标签" class="headerlink" title="介绍标签"></a>介绍标签</h3><p>标签是一种简单却功能强大的<code>Kubernetes</code>特性, 不仅可以组织<code>pod</code>, 也可以组织所有其他的<code>Kubernetes</code>资源. 详细来说, 标签是可以附加到任意资源的任意键值对, 用以选择具有该确切标签的资源(这是通过标签选择器完成的). 只要标签的<code>key</code>在资源内是唯一的, 一个资源便可以拥有多个标签. 通常我们创建资源时就会将标签附加到资源上, 但之后我们也可以在添加其他标签, 或者修改现有标签的值, 而无须重新创建资源. </p>
+<p>金丝雀发布是指在部署新版本时, 先只让小部分用户体验新版本以观察新版本的表现, 然后再向所有用户进行推广, 这样可以防止暴露有问题的版本给过多的用户. </p>
+<h3 id="创建pod时指定标签"><a href="#创建pod时指定标签" class="headerlink" title="创建pod时指定标签"></a>创建<code>pod</code>时指定标签</h3><h4 id="显示所有标签"><a href="#显示所有标签" class="headerlink" title="显示所有标签"></a>显示所有标签</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods --show-labels</span><br></pre></td></tr></table></figure>
+
+<h4 id="显示特定标签"><a href="#显示特定标签" class="headerlink" title="显示特定标签"></a>显示特定标签</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pods -L &lt;label1的key&gt;,&lt;label2的key&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="修改现有pod的标签"><a href="#修改现有pod的标签" class="headerlink" title="修改现有pod的标签"></a>修改现有<code>pod</code>的标签</h3><h4 id="创建标签"><a href="#创建标签" class="headerlink" title="创建标签"></a>创建标签</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label po &lt;pod的名称&gt; &lt;新label的key&gt;=&lt;新label的value&gt; </span><br></pre></td></tr></table></figure>
+
+<h4 id="修改标签"><a href="#修改标签" class="headerlink" title="修改标签"></a>修改标签</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl label po &lt;pod的名称&gt; &lt;已存在label的key&gt;=&lt;label的值&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="通过标签选择器列出pod子集"><a href="#通过标签选择器列出pod子集" class="headerlink" title="通过标签选择器列出pod子集"></a>通过标签选择器列出<code>pod</code>子集</h2><p>标签选择器允许我们选择标记有特定标签的<code>pod</code>子集, 并对这些<code>pod</code>执行操作. 可以说标签选择器是一种能够根据是否包含具有特定值的特定标签来过滤资源的准则. </p>
+<p>标签选择器根据资源的以下条件来选择资源:</p>
+<p>包含(或不包含)使用特定键的标签</p>
+<p>包含具有特定键和值的标签</p>
+<p>包含就有特定值的标签, 但其值与我们指定的不同</p>
+<h3 id="使用标签选择器列出pod"><a href="#使用标签选择器列出pod" class="headerlink" title="使用标签选择器列出pod"></a>使用标签选择器列出<code>pod</code></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">kubectl get po -l &#x27;&lt;label的key&gt;&#x27;</span><br><span class="line">kubectl get po -l &#x27;!&lt;label的key&gt;&#x27;</span><br><span class="line">kubectl get po -l &lt;label的key&gt;=&lt;label的value&gt;</span><br><span class="line">kubectl get po -l &lt;label的key&gt;!=&lt;label的value&gt;</span><br><span class="line">kubectl get po -l &lt;label的key&gt;in (&lt;label的value&gt;, &lt;label的value&gt;)</span><br><span class="line">kubectl get po -l &lt;label的key&gt;notin (&lt;label的value&gt;, &lt;label的value&gt;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="在标签选择器中使用多个条件"><a href="#在标签选择器中使用多个条件" class="headerlink" title="在标签选择器中使用多个条件"></a>在标签选择器中使用多个条件</h3><p>在包含多个逗号分隔的情况下, 可以在标签选择器中同时使用多个条件, 此时资源需要全部匹配才算成功匹配了选择器. </p>
+<h2 id="使用标签和选择器来约束pod调度"><a href="#使用标签和选择器来约束pod调度" class="headerlink" title="使用标签和选择器来约束pod调度"></a>使用标签和选择器来约束<code>pod</code>调度</h2><h3 id="使用标签分类工作节点"><a href="#使用标签分类工作节点" class="headerlink" title="使用标签分类工作节点"></a>使用标签分类工作节点</h3><p>标签可以附加到任何<code>kubernetes</code>对象上, 包括节点. </p>
+<h3 id="将pod调度到特定节点"><a href="#将pod调度到特定节点" class="headerlink" title="将pod调度到特定节点"></a>将<code>pod</code>调度到特定节点</h3><p>为了让调度器只在合适节点上进行选择, 我们需要在<code>pod</code>的<code>YAML</code>文件中添加一个节点选择器. 我们只是在<code>spec</code>部分添加了一个<code>nodeSelector</code>字段. </p>
+<h3 id="调度到一个特定节点"><a href="#调度到一个特定节点" class="headerlink" title="调度到一个特定节点"></a>调度到一个特定节点</h3><p>同样地, 我们也可以将<code>pod</code>调度到某个确定的节点, 由于每个节点都有一个唯一标签, 其中键为<code>kubernetes.io/hostname</code>, 值为该节点的实际主机名, 因此我们也可以将<code>pod</code>调度到某个确定的节点. 我们绝不应该考虑单个节点, 而是应该通过标签选择器考虑符合特定标准的逻辑节点组. </p>
+<h2 id="注解pod"><a href="#注解pod" class="headerlink" title="注解pod"></a>注解<code>pod</code></h2><p>除标签外, <code>pod</code>和其他对象还可以包含注解. 注解也是键值对, 所以它们本质上与标签非常相似. 但与标签不同, 注解并不是为了保存标识信息而存在的, 它们不能像标签一样用于对对象进行分组. </p>
+<p>大量使用注解可以为每个<code>pod</code>或其他<code>API</code>对象添加说明, 以便每个使用该集群的人都可以快速查找有关每个单独对象的信息. </p>
+<h3 id="查找对象的注解"><a href="#查找对象的注解" class="headerlink" title="查找对象的注解"></a>查找对象的注解</h3><p>为了查看注解, 我们需要获取<code>pod</code>的完整<code>YAML</code>文件或使用<code>kubectl describe</code>命令. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kubectl get po &lt;pod的名称&gt; -o yaml</span><br><span class="line"></span><br><span class="line">kubectl describe</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加和修改注解"><a href="#添加和修改注解" class="headerlink" title="添加和修改注解"></a>添加和修改注解</h3><p>和标签一样, 注解可以在创建是就添加到<code>pod</code>中, 也可以在之后再对现有的<code>pod</code>进行添加或修改. 其中将注解添加到现有对象的最简单的方式是通过<code>kubectl annotate</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl annotate pod &lt;pod的名称&gt; &lt;注解的键&gt;=&lt;注解的值&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用命名空间对资源进行分组"><a href="#使用命名空间对资源进行分组" class="headerlink" title="使用命名空间对资源进行分组"></a>使用命名空间对资源进行分组</h2><p><code>Kubernetes</code>命名空间简单地为对象名称提供了一个作用域. 此时我们并不会将所有资源都放在同一个命名空间中, 而是将它们组织到多个命名空间中, 这样可以允许我们多次使用相同的资源名称. </p>
+<h3 id="发现其他命名空间及其pod"><a href="#发现其他命名空间及其pod" class="headerlink" title="发现其他命名空间及其pod"></a>发现其他命名空间及其<code>pod</code></h3><p>列出命名空间: </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get ns</span><br></pre></td></tr></table></figure>
+
+<p>当使用<code>kubectl get</code>命令列出资源时, 我们从未明确指定命名空间, 因此<code>kubectl</code>总是默认为<code>default</code>命名空间, 只显示该命名空间下的对象. </p>
+<p>得到指定命名空间下的对象: </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get po -n &lt;命名空间&gt;</span><br></pre></td></tr></table></figure>
+
+<p><code>namespace</code>使我们能够将不属于一组的资源分到不重叠的组中. 如果有多个用户或用户组正在使用同一个<code>Kubernetes</code>集群, 并且它们都各自管理自己独特的资源集合, 那么它们就应该使用各自的命名空间. 这样一来, 它们就不用特别担心无意中修改或删除其他用户的资源, 也无须关心名称冲突. 如前所述, 命名空间为资源名称提供了一个作用域. </p>
+<p>除了隔离资源, 命名空间还可用于仅允许某些用户访问特定资源, 甚至限制单个用户可用的计算资源数量. </p>
+<h3 id="创建一个命名空间"><a href="#创建一个命名空间" class="headerlink" title="创建一个命名空间"></a>创建一个命名空间</h3><p>命名空间是一种和其他资源一样的<code>Kubernetes</code>资源, 因此可以通过将<code>YAML</code>文件提交到<code>Kubernetes API</code>服务器来创建该资源. </p>
+<p>还可以使用<code>kubectl create namespace</code>命令创建命名空间</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create namespace &lt;命名空间&gt;</span><br></pre></td></tr></table></figure>
+
+<p>命名空间只能包含字母, 数字, 横杠</p>
+<h3 id="管理其他命名空间中的对象"><a href="#管理其他命名空间中的对象" class="headerlink" title="管理其他命名空间中的对象"></a>管理其他命名空间中的对象</h3><p>如果想在指定的命名空间中创建资源, 可以选择在<code>metedata</code>字段中添加一个<code>namespace: custom-namespace</code>属性, 也可以使用<code>kubectl create</code>命令创建资源时指定命名空间: </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f 模版 -n &lt;命名空间&gt;</span><br></pre></td></tr></table></figure>
+
+<p>在列出, 描述, 修改或删除其他命名空间中的对象时, 需要给<code>kubectl</code>命令传递<code>--namespace</code>(或<code>-n</code>)选项. 如果不指定命名空间, <code>kubectl</code>将在当前上下文中配置的默认命名空间中执行操作. </p>
+<h3 id="命名空间提供的隔离"><a href="#命名空间提供的隔离" class="headerlink" title="命名空间提供的隔离"></a>命名空间提供的隔离</h3><p>尽管命名空间将对象分隔到不同组, 只允许你对属于特定命名空间的对象进行操作, 但实际上命名空间之间并不提供对正在运行的对象的任何隔离. </p>
+
+    </div>
+
+    
+    
+    
+      <div>
+  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+</div>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag"></i> kubernetes</a>
+              <a href="/tags/kubernetes-in-Action/" rel="tag"><i class="fa fa-tag"></i> kubernetes in Action</a>
+          </div>
+	  <script type="text/javascript">
+            var tagsall=document.getElementsByClassName("post-tags")
+            for (var i = tagsall.length - 1; i >= 0; i--){
+                var tags=tagsall[i].getElementsByTagName("a");
+                for (var j = tags.length - 1; j >= 0; j--) {
+                    var golden_ratio = 0.618033988749895;
+                    var s = 0.5;
+                    var v = 0.999;
+                    var h = golden_ratio + Math.random()*0.8 - 0.5;
+                    var h_i = parseInt(h * 6);
+                    var f = h * 6 - h_i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+                    var r, g, b;
+                    switch (h_i) {
+                        case 0:
+                            r = v;
+                            g = t;
+                            b = p;
+                            break;
+                        case 1:
+                            r = q;
+                            g = v;
+                            b = p;
+                            break;
+                        case 2:
+                            r = p;
+                            g = v;
+                            b = t;
+                            break;
+                        case 3 :
+                            r = p;
+                            g = q;
+                            b = v;
+                            break;
+                        case 4:
+                            r = t;
+                            g = p;
+                            b = v;
+                            break;
+                        case 5:
+                            r = v;
+                            g = p;
+                            b = q;
+                            break;
+                        default:
+                            r = 1;
+                            g = 1;
+                            b = 1;
+                      }
+                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
+                }
+            }
+            </script>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%BC%80%E5%A7%8B%E4%BD%BF%E7%94%A8Kubernetes%E5%92%8CDocker/" rel="prev" title="开始使用Kubernetes和Docker">
+                  <i class="fa fa-chevron-left"></i> 开始使用Kubernetes和Docker
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-leaf"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">霄剑</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">41k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:28</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/55OX5XO55" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
