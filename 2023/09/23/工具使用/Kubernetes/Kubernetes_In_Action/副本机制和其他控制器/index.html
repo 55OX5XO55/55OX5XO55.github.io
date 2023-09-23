@@ -18,28 +18,29 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="Hexo文章发布">
+    <meta name="description" content="副本机制和其他控制器: 部署托管的pod保持pod健康只要pod调度到某个节点, 该节点上的Kubelet就会运行pod的容器, 从此只要该pod存在, 就会保持运行. 如果容器的主进程崩溃, Kubelet将重启容器.  程序可以能因为无限循环或死锁而停止响应, 为确保应用程序在这种情况下可以重新启动, 必须从外部检查应用程序的运行状态, 而不是依赖于应用的内部检测.  介绍存活探针Kubern">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hexo文章发布">
-<meta property="og:url" content="http://example.com/2022/11/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/Hexo%E6%96%87%E7%AB%A0%E5%8F%91%E5%B8%83/index.html">
+<meta property="og:title" content="副本机制和其他控制器">
+<meta property="og:url" content="http://example.com/2023/09/23/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E5%92%8C%E5%85%B6%E4%BB%96%E6%8E%A7%E5%88%B6%E5%99%A8/index.html">
 <meta property="og:site_name" content="space">
-<meta property="og:description" content="Hexo文章发布">
+<meta property="og:description" content="副本机制和其他控制器: 部署托管的pod保持pod健康只要pod调度到某个节点, 该节点上的Kubelet就会运行pod的容器, 从此只要该pod存在, 就会保持运行. 如果容器的主进程崩溃, Kubelet将重启容器.  程序可以能因为无限循环或死锁而停止响应, 为确保应用程序在这种情况下可以重新启动, 必须从外部检查应用程序的运行状态, 而不是依赖于应用的内部检测.  介绍存活探针Kubern">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-13T11:38:15.000Z">
-<meta property="article:modified_time" content="2023-07-30T13:23:37.672Z">
+<meta property="article:published_time" content="2023-09-23T15:07:52.000Z">
+<meta property="article:modified_time" content="2023-09-23T17:54:42.994Z">
 <meta property="article:author" content="霄剑">
-<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="kubernetes in Action">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="http://example.com/2022/11/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/Hexo%E6%96%87%E7%AB%A0%E5%8F%91%E5%B8%83/">
+<link rel="canonical" href="http://example.com/2023/09/23/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E5%92%8C%E5%85%B6%E4%BB%96%E6%8E%A7%E5%88%B6%E5%99%A8/">
 
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2022/11/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/Hexo%E6%96%87%E7%AB%A0%E5%8F%91%E5%B8%83/","path":"2022/11/13/工具使用/Hexo/Hexo文章发布/","title":"Hexo文章发布"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/23/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E5%92%8C%E5%85%B6%E4%BB%96%E6%8E%A7%E5%88%B6%E5%99%A8/","path":"2023/09/23/工具使用/Kubernetes/Kubernetes_In_Action/副本机制和其他控制器/","title":"副本机制和其他控制器"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>Hexo文章发布 | space</title>
+<title>副本机制和其他控制器 | space</title>
   
 
 
@@ -129,7 +130,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -142,6 +143,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E5%92%8C%E5%85%B6%E4%BB%96%E6%8E%A7%E5%88%B6%E5%99%A8-%E9%83%A8%E7%BD%B2%E6%89%98%E7%AE%A1%E7%9A%84pod"><span class="nav-number">1.</span> <span class="nav-text">副本机制和其他控制器: 部署托管的pod</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%9D%E6%8C%81pod%E5%81%A5%E5%BA%B7"><span class="nav-number">1.1.</span> <span class="nav-text">保持pod健康</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%AD%98%E6%B4%BB%E6%8E%A2%E9%92%88"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">介绍存活探针</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E5%9F%BA%E4%BA%8EHTTP%E7%9A%84%E5%AD%98%E6%B4%BB%E6%8E%A2%E9%92%88"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建基于HTTP的存活探针</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%AD%98%E6%B4%BB%E6%8E%A2%E9%92%88"><span class="nav-number">1.1.2.</span> <span class="nav-text">使用存活探针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E5%B4%A9%E6%BA%83%E5%AE%B9%E5%99%A8%E7%9A%84%E5%BA%94%E7%94%A8%E6%97%A5%E5%BF%97"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">获取崩溃容器的应用日志</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%AD%98%E6%B4%BB%E6%8E%A2%E9%92%88%E7%9A%84%E9%99%84%E5%8A%A0%E5%B1%9E%E6%80%A7"><span class="nav-number">1.1.3.</span> <span class="nav-text">配置存活探针的附加属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%98%E6%B4%BB%E6%8E%A2%E9%92%88"><span class="nav-number">1.1.4.</span> <span class="nav-text">创建有效的存活探针</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3ReplicationController"><span class="nav-number">1.2.</span> <span class="nav-text">了解ReplicationController</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ReplicationController%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.2.1.</span> <span class="nav-text">ReplicationController的操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E6%8E%A7%E5%88%B6%E5%99%A8%E7%9A%84%E5%8D%8F%E8%B0%83%E6%B5%81%E7%A8%8B"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">介绍控制器的协调流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8DaemonSet%E5%9C%A8%E6%AF%8F%E4%B8%AA%E8%8A%82%E7%82%B9%E4%B8%8A%E8%BF%90%E8%A1%8C%E4%B8%80%E4%B8%AApod"><span class="nav-number">1.3.</span> <span class="nav-text">使用DaemonSet在每个节点上运行一个pod</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -202,7 +204,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/13/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/Hexo%E6%96%87%E7%AB%A0%E5%8F%91%E5%B8%83/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/23/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E5%92%8C%E5%85%B6%E4%BB%96%E6%8E%A7%E5%88%B6%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.svg">
@@ -215,12 +217,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="Hexo文章发布 | space">
+      <meta itemprop="name" content="副本机制和其他控制器 | space">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Hexo文章发布
+          副本机制和其他控制器
         </h1>
 
         <div class="post-meta-container">
@@ -231,14 +233,14 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-11-13 19:38:15" itemprop="dateCreated datePublished" datetime="2022-11-13T19:38:15+08:00">2022-11-13</time>
+      <time title="创建时间：2023-09-23 23:07:52" itemprop="dateCreated datePublished" datetime="2023-09-23T23:07:52+08:00">2023-09-23</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-07-30 21:23:37" itemprop="dateModified" datetime="2023-07-30T21:23:37+08:00">2023-07-30</time>
+      <time title="修改时间：2023-09-24 01:54:42" itemprop="dateModified" datetime="2023-09-24T01:54:42+08:00">2023-09-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -250,7 +252,7 @@
         </span>
           ，
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
         </span>
     </span>
 
@@ -261,14 +263,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>96</span>
+      <span>812</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>1 分钟</span>
+      <span>3 分钟</span>
     </span>
 </div>
 
@@ -279,15 +281,25 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>Hexo文章发布</p>
-<span id="more"></span>
+        <h1 id="副本机制和其他控制器-部署托管的pod"><a href="#副本机制和其他控制器-部署托管的pod" class="headerlink" title="副本机制和其他控制器: 部署托管的pod"></a>副本机制和其他控制器: 部署托管的<code>pod</code></h1><h2 id="保持pod健康"><a href="#保持pod健康" class="headerlink" title="保持pod健康"></a>保持<code>pod</code>健康</h2><p>只要<code>pod</code>调度到某个节点, 该节点上的<code>Kubelet</code>就会运行<code>pod</code>的容器, 从此只要该<code>pod</code>存在, 就会保持运行. 如果容器的主进程崩溃, <code>Kubelet</code>将重启容器. </p>
+<p>程序可以能因为无限循环或死锁而停止响应, 为确保应用程序在这种情况下可以重新启动, 必须从外部检查应用程序的运行状态, 而不是依赖于应用的内部检测. </p>
+<h4 id="介绍存活探针"><a href="#介绍存活探针" class="headerlink" title="介绍存活探针"></a>介绍存活探针</h4><p><code>Kubernetes</code>可以通过存活探针(liveness probe)检查容器是否还在运行. 可以为<code>pod</code>中每个容器单独指定存活探针, 如果检测失败, <code>Kubernetes</code>将定期执行探针并重启容器. </p>
+<p><code>Kubernetes</code>有以下三种检测容器的机制:</p>
+<p><code>HTTP GET</code>探针对容器的<code>IP</code>地址(你指定的端口和路径)执行<code>HTTP GET</code>请求. 如果探测器收到响应, 并且响应码不代表错误, 则认为探测成功. 如果服务器返回错误响应码或者根本没有响应, 那么特测被认为是失败的, 容器将被重新启动. </p>
+<p><code>TCP</code>套接字探针尝试与容器指定端口建立<code>TCP</code>连接. 如果连接成功建立, 则探测成功. 否则, 容器重新启动. </p>
+<p><code>Exec</code>探针在容器内执行任意命令, 并检查命令的退出状态码. 如果状态码是<code>0</code>, 则探测成功. 所有其他状态码都认为失败. </p>
+<h3 id="创建基于HTTP的存活探针"><a href="#创建基于HTTP的存活探针" class="headerlink" title="创建基于HTTP的存活探针"></a>创建基于<code>HTTP</code>的存活探针</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">liveness:</span></span><br><span class="line">	<span class="attr">httpGet:</span></span><br><span class="line">		<span class="attr">path:</span> <span class="string">/</span></span><br><span class="line">		<span class="attr">port:</span> <span class="number">8080</span></span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>在hexo的根目录执行<code>hexo new -p x/y/z &quot;文章的名称&quot;</code>. <code>x/y/z</code>是文章的相对路径, 从<code>_post</code>开始的, <code>z</code>为文件系统中文件的名称, 会自动添加上<code>.md</code>后缀. 该命令会自动创建不存在的目录</li>
-<li>本地验证<code>hexo clean; hexo g; hexo s</code></li>
-<li>推送到远端<code>hexo d</code></li>
-</ol>
-
+<p>该<code>pod</code>的描述文件定义了一个<code>httpGet</code>探针, 该探针告诉<code>Kubernetes</code>定期在端口<code>8080</code>路径上执行<code>HTTP GET</code>请求, 以确定容器是否健康. </p>
+<h3 id="使用存活探针"><a href="#使用存活探针" class="headerlink" title="使用存活探针"></a>使用存活探针</h3><h4 id="获取崩溃容器的应用日志"><a href="#获取崩溃容器的应用日志" class="headerlink" title="获取崩溃容器的应用日志"></a>获取崩溃容器的应用日志</h4><p>如果容器重启, <code>Kubectl logs</code>命令将显示当前容器的日志. 当你想知道前一个容器为什么终止时. 可以通过添加<code>--previous</code>选项. </p>
+<p>容器被强行终止时, 会创建一个全新的容器<code>--</code>而不是重启原来的容器. </p>
+<h3 id="配置存活探针的附加属性"><a href="#配置存活探针的附加属性" class="headerlink" title="配置存活探针的附加属性"></a>配置存活探针的附加属性</h3><p>除了明确指定的存活探针选项, 还可以看到其他属性, 例如delay, timeout, period等. </p>
+<p>请务必记得设置一个初始延时来说明应用程序的启动时间. </p>
+<h3 id="创建有效的存活探针"><a href="#创建有效的存活探针" class="headerlink" title="创建有效的存活探针"></a>创建有效的存活探针</h3><p>对于在生产中运行的<code>pod</code>, 一定要定义一个存活探针. 没有探针的话, <code>Kubernetes</code>无法知道你的应用是否还活着. 只要进程还存在, <code>Kubernetes</code>会认为容器是健康的. </p>
+<h2 id="了解ReplicationController"><a href="#了解ReplicationController" class="headerlink" title="了解ReplicationController"></a>了解<code>ReplicationController</code></h2><p><code>ReplicationController</code>是一种<code>Kubernetes</code>资源, 可确保它的<code>pod</code>始终保持运行状态. </p>
+<h3 id="ReplicationController的操作"><a href="#ReplicationController的操作" class="headerlink" title="ReplicationController的操作"></a><code>ReplicationController</code>的操作</h3><p><code>RelicationController</code>会持续监控正在运行的<code>pod</code>列表, 并保证相应”类型”的<code>pod</code>的数目与期望的相符. </p>
+<h4 id="介绍控制器的协调流程"><a href="#介绍控制器的协调流程" class="headerlink" title="介绍控制器的协调流程"></a>介绍控制器的协调流程</h4><p><code>ReplicationController</code>的工作是确保<code>pod</code>的数量始终与其标签选择器匹配. 如果不匹配, 则<code>ReplicationController</code>将根据所需, 采取适当地操作来协调<code>pod</code>的数量. </p>
+<h2 id="使用DaemonSet在每个节点上运行一个pod"><a href="#使用DaemonSet在每个节点上运行一个pod" class="headerlink" title="使用DaemonSet在每个节点上运行一个pod"></a>使用<code>DaemonSet</code>在每个节点上运行一个<code>pod</code></h2>
     </div>
 
     
@@ -300,7 +312,8 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Hexo/" rel="tag"><i class="fa fa-tag"></i> Hexo</a>
+              <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag"></i> kubernetes</a>
+              <a href="/tags/kubernetes-in-Action/" rel="tag"><i class="fa fa-tag"></i> kubernetes in Action</a>
           </div>
 	  <script type="text/javascript">
             var tagsall=document.getElementsByClassName("post-tags")
@@ -362,11 +375,11 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
+                <a href="/2023/09/20/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E8%BF%90%E8%A1%8C%E4%BA%8EKubernetes%E4%B8%AD%E7%9A%84%E5%AE%B9%E5%99%A8/" rel="prev" title="运行于Kubernetes中的容器">
+                  <i class="fa fa-chevron-left"></i> 运行于Kubernetes中的容器
+                </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2023/04/30/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Git/%E5%9C%A8%E6%9C%8D%E5%8A%A1%E5%99%A8%E4%B8%8A%E6%90%AD%E5%BB%BAGit%E6%9C%8D%E5%8A%A1/" rel="next" title="在服务器上搭建Git服务">
-                  在服务器上搭建Git服务 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>
