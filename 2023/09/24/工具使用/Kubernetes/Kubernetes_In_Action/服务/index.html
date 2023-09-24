@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#70B7FD"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-space.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-space.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-space.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab-space.svg" color="#70B7FD">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="服务pod需要一种寻找其他pod的方法来使用其他pod提供的服务, 不想在没有Kubernetes的世界, 系统管理员要在用户端配置文件中明确指出服务的精确IP地址或主机名来配置每个服务短应用.  介绍服务Kubernetes服务是一种为一组功能相同的pod提供单一不变的接入点的资源. 当服务存在是, 它的IP地址和端口不会改变. 客户端通过IP地址和端口号建立连接, 这些连接会被路由到提供该服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="服务">
+<meta property="og:url" content="http://example.com/2023/09/24/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E6%9C%8D%E5%8A%A1/index.html">
+<meta property="og:site_name" content="space">
+<meta property="og:description" content="服务pod需要一种寻找其他pod的方法来使用其他pod提供的服务, 不想在没有Kubernetes的世界, 系统管理员要在用户端配置文件中明确指出服务的精确IP地址或主机名来配置每个服务短应用.  介绍服务Kubernetes服务是一种为一组功能相同的pod提供单一不变的接入点的资源. 当服务存在是, 它的IP地址和端口不会改变. 客户端通过IP地址和端口号建立连接, 这些连接会被路由到提供该服务">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-09-24T03:20:56.000Z">
+<meta property="article:modified_time" content="2023-09-24T13:31:36.324Z">
+<meta property="article:author" content="霄剑">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="kubernetes in Action">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/09/24/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E6%9C%8D%E5%8A%A1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/09/24/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E6%9C%8D%E5%8A%A1/","path":"2023/09/24/工具使用/Kubernetes/Kubernetes_In_Action/服务/","title":"服务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>服务 | space</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<script async src="/live2d/autoload.js"> </script>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">space</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">22</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.</span> <span class="nav-text">服务</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.</span> <span class="nav-text">介绍服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.1.</span> <span class="nav-text">创建服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9C%A8%E8%BF%90%E8%A1%8C%E7%9A%84%E5%AE%B9%E5%99%A8%E4%B8%AD%E8%BF%9C%E7%A8%8B%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">在运行的容器中远程执行命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E7%9A%84%E5%9B%9E%E8%AF%9D%E4%BA%B2%E5%92%8C%E6%80%A7"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">配置服务的回话亲和性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%90%8C%E4%B8%80%E4%B8%AA%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E5%A4%9A%E4%B8%AA%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">同一个服务暴露多个端口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%91%BD%E5%90%8D%E7%9A%84%E7%AB%AF%E5%8F%A3"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">使用命名的端口</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%8D%E5%8A%A1%E5%8F%91%E7%8E%B0"><span class="nav-number">1.1.2.</span> <span class="nav-text">服务发现</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E5%8F%91%E7%8E%B0%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">通过环境变量发现服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87DNS%E5%8F%91%E7%8E%B0%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">通过DNS发现服务</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E5%85%A8%E9%99%90%E5%AE%9A%E5%9F%9F%E5%90%8D%E8%BF%9E%E6%8E%A5%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">通过全限定域名连接服务</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E9%9B%86%E7%BE%A4%E5%A4%96%E9%83%A8%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">连接集群外部的服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E6%9C%8D%E5%8A%A1endpoint"><span class="nav-number">1.2.1.</span> <span class="nav-text">介绍服务endpoint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%8B%E5%8A%A8%E9%85%8D%E7%BD%AE%E6%9C%8D%E5%8A%A1%E7%9A%84endpoint"><span class="nav-number">1.2.2.</span> <span class="nav-text">手动配置服务的endpoint</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%86%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E7%BB%99%E5%A4%96%E9%83%A8%E5%AE%A2%E6%88%B7%E7%AB%AF"><span class="nav-number">1.3.</span> <span class="nav-text">将服务暴露给外部客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8NodePort%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用NodePort类型的服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%99%A8%E5%B0%86%E6%9C%8D%E5%8A%A1%E6%9A%B4%E9%9C%B2%E5%87%BA%E6%9D%A5"><span class="nav-number">1.3.2.</span> <span class="nav-text">通过负载均衡器将服务暴露出来</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9B%9E%E8%AF%9D%E4%BA%B2%E5%92%8C%E6%80%A7%E5%92%8CWeb%E6%B5%8F%E8%A7%88%E5%99%A8"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">回话亲和性和Web浏览器</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E8%BF%87Ingress%E6%9A%B4%E9%9C%B2%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.4.</span> <span class="nav-text">通过Ingress暴露服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81Ingress"><span class="nav-number">1.4.0.1.</span> <span class="nav-text">为什么需要Ingress</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3Ingress%E7%9A%84%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-number">1.4.0.2.</span> <span class="nav-text">了解Ingress的工作原理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pod%E5%B0%B1%E7%BB%AA%E5%90%8E%E5%8F%91%E5%87%BA%E4%BF%A1%E5%8F%B7"><span class="nav-number">1.5.</span> <span class="nav-text">pod就绪后发出信号</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%8B%E7%BB%8D%E5%B0%B1%E7%BB%AA%E6%8E%A2%E9%92%88"><span class="nav-number">1.5.1.</span> <span class="nav-text">介绍就绪探针</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E5%B0%B1%E7%BB%AA%E6%8E%A2%E9%92%88%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="nav-number">1.5.1.1.</span> <span class="nav-text">了解就绪探针的操作</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="霄剑"
+      src="/images/avatar.svg">
+  <p class="site-author-name" itemprop="name">霄剑</p>
+  <div class="site-description" itemprop="description">醉后不知天在水,满船清梦压星河</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">22</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/55OX5XO55" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;55OX5XO55" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2606863445@qq.com" title="E-Mail → 2606863445@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/24/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.svg">
+      <meta itemprop="name" content="霄剑">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="space">
+      <meta itemprop="description" content="醉后不知天在水,满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="服务 | space">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          服务
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-24 11:20:56 / 修改时间：21:31:36" itemprop="dateCreated datePublished" datetime="2023-09-24T11:20:56+08:00">2023-09-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h1><p><code>pod</code>需要一种寻找其他<code>pod</code>的方法来使用其他<code>pod</code>提供的服务, 不想在没有<code>Kubernetes</code>的世界, 系统管理员要在用户端配置文件中明确指出服务的精确IP地址或主机名来配置每个服务短应用. </p>
+<h2 id="介绍服务"><a href="#介绍服务" class="headerlink" title="介绍服务"></a>介绍服务</h2><p><code>Kubernetes</code>服务是一种为一组功能相同的<code>pod</code>提供单一不变的接入点的资源. 当服务存在是, 它的<code>IP</code>地址和端口不会改变. 客户端通过<code>IP</code>地址和端口号建立连接, 这些连接会被路由到提供该服务的任意一个<code>pod</code>上. 通过这种方式, 客户端不需要知道每个单独的提供服务的<code>pod</code>的地址, 这样这些<code>pod</code>就可以在集群中随时被创建或移除. </p>
+<h3 id="创建服务"><a href="#创建服务" class="headerlink" title="创建服务"></a>创建服务</h3><p>服务的后端可以有不止一个<code>pod</code>. 服务的连接对所有的后端<code>pod</code>是负载均衡的. </p>
+<p><code>CLUSTER-IP</code>只能在集群内部可以被访问, 是为了让集群内部的其他<code>pod</code>可以访问当前这组<code>pod</code>. </p>
+<h4 id="在运行的容器中远程执行命令"><a href="#在运行的容器中远程执行命令" class="headerlink" title="在运行的容器中远程执行命令"></a>在运行的容器中远程执行命令</h4><p>嗯可以使用<code>kubectl exec</code>命令远程地在一个已经存在的<code>pod</code>容器上执行任何命令. 这样就可以很方便地了解<code>pod</code>的内容, 状态及环境. <code>--</code>代表着命令项的结束. </p>
+<h4 id="配置服务的回话亲和性"><a href="#配置服务的回话亲和性" class="headerlink" title="配置服务的回话亲和性"></a>配置服务的回话亲和性</h4><p>如果希望特定客户端产生的所有请求每次都指向同一个<code>pod</code>, 可以设置服务的<code>sessionAffinity</code>属性为<code>ClientIP</code>(而不是<code>None</code>, <code>None</code>是默认值). </p>
+<h4 id="同一个服务暴露多个端口"><a href="#同一个服务暴露多个端口" class="headerlink" title="同一个服务暴露多个端口"></a>同一个服务暴露多个端口</h4><p>在创建一个有多个端口的服务的时候, 必须给每个端口指定名字. </p>
+<h4 id="使用命名的端口"><a href="#使用命名的端口" class="headerlink" title="使用命名的端口"></a>使用命名的端口</h4><p>服务中可以通过数字来指定端口, 也可以通过名称来指定. </p>
+<h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><p>客户端<code>pod</code>如何知道服务的<code>IP</code>和端口. <code>Kubernetes</code>为客户端提供了发现服务的<code>IP</code>和端口的方式. </p>
+<h4 id="通过环境变量发现服务"><a href="#通过环境变量发现服务" class="headerlink" title="通过环境变量发现服务"></a>通过环境变量发现服务</h4><p>在<code>pod</code>开始运行的时候, <code>Kubernetes</code>会初始化一系列的环境变量指向现在存在的服务. 如果你创建的服务中早于客户端<code>pod</code>的创建, <code>pod</code>上的进程可以根据环境变量获得服务的<code>IP</code>地址和端口号. </p>
+<h4 id="通过DNS发现服务"><a href="#通过DNS发现服务" class="headerlink" title="通过DNS发现服务"></a>通过<code>DNS</code>发现服务</h4><p><code>kube-dns</code>运行<code>DNS</code>服务, 在集群中的其他<code>pod</code>都被配置成使用其作为<code>dns</code>(<code>Kubernetes</code>通过修改每个容器的<code>/etc/resolv.conf</code>文件实现). 运行在<code>pod</code>上的进程<code>DNS</code>查询都会被<code>Kubernetes</code>自身的<code>DNS</code>服务器响应, 该服务器知道系统中运行的所有服务. </p>
+<p><code>pod</code>是否使用内部的<code>DNS</code>服务器是根据<code>pod</code>中的<code>spec</code>的<code>dnsPolicy</code>属性来决定的. </p>
+<p>每个服务从内部<code>DNS</code>服务器中获得一个<code>DNS</code>条目, 客户端的<code>pod</code>在知道服务名称的情况下可以通过全限定域名来访问, 而不是诉诸于环境变量. </p>
+<h4 id="通过全限定域名连接服务"><a href="#通过全限定域名连接服务" class="headerlink" title="通过全限定域名连接服务"></a>通过全限定域名连接服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;服务名&gt;.&lt;服务的命名空间&gt;.svc.cluster.local</span><br></pre></td></tr></table></figure>
+
+<p>客户端仍然必须知道服务的端口后. 如果不是标准端口, 客户端可以从环境变量中获取端口号. </p>
+<h2 id="连接集群外部的服务"><a href="#连接集群外部的服务" class="headerlink" title="连接集群外部的服务"></a>连接集群外部的服务</h2><h3 id="介绍服务endpoint"><a href="#介绍服务endpoint" class="headerlink" title="介绍服务endpoint"></a>介绍服务<code>endpoint</code></h3><p>服务并不是和<code>pod</code>直接相连的. 相反, 有一种资源介于两者之间<code>--</code>它就是<code>Endpoint</code>资源. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get endpoints &lt;服务名&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="手动配置服务的endpoint"><a href="#手动配置服务的endpoint" class="headerlink" title="手动配置服务的endpoint"></a>手动配置服务的<code>endpoint</code></h3><p>服务的<code>endpoint</code>与服务解耦后, 可以分别配置和更新它们. </p>
+<p><code>Endpoint</code>对象需要与服务具有相同的名称. </p>
+<h2 id="将服务暴露给外部客户端"><a href="#将服务暴露给外部客户端" class="headerlink" title="将服务暴露给外部客户端"></a>将服务暴露给外部客户端</h2><h3 id="使用NodePort类型的服务"><a href="#使用NodePort类型的服务" class="headerlink" title="使用NodePort类型的服务"></a>使用<code>NodePort</code>类型的服务</h3><p>通过创建<code>NodePort</code>服务, 可以让<code>Kubernetes</code>在其所有节点上保留一个端口(所有节点都使用相同的端口), 并将传入的连接转发给作为服务部分的<code>pod</code>. </p>
+<h3 id="通过负载均衡器将服务暴露出来"><a href="#通过负载均衡器将服务暴露出来" class="headerlink" title="通过负载均衡器将服务暴露出来"></a>通过负载均衡器将服务暴露出来</h3><h4 id="回话亲和性和Web浏览器"><a href="#回话亲和性和Web浏览器" class="headerlink" title="回话亲和性和Web浏览器"></a>回话亲和性和<code>Web</code>浏览器</h4><p>浏览器使用<code>keep-alive</code>连接, 并通过单个连接发送所有请求, 而<code>curl</code>每次都会打开一个新连接. 服务在连接级别工作, 所以当首次打开服务的连接时, 会选择一个随机集群, 然后将属于该连接的所有网络数据包全部发送到单个集群. 即使会话亲和性设置为<code>None</code>, 用户也会始终使用相同的<code>pod</code>(直到连接关闭). </p>
+<h2 id="通过Ingress暴露服务"><a href="#通过Ingress暴露服务" class="headerlink" title="通过Ingress暴露服务"></a>通过<code>Ingress</code>暴露服务</h2><h4 id="为什么需要Ingress"><a href="#为什么需要Ingress" class="headerlink" title="为什么需要Ingress"></a>为什么需要Ingress</h4><p>一个重要的原因是每个<code>LoadBalancer</code>服务都需要自己的负载均衡器, 以及独有的公有<code>IP</code>地址, 而<code>Ingress</code>只需要一个公网<code>IP</code>就能为许多服务提供访问. 当客户端向<code>Ingress</code>发送<code>HTTP</code>请求时, <code>Ingress</code>会根据请求的主机名和路径决定请求转发到的服务. </p>
+<h4 id="了解Ingress的工作原理"><a href="#了解Ingress的工作原理" class="headerlink" title="了解Ingress的工作原理"></a>了解<code>Ingress</code>的工作原理</h4><p><code>Ingress</code>控制器不会将请求转发给该服务, 只用它来选择一个<code>pod</code>. </p>
+<h2 id="pod就绪后发出信号"><a href="#pod就绪后发出信号" class="headerlink" title="pod就绪后发出信号"></a><code>pod</code>就绪后发出信号</h2><h3 id="介绍就绪探针"><a href="#介绍就绪探针" class="headerlink" title="介绍就绪探针"></a>介绍就绪探针</h3><p>就绪探针器会定期调用, 并确定特定的<code>pod</code>是否接收客户端请求. 当容器的准备就绪探测返回成功时, 表示容器已经准备好接收请求. </p>
+<h4 id="了解就绪探针的操作"><a href="#了解就绪探针的操作" class="headerlink" title="了解就绪探针的操作"></a>了解就绪探针的操作</h4><p>启动容器时, 可以为<code>Kubernetes</code>配置一个等待时间, 经过等待时间后才可以执行第一次就绪检查. 之后, 它会周期性地调用探针, 并根据就绪探针的结果采取行动. 如果某个<code>pod</code>报告它尚未准备就绪, 则会从该服务中删除该<code>pod</code>. 如果<code>pod</code>再次准备就绪, 则重新添加<code>pod</code>. </p>
+
+    </div>
+
+    
+    
+    
+      <div>
+  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+</div>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag"></i> kubernetes</a>
+              <a href="/tags/kubernetes-in-Action/" rel="tag"><i class="fa fa-tag"></i> kubernetes in Action</a>
+          </div>
+	  <script type="text/javascript">
+            var tagsall=document.getElementsByClassName("post-tags")
+            for (var i = tagsall.length - 1; i >= 0; i--){
+                var tags=tagsall[i].getElementsByTagName("a");
+                for (var j = tags.length - 1; j >= 0; j--) {
+                    var golden_ratio = 0.618033988749895;
+                    var s = 0.5;
+                    var v = 0.999;
+                    var h = golden_ratio + Math.random()*0.8 - 0.5;
+                    var h_i = parseInt(h * 6);
+                    var f = h * 6 - h_i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+                    var r, g, b;
+                    switch (h_i) {
+                        case 0:
+                            r = v;
+                            g = t;
+                            b = p;
+                            break;
+                        case 1:
+                            r = q;
+                            g = v;
+                            b = p;
+                            break;
+                        case 2:
+                            r = p;
+                            g = v;
+                            b = t;
+                            break;
+                        case 3 :
+                            r = p;
+                            g = q;
+                            b = v;
+                            break;
+                        case 4:
+                            r = t;
+                            g = p;
+                            b = v;
+                            break;
+                        case 5:
+                            r = v;
+                            g = p;
+                            b = q;
+                            break;
+                        default:
+                            r = 1;
+                            g = 1;
+                            b = 1;
+                      }
+                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
+                }
+            }
+            </script>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/23/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%89%AF%E6%9C%AC%E6%9C%BA%E5%88%B6%E5%92%8C%E5%85%B6%E4%BB%96%E6%8E%A7%E5%88%B6%E5%99%A8/" rel="prev" title="副本机制和其他控制器">
+                  <i class="fa fa-chevron-left"></i> 副本机制和其他控制器
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-leaf"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">霄剑</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">44k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:39</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/55OX5XO55" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

@@ -88,7 +88,7 @@
 
 
 <nav class="site-nav">
-  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">21</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">22</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
         </a>
@@ -153,7 +153,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">22</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -189,6 +189,130 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/09/24/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E6%9C%8D%E5%8A%A1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.svg">
+      <meta itemprop="name" content="霄剑">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="space">
+      <meta itemprop="description" content="醉后不知天在水,满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | space">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2023/09/24/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E6%9C%8D%E5%8A%A1/" class="post-title-link" itemprop="url">服务</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-24 11:20:56 / 修改时间：21:31:36" itemprop="dateCreated datePublished" datetime="2023-09-24T11:20:56+08:00">2023-09-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>5 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="服务"><a href="#服务" class="headerlink" title="服务"></a>服务</h1><p><code>pod</code>需要一种寻找其他<code>pod</code>的方法来使用其他<code>pod</code>提供的服务, 不想在没有<code>Kubernetes</code>的世界, 系统管理员要在用户端配置文件中明确指出服务的精确IP地址或主机名来配置每个服务短应用. </p>
+<h2 id="介绍服务"><a href="#介绍服务" class="headerlink" title="介绍服务"></a>介绍服务</h2><p><code>Kubernetes</code>服务是一种为一组功能相同的<code>pod</code>提供单一不变的接入点的资源. 当服务存在是, 它的<code>IP</code>地址和端口不会改变. 客户端通过<code>IP</code>地址和端口号建立连接, 这些连接会被路由到提供该服务的任意一个<code>pod</code>上. 通过这种方式, 客户端不需要知道每个单独的提供服务的<code>pod</code>的地址, 这样这些<code>pod</code>就可以在集群中随时被创建或移除. </p>
+<h3 id="创建服务"><a href="#创建服务" class="headerlink" title="创建服务"></a>创建服务</h3><p>服务的后端可以有不止一个<code>pod</code>. 服务的连接对所有的后端<code>pod</code>是负载均衡的. </p>
+<p><code>CLUSTER-IP</code>只能在集群内部可以被访问, 是为了让集群内部的其他<code>pod</code>可以访问当前这组<code>pod</code>. </p>
+<h4 id="在运行的容器中远程执行命令"><a href="#在运行的容器中远程执行命令" class="headerlink" title="在运行的容器中远程执行命令"></a>在运行的容器中远程执行命令</h4><p>嗯可以使用<code>kubectl exec</code>命令远程地在一个已经存在的<code>pod</code>容器上执行任何命令. 这样就可以很方便地了解<code>pod</code>的内容, 状态及环境. <code>--</code>代表着命令项的结束. </p>
+<h4 id="配置服务的回话亲和性"><a href="#配置服务的回话亲和性" class="headerlink" title="配置服务的回话亲和性"></a>配置服务的回话亲和性</h4><p>如果希望特定客户端产生的所有请求每次都指向同一个<code>pod</code>, 可以设置服务的<code>sessionAffinity</code>属性为<code>ClientIP</code>(而不是<code>None</code>, <code>None</code>是默认值). </p>
+<h4 id="同一个服务暴露多个端口"><a href="#同一个服务暴露多个端口" class="headerlink" title="同一个服务暴露多个端口"></a>同一个服务暴露多个端口</h4><p>在创建一个有多个端口的服务的时候, 必须给每个端口指定名字. </p>
+<h4 id="使用命名的端口"><a href="#使用命名的端口" class="headerlink" title="使用命名的端口"></a>使用命名的端口</h4><p>服务中可以通过数字来指定端口, 也可以通过名称来指定. </p>
+<h3 id="服务发现"><a href="#服务发现" class="headerlink" title="服务发现"></a>服务发现</h3><p>客户端<code>pod</code>如何知道服务的<code>IP</code>和端口. <code>Kubernetes</code>为客户端提供了发现服务的<code>IP</code>和端口的方式. </p>
+<h4 id="通过环境变量发现服务"><a href="#通过环境变量发现服务" class="headerlink" title="通过环境变量发现服务"></a>通过环境变量发现服务</h4><p>在<code>pod</code>开始运行的时候, <code>Kubernetes</code>会初始化一系列的环境变量指向现在存在的服务. 如果你创建的服务中早于客户端<code>pod</code>的创建, <code>pod</code>上的进程可以根据环境变量获得服务的<code>IP</code>地址和端口号. </p>
+<h4 id="通过DNS发现服务"><a href="#通过DNS发现服务" class="headerlink" title="通过DNS发现服务"></a>通过<code>DNS</code>发现服务</h4><p><code>kube-dns</code>运行<code>DNS</code>服务, 在集群中的其他<code>pod</code>都被配置成使用其作为<code>dns</code>(<code>Kubernetes</code>通过修改每个容器的<code>/etc/resolv.conf</code>文件实现). 运行在<code>pod</code>上的进程<code>DNS</code>查询都会被<code>Kubernetes</code>自身的<code>DNS</code>服务器响应, 该服务器知道系统中运行的所有服务. </p>
+<p><code>pod</code>是否使用内部的<code>DNS</code>服务器是根据<code>pod</code>中的<code>spec</code>的<code>dnsPolicy</code>属性来决定的. </p>
+<p>每个服务从内部<code>DNS</code>服务器中获得一个<code>DNS</code>条目, 客户端的<code>pod</code>在知道服务名称的情况下可以通过全限定域名来访问, 而不是诉诸于环境变量. </p>
+<h4 id="通过全限定域名连接服务"><a href="#通过全限定域名连接服务" class="headerlink" title="通过全限定域名连接服务"></a>通过全限定域名连接服务</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;服务名&gt;.&lt;服务的命名空间&gt;.svc.cluster.local</span><br></pre></td></tr></table></figure>
+
+<p>客户端仍然必须知道服务的端口后. 如果不是标准端口, 客户端可以从环境变量中获取端口号. </p>
+<h2 id="连接集群外部的服务"><a href="#连接集群外部的服务" class="headerlink" title="连接集群外部的服务"></a>连接集群外部的服务</h2><h3 id="介绍服务endpoint"><a href="#介绍服务endpoint" class="headerlink" title="介绍服务endpoint"></a>介绍服务<code>endpoint</code></h3><p>服务并不是和<code>pod</code>直接相连的. 相反, 有一种资源介于两者之间<code>--</code>它就是<code>Endpoint</code>资源. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get endpoints &lt;服务名&gt;</span><br></pre></td></tr></table></figure>
+
+<h3 id="手动配置服务的endpoint"><a href="#手动配置服务的endpoint" class="headerlink" title="手动配置服务的endpoint"></a>手动配置服务的<code>endpoint</code></h3><p>服务的<code>endpoint</code>与服务解耦后, 可以分别配置和更新它们. </p>
+<p><code>Endpoint</code>对象需要与服务具有相同的名称. </p>
+<h2 id="将服务暴露给外部客户端"><a href="#将服务暴露给外部客户端" class="headerlink" title="将服务暴露给外部客户端"></a>将服务暴露给外部客户端</h2><h3 id="使用NodePort类型的服务"><a href="#使用NodePort类型的服务" class="headerlink" title="使用NodePort类型的服务"></a>使用<code>NodePort</code>类型的服务</h3><p>通过创建<code>NodePort</code>服务, 可以让<code>Kubernetes</code>在其所有节点上保留一个端口(所有节点都使用相同的端口), 并将传入的连接转发给作为服务部分的<code>pod</code>. </p>
+<h3 id="通过负载均衡器将服务暴露出来"><a href="#通过负载均衡器将服务暴露出来" class="headerlink" title="通过负载均衡器将服务暴露出来"></a>通过负载均衡器将服务暴露出来</h3><h4 id="回话亲和性和Web浏览器"><a href="#回话亲和性和Web浏览器" class="headerlink" title="回话亲和性和Web浏览器"></a>回话亲和性和<code>Web</code>浏览器</h4><p>浏览器使用<code>keep-alive</code>连接, 并通过单个连接发送所有请求, 而<code>curl</code>每次都会打开一个新连接. 服务在连接级别工作, 所以当首次打开服务的连接时, 会选择一个随机集群, 然后将属于该连接的所有网络数据包全部发送到单个集群. 即使会话亲和性设置为<code>None</code>, 用户也会始终使用相同的<code>pod</code>(直到连接关闭). </p>
+<h2 id="通过Ingress暴露服务"><a href="#通过Ingress暴露服务" class="headerlink" title="通过Ingress暴露服务"></a>通过<code>Ingress</code>暴露服务</h2><h4 id="为什么需要Ingress"><a href="#为什么需要Ingress" class="headerlink" title="为什么需要Ingress"></a>为什么需要Ingress</h4><p>一个重要的原因是每个<code>LoadBalancer</code>服务都需要自己的负载均衡器, 以及独有的公有<code>IP</code>地址, 而<code>Ingress</code>只需要一个公网<code>IP</code>就能为许多服务提供访问. 当客户端向<code>Ingress</code>发送<code>HTTP</code>请求时, <code>Ingress</code>会根据请求的主机名和路径决定请求转发到的服务. </p>
+<h4 id="了解Ingress的工作原理"><a href="#了解Ingress的工作原理" class="headerlink" title="了解Ingress的工作原理"></a>了解<code>Ingress</code>的工作原理</h4><p><code>Ingress</code>控制器不会将请求转发给该服务, 只用它来选择一个<code>pod</code>. </p>
+<h2 id="pod就绪后发出信号"><a href="#pod就绪后发出信号" class="headerlink" title="pod就绪后发出信号"></a><code>pod</code>就绪后发出信号</h2><h3 id="介绍就绪探针"><a href="#介绍就绪探针" class="headerlink" title="介绍就绪探针"></a>介绍就绪探针</h3><p>就绪探针器会定期调用, 并确定特定的<code>pod</code>是否接收客户端请求. 当容器的准备就绪探测返回成功时, 表示容器已经准备好接收请求. </p>
+<h4 id="了解就绪探针的操作"><a href="#了解就绪探针的操作" class="headerlink" title="了解就绪探针的操作"></a>了解就绪探针的操作</h4><p>启动容器时, 可以为<code>Kubernetes</code>配置一个等待时间, 经过等待时间后才可以执行第一次就绪检查. 之后, 它会周期性地调用探针, 并根据就绪探针的结果采取行动. 如果某个<code>pod</code>报告它尚未准备就绪, 则会从该服务中删除该<code>pod</code>. 如果<code>pod</code>再次准备就绪, 则重新添加<code>pod</code>. </p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -234,7 +358,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-24 01:54:42" itemprop="dateModified" datetime="2023-09-24T01:54:42+08:00">2023-09-24</time>
+      <time title="修改时间：2023-09-24 11:18:00" itemprop="dateModified" datetime="2023-09-24T11:18:00+08:00">2023-09-24</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -257,14 +381,14 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>812</span>
+      <span>1.1k</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
         <i class="far fa-clock"></i>
       </span>
       <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>3 分钟</span>
+      <span>4 分钟</span>
     </span>
 </div>
 
@@ -293,7 +417,10 @@
 <h2 id="了解ReplicationController"><a href="#了解ReplicationController" class="headerlink" title="了解ReplicationController"></a>了解<code>ReplicationController</code></h2><p><code>ReplicationController</code>是一种<code>Kubernetes</code>资源, 可确保它的<code>pod</code>始终保持运行状态. </p>
 <h3 id="ReplicationController的操作"><a href="#ReplicationController的操作" class="headerlink" title="ReplicationController的操作"></a><code>ReplicationController</code>的操作</h3><p><code>RelicationController</code>会持续监控正在运行的<code>pod</code>列表, 并保证相应”类型”的<code>pod</code>的数目与期望的相符. </p>
 <h4 id="介绍控制器的协调流程"><a href="#介绍控制器的协调流程" class="headerlink" title="介绍控制器的协调流程"></a>介绍控制器的协调流程</h4><p><code>ReplicationController</code>的工作是确保<code>pod</code>的数量始终与其标签选择器匹配. 如果不匹配, 则<code>ReplicationController</code>将根据所需, 采取适当地操作来协调<code>pod</code>的数量. </p>
-<h2 id="使用DaemonSet在每个节点上运行一个pod"><a href="#使用DaemonSet在每个节点上运行一个pod" class="headerlink" title="使用DaemonSet在每个节点上运行一个pod"></a>使用<code>DaemonSet</code>在每个节点上运行一个<code>pod</code></h2>
+<h2 id="使用DaemonSet在每个节点上运行一个pod"><a href="#使用DaemonSet在每个节点上运行一个pod" class="headerlink" title="使用DaemonSet在每个节点上运行一个pod"></a>使用<code>DaemonSet</code>在每个节点上运行一个<code>pod</code></h2><h2 id="运行执行单个任务的pod"><a href="#运行执行单个任务的pod" class="headerlink" title="运行执行单个任务的pod"></a>运行执行单个任务的<code>pod</code></h2><h3 id="介绍Job资源"><a href="#介绍Job资源" class="headerlink" title="介绍Job资源"></a>介绍<code>Job</code>资源</h3><p>在发生节点故障时, 该节点上由<code>Job</code>管理的<code>pod</code>将按照<code>ReplicaSet</code>的<code>pod</code>的方式, 重新安排到其他节点. 如果进程本身异常退出(进程返回错误退出代码时), 可以将<code>Job</code>配置为重新启动容器. </p>
+<h2 id="安排Job定期运行或在将来运行一次"><a href="#安排Job定期运行或在将来运行一次" class="headerlink" title="安排Job定期运行或在将来运行一次"></a>安排<code>Job</code>定期运行或在将来运行一次</h2><p><code>Job</code>资源在创建时会立即运行<code>pod</code>. 但是许多批处理任务需要在特定时间运行, 或者在指定的时间间隔內重复运行. 在<code>Linux</code>和类<code>UNIX</code>操作系统中, 这些任务通常被称为<code>cron</code>任务. </p>
+<h3 id="了解计划任务的运行方式"><a href="#了解计划任务的运行方式" class="headerlink" title="了解计划任务的运行方式"></a>了解计划任务的运行方式</h3><p>在正常情况下, <code>CronJob</code>总是计划为配置中的每个执行创建一个<code>Job</code>, 但是可能会同时创建两个<code>Job</code>, 或者根本没有创建. 为了解决第一个问题, 你的任务应该是幂等的. 对于第二个问题, 请确保下一个任务完成本应该由上一次的(错过的)运行完成的工作. </p>
+
       
     </div>
 
@@ -1509,182 +1636,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2023/08/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.svg">
-      <meta itemprop="name" content="霄剑">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="space">
-      <meta itemprop="description" content="醉后不知天在水,满船清梦压星河">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | space">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2023/08/29/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/Go%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80/%E5%A4%8D%E5%90%88%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">复合数据类型</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-29 20:31:33" itemprop="dateCreated datePublished" datetime="2023-08-29T20:31:33+08:00">2023-08-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-03 20:20:06" itemprop="dateModified" datetime="2023-09-03T20:20:06+08:00">2023-09-03</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/" itemprop="url" rel="index"><span itemprop="name">编程语言</span></a>
-        </span>
-          ，
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80/Go/" itemprop="url" rel="index"><span itemprop="name">Go</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-break"></span>
-    <span class="post-meta-item" title="本文字数">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">本文字数：</span>
-      <span>3.9k</span>
-    </span>
-    <span class="post-meta-item" title="阅读时长">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">阅读时长 &asymp;</span>
-      <span>14 分钟</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="复合数据类型"><a href="#复合数据类型" class="headerlink" title="复合数据类型"></a>复合数据类型</h1><p>复合数据类型是由基本数据类型以各种方式组合而构成的. 数组和结构体都是聚合类型, 它们的值由内存中的一组变量构成. 数组的元素具有相同的类型, 而结构体中元素类型则可以不同. 数组和结构体的长度都是固定的, 反之, <code>slice</code>和<code>map</code>都是动态数据结构, 它们的长度都是元素添加到结构体中时可以动态增长. </p>
-<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>数组是具有固定长度且拥有零个或多个相同数据类型元素的序列. 由于数组的长度固定, 所以在<code>Go</code>里面直接很少使用. <code>slice</code>的长度可以增长和缩短, 在很多场合下使用得更多. </p>
-<p><code>Go</code>内置的函数<code>len</code>可以返回数组中元素元素的个数. </p>
-<p>默认情况下, 一个新数组中的元素初始值为元素类型的零值, 对于数字来说, 就是0. 也可以使用数组字面量根据一组值来初始化一个数组. 在数组字面中, 如果使用<code>...</code>代替数组长度, 那么数组的长度由初始化数组的个数决定. </p>
-<p>数组长度是数组类型的一部分, 所以<code>[3]int</code>和<code>[4]int</code>是两种不同的数组类型. 数组的长度必须是常量表达式, 也就是说, 这个表达式的值在程序编译时就可以确定. </p>
-<p>数组可以通过索引赋值, 没有指定值的索引位置的元素默认被赋予数组元素类型的零值. </p>
-<p>如果一个数组的元素类型是可比较的, 那么这个数组也是可比较的, 这样我们就可以直接使用<code>==</code>操作符来比较两个数组, 比较的结果是两边元素的值是否完全相同. 只有长度相同的数组可以比较, 如果长度不同, 会认为是两个不同类型的数组. </p>
-<p>在<code>Go</code>语言中, 把数组和其他的类型都看成值传递, 对参数的任何修改都发生在复制的数组上. 而在其语言中, 数组时隐式地使用了引用或指针传递. </p>
-<h2 id="slice"><a href="#slice" class="headerlink" title="slice"></a><code>slice</code></h2><p><code>slice</code>表示一个拥有相同类型元素的可变长度的序列. <code>slice</code>通常写成<code>[]T</code>, 其中元素的类型都是<code>T</code>; 它看上去像没有长度的数组类型. </p>
-<p>一个<code>slice</code>是一个轻量级的数据结构, 提供了访问数组子序列元素的功能, 而且<code>slice</code>的底层确实引用了一个数组对象. 一个<code>slice</code>有三个属性: 指针, 长度和容量. 指针指向数组的第一个可以从<code>slice</code>中访问的元素, 这个元素并不一定是数组的第一个元素. 长度是指<code>slice</code>中元素的个数, 它不能超过<code>slice</code>的容量. 容量的大小通常是从<code>slice</code>的起始元素到底层数组的最后一个元素间元素的个数. <code>Go</code>的内置函数<code>len</code>和<code>cap</code>用来返回<code>slice</code>的长度和容量. </p>
-<p>一个底层数组可以对应多个<code>slice</code>, 这些<code>slice</code>可以引用数组的任何位置, 彼此之间的元素还可以重叠. </p>
-<p><code>slice</code>操作符<code>s[i:j]</code>(其中$0 \le i \le j \le cap(s)$) 创建了一个新的<code>slice</code>, 这个新的<code>slice</code>引用了序列s中<code>i</code>到<code>j-1</code>索引位置的所有元素, 这里的s既可以是数组或是指向数组的指针, 也可以是<code>slice</code>. </p>
-<p>如果切片操作超出了<code>cap(s)</code>的上限将导致一个<code>panic</code>异常, 但是超出了<code>len(s)</code>则是意味着扩展了<code>slice</code>, 因为新的<code>slice</code>的长度会变大. </p>
-<p>因为<code>slice</code>包含了指向数组元素的指针, 所以将一个<code>slice</code>传递给函数的时候, 可以在函数内部修改底层数组的元素. </p>
-<p><code>slice</code>字面量看上去和数组字面量很像, 都是用逗号分隔并用花括号扩起来的一个元素序列, 但是<code>slice</code>没有指定长度. 这种隐式区别的结果分别是创建有固定长度的数组和创建指向数组的<code>slice</code>. 和数组一样, <code>slice</code>也按照顺序指定元素, 也可以通过索引了指定元素, 或者两种结合. </p>
-<p>和数组不同的是, <code>slice</code>无法做比较, 因此不能用<code>==</code>来测试两个<code>slice</code>是否拥有相同的元素. 标准库里面提供了高度优化的函数<code>bytes.Equal</code>来比较两个字节<code>slice</code>. 但是对于其他类型的<code>slice</code>, 我们必须自己写函数来比较. </p>
-<p><code>slice</code>唯一允许的比较操作是和<code>nil</code>做比较. <code>slice</code>类型的零值是<code>nil</code>. 值是<code>nil</code>的<code>slice</code>没有对应的底层数组. 值为<code>nik</code>的<code>slice</code>长度和容量都是零, 但是也有非<code>nil</code>的<code>slice</code>长度和容量都是零, 例如<code>[]int&#123;&#125;</code>或<code>make([]int,3)[3:]</code>. 对于任何类型, 如果它们的值可以nil, 那么这个类型的值可以使用一种转换表达式, 例如<code>[]int(nil)</code>. </p>
-<p>所以, 如果想检查一个<code>slice</code>是否为空, 那么使用<code>len(s) == 0</code>, 而不是<code>s == nil</code>, 因为<code>s != nil</code>情况下, <code>slice</code>也可能是空. </p>
-<p>内置函数<code>make</code>可以创建一个具有指定元素类型, 长度和容量的<code>slice</code>. 其中容量参数可以省略, 在这种情况下, <code>slice</code>的长度和容量相等. </p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">make</span>([]T, <span class="built_in">len</span>)</span><br><span class="line"><span class="built_in">make</span>([]T, <span class="built_in">len</span>, <span class="built_in">cap</span>) <span class="comment">// 和 make([]T, cap)[:len]功能相同</span></span><br></pre></td></tr></table></figure>
-
-<p>深度研究一下, 其实<code>make</code>创建了一个无名数组并返回了它的一个<code>slice</code>; 这个数组仅可以通过<code>slice</code>来访问. 在上面的第一行代码中, 所返回的<code>slice</code>引用了整个数组. 在第二行代码中, <code>slice</code>只引用了数组的前<code>len</code>个元素, 但是它的容量和数组的长度, 这为未来的<code>slice</code>元素留出空间. </p>
-<h3 id="append函数"><a href="#append函数" class="headerlink" title="append函数"></a><code>append</code>函数</h3><p>内置函数<code>append</code>用来将元素追加到<code>slice</code>的后面. </p>
-<p>更新<code>slice</code>变量不仅对调用<code>append</code>函数是必要的, 实际上对应任何可能导致长度, 容量或底层数组变化的操作都是必要的. </p>
-<p>函数参数声明中的省略号<code>...</code>表示该函数可以接受可变参数列表, 实参后面的省略号表示将一个<code>slice</code>转换为参数列表. </p>
-<h3 id="slice内存技巧"><a href="#slice内存技巧" class="headerlink" title="slice内存技巧"></a><code>slice</code>内存技巧</h3><p>输入的<code>slice</code>和输出的<code>slice</code>共享一个底层数组. 这可以避免分配另一个数组, 不过原来的数据可能会被覆盖. </p>
-<h2 id="map"><a href="#map" class="headerlink" title="map"></a><code>map</code></h2><p>在<code>Go</code>语言中, <code>map</code>是散列表的引用, <code>map</code>的类型是<code>map[K]V</code>, 其中<code>K</code>和<code>V</code>是字典的键和值对应的数据类型. 键的类型<code>K</code>, 必须可以通过操作符<code>==</code>来进行比较的数据类型, 所以<code>map</code>可以检测某一个键是否已经存在. 虽然浮点型是可以比较的, 但是比较浮点型的相等性不是一个好主意. </p>
-<p>内置函数<code>make</code>可以用来创建一个<code>map</code>:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">args := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>) <span class="comment">// 创建一个从string到int的map</span></span><br></pre></td></tr></table></figure>
-
-<p>也可以使用<code>map</code>的字面量来创建一个带初始键值对元素的字典:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">args := <span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>&#123;</span><br><span class="line">    <span class="string">&quot;alice&quot;</span>: <span class="number">31</span>,</span><br><span class="line">    <span class="string">&quot;charlie&quot;</span>: <span class="number">34</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">等价于</span><br><span class="line">args := <span class="built_in">make</span>(<span class="keyword">map</span>[<span class="type">string</span>]<span class="type">int</span>) <span class="comment">// 等价于map[string]int&#123;&#125;</span></span><br><span class="line">args[<span class="string">&quot;alice&quot;</span>] = <span class="number">31</span></span><br><span class="line">args[<span class="string">&quot;charlie&quot;</span>] = <span class="number">34</span></span><br></pre></td></tr></table></figure>
-
-<p>可以使用内置函数<code>delete</code>来从字典中根据键移除一个元素:</p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">delete</span>(args, <span class="string">&quot;alice&quot;</span>)</span><br></pre></td></tr></table></figure>
-
-<p>即使键不在<code>map</code>中, 上面的操作也都是安全的. <code>map</code>使用给定的键来查找元素, 如果对应的元素不存在, 就返回值类型的零值. </p>
-<p>快捷赋值方式(如x+&#x3D;y和x++)对<code>map</code>中元素同样适用.</p>
-<p>我们无法获得<code>map</code>元素的地址的一个原因是<code>map</code>的增长可能会导致已有元素元素被重新散列到新的存储位置, 这样就可能使得获得的地址无效. </p>
-<p>可以使用<code>for</code>循环(结合<code>range</code>关键字)来便历<code>map</code>中所有的键和对应的值. </p>
-<p>如果需要按照某种顺序来遍历<code>map</code>中的元素, 我们必须显式地来给键排序, 然后再取值. 如果一开始就知道了元素的个数, 直接指定一个<code>slice</code>的长度会更加高效. </p>
-<p><code>map</code>类型的零值是<code>nil</code>, 大多数的<code>map</code>操作都可以安全地在<code>map</code>的零值<code>nil</code>上执行, 包括查找元素, 删除元素, 获取<code>map</code>元素的个数(<code>len</code>), 执行<code>range</code>循环, 应为这和空<code>map</code>的行为一致. 但是向零值<code>map</code>中设置元素会导致错误. </p>
-<p>判断一个元素知否在<code>map</code>中, 还是值是零值. </p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> age, ok := args[<span class="string">&quot;bob&quot;</span>]; !ok &#123; <span class="comment">/* ... */</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>和<code>slice</code>一样, <code>map</code>不可比较, 唯一合法的比较就是和<code>nil</code>做比较. 为了判断两个<code>map</code>是否拥有相同的键和值, 必须写一个循环. </p>
-<p><code>Go</code>没有提供集合类型, 但既然<code>map</code>的键都是唯一的, 就可以用<code>map</code>来实现这个功能. </p>
-<p><code>map</code>的值类型本身可以是复合数据类型, 例如<code>map</code>和<code>slice</code>.</p>
-<h1 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h1><p>结构体是将零个或多个任意类型的命名变量组合在一起的聚合数据类型. 每个变量都叫做结构体的成员. </p>
-<p>结构体可以通过点号的方式来访问成员. 点号同样可以用在结构体指针上. </p>
-<p>成员变量的顺序对于结构体同一性很重要. 顺序不一样, 结构体就不一样. </p>
-<p>命名结构体类型S不可以定义一个拥有相同结构体类型S的成员变量, 也就是一个聚合类型不可以包含它自己(同样的限制对数组也是适用). 但是S中可以定义一个S的指针类型, 即<code>*S</code>, 这样我们就可以创建一些递归数据结构, 比如链表和树. </p>
-<p>结构体的零值由结构体成员的零值组成. 通常情况下, 我们希望零值是一个默认自然的, 合理的值. </p>
-<p>任何没有成员变量的结构体称为空结构体, 写作<code>struct&#123;&#125;</code>. 它没有长度, 也不携带任何信息, 但是有时候会很有用. </p>
-<h3 id="结构体字面量"><a href="#结构体字面量" class="headerlink" title="结构体字面量"></a>结构体字面量</h3><p>结构体类型的值可以通过结构体字面量来设置, 即通过设计结构体的成员变量来设置. </p>
-<figure class="highlight go"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">type</span> Point struce&#123; X, Y <span class="type">int</span>&#125;</span><br><span class="line">p := Point&#123;<span class="number">1</span>, <span class="number">2</span>&#125;</span><br></pre></td></tr></table></figure>
-
-<p>有两种格式的结构体字面量. 第一中格式如上, 它要求按照正确的顺序, 为每个成员变量指定一个值, 这种格式一般只在定义结构体的包内部使用, 或者是在较小的结构体中使用, 这些结构体的成员排列比较规则. 第二种形式, 通过指定部分或全部成员变量的名称和值来初始化结构体变量. 如果在这种初始化方式中某个成员变量没有指定, 那么它的值就是该成员变量类型的零值. 因为了指定了成员变量的名字, 所以它们的顺序是无所谓的. </p>
-<p>这两种初始化方式不可以混合使用, 另外也无法使用第一种初始化方式来绕过不可导出的变量无法在其他包中使用的规则. </p>
-<p>如果考虑效率的haunted, 较大的结构体通常会使用指针的方式传入和返回. </p>
-<p>如果要在函数内部修改结构体成员的话, 用指针传入是必须的; 因为在<code>Go</code>语言中, 所有的函数参数都是值拷贝传入的, 函数参数将不再是函数调用时的原始变量. </p>
-<h3 id="结构体比较"><a href="#结构体比较" class="headerlink" title="结构体比较"></a>结构体比较</h3><p>如果结构体的所有成员变量都是可以比较的, 那么这个结构体就是可比较的. 两个结构体的比较可以使用<code>==</code>或者<code>!=</code>. 其中<code>==</code>操作按照顺序比较两个结构体变量的成员变量. </p>
-<h3 id="结构体嵌套和匿名成员"><a href="#结构体嵌套和匿名成员" class="headerlink" title="结构体嵌套和匿名成员"></a>结构体嵌套和匿名成员</h3><p><code>Go</code>允许我们定义不带名称的结构体成员, 只需要指定类型即可; 这种结构体成员称做匿名成员. 这个结构体成员的类型必须是一个命名类型或指向命名类型的指针. 正因为有了这种结构体嵌套的功能, 我们才能直接访问到我们需要的变量而不是指定一大串中间变量. </p>
-<p>匿名成员的名称其实是对应类型的名字, 只是这些名字在点号访问时时可选的. 结构体字面值并没有简短表示匿名成员的语法. </p>
-<p>因为”匿名成员”拥有隐式的名字, 所以你不能在一个结构体里面定义两个相同类型的匿名成员, 否则会引起冲突. 由于匿名成员的名字是由它们的类型决定的, 因此它们的可导出性也是由它们的类型决定的. </p>
-<p>以快捷方式访问匿名成员的内部变量同样适用于访问匿名成员的内部方法. 因此, 外围的结构体类型获取的不仅是匿名成员的内部变量, 还有相关的方法. </p>
-<h2 id="JSON"><a href="#JSON" class="headerlink" title="JSON"></a><code>JSON</code></h2><p><code>javaScript</code>对象表示法(<code>JSON</code>)是一种发送和接收格式化信息的标准. <code>JSON</code>是<code>JavaScript</code>值的<code>Unicode</code>编码, 这些值包括字符串, 数字, 布尔值, 数组和对象. <code>JSON</code>里面的<code>\Uhhhh</code>转义数字来表示一个<code>UTF-16</code>编码(译注: <code>UTF-16</code>和<code>UTF-8</code>一样是一种变长的编码, 但是有大端和小端之分). </p>
-<h2 id="文本和HTML模版"><a href="#文本和HTML模版" class="headerlink" title="文本和HTML模版"></a>文本和<code>HTML</code>模版</h2><p>通常情况下, <code>Printf</code>函数就够用了, 但是有的情况下格式化会很复杂, 并且要求格式和代码彻底分离. 这个可以通过<code>text/template</code>包和<code>/html/template</code>包里面的方法来实现, 这两个包提供了一种机制, 可以将程序变量的值植入到文本或者是<code>HTML</code>模版中. </p>
-<h1 id="常用函数"><a href="#常用函数" class="headerlink" title="常用函数"></a>常用函数</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 解码UTF-8编码, 并返回三个值, 解码的字符, UTF-8编码中字节的长度和错误值. 这里唯一可能出现的错误是文件结束(EOF), 如果输入的不是合法的UTF-8字符, 那么返回的字符是unicode.ReplacementChar并且长度是1</span><br><span class="line">in.ReadRune()</span><br><span class="line"></span><br><span class="line">// 副词#使得%v用和`Go`语言类似的语法打印. 对于结构体类型来说, 将包含每个成员的名字</span><br><span class="line">fmt.Printf(&quot;%#v&quot;, w)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">marshal编组, 将go对象编组为JSON对象, 这个是紧凑形式, 格式化方法, json.MarshlIndent(movies, <span class="string">&quot;&quot;</span>, <span class="string">&quot;    &quot;</span>), 只有可以导出的成员可以转换为JSON字段</span></span><br><span class="line">json.marshal(movies)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">unmarshal解码, 将JSON转换为go对象. 通过合理地定义go的数据结构, 我们可以选择将哪部分JSON数据解码到结构体中, 哪些数据可以丢弃, 解码忽略大小写</span></span><br><span class="line">json.Unmarsh</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="技巧"><a href="#技巧" class="headerlink" title="技巧"></a>技巧</h1><p>将一个<code>slice</code>左移n个元素的简单方法是连续调用<code>reverse</code>函数三次. 第一次反转前n个元素, 第二次反转剩下的元素, 最后一次对整个<code>slice</code>再做一次反转(如果将元素右移n个元素, 那么先做第三次调用)</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
@@ -1710,14 +1661,14 @@
       <i class="fa fa-chart-line"></i>
     </span>
       <span>站点总字数：</span>
-    <span title="站点总字数">42k</span>
+    <span title="站点总字数">44k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
       <span>站点阅读时长 &asymp;</span>
-    <span title="站点阅读时长">2:33</span>
+    <span title="站点阅读时长">2:39</span>
   </span>
 </div>
 
