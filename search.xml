@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>卷</title>
+      <link href="/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%8D%B7/"/>
+      <url>/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%8D%B7/</url>
+      
+        <content type="html"><![CDATA[<h1 id="卷"><a href="#卷" class="headerlink" title="卷"></a>卷</h1><p><code>pod</code>的每个容器都有自己独立的文件系统, 因为文件系统来自容器镜像. 如果想要共享磁盘, <code>container</code>需要自己进行挂载. </p><p><code>Kubernetes</code>定义了存储卷, 它们被定义为<code>pod</code>的一部分, 并和<code>pod</code>共享相同的声明周期. 这意味着在<code>pod</code>启动时创建卷, 并在删除<code>pod</code>时销毁卷. 因此, 在容器重新启动期间, 卷的内容将保持不变, 在重新启动容器之后, 新容器可以识别前一个容器写入卷的所有文件. </p><h2 id="通过卷在容器之间共享数据"><a href="#通过卷在容器之间共享数据" class="headerlink" title="通过卷在容器之间共享数据"></a>通过卷在容器之间共享数据</h2><h3 id="使用emptyDir卷"><a href="#使用emptyDir卷" class="headerlink" title="使用emptyDir卷"></a>使用<code>emptyDir</code>卷</h3><p>卷从一个空目录开始, 运行在<code>pod</code>内的应用程序可以写入它需要的任何文件. 因为卷的生存周期与<code>pod</code>的生存周期相关联, 所以当删除<code>pod</code>时, 卷的内容就会丢失. </p><h4 id="指定用于EMPTYDIR的介质"><a href="#指定用于EMPTYDIR的介质" class="headerlink" title="指定用于EMPTYDIR的介质"></a>指定用于<code>EMPTYDIR</code>的介质</h4><p>作为卷来使用的<code>emptyDir</code>, 是在承载<code>pod</code>的工作节点的实际磁盘上创建的, 因此其性能取决于节点的磁盘类型. 但我们可以通知<code>Kubernetes</code>在<code>tmfs</code>文件系统(存在内存而非硬盘)上创建<code>emptyDir</code>. 因此, 将<code>emptyDir</code>的<code>medium</code>设置为<code>Memory</code>:</p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">  <span class="attr">emptyDir:</span></span><br><span class="line">    <span class="attr">medium:</span> <span class="string">Memory</span></span><br></pre></td></tr></table></figure><h3 id="使用Git仓库作为存储卷"><a href="#使用Git仓库作为存储卷" class="headerlink" title="使用Git仓库作为存储卷"></a>使用<code>Git</code>仓库作为存储卷</h3><p><code>gitRepo</code>卷基本上也是一个<code>emptyDir</code>卷, 它通过克隆<code>Git</code>仓库并在<code>pod</code>启动时(但在创建容器之前)检出特定版本类填充数据. </p><p>在创建<code>gitRepo</code>卷之后, 它并不能和对应<code>repo</code>保持同步. 当向<code>Git</code>仓库推送新增的提交时, 卷中的文件将不会被更新. </p><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">html</span></span><br><span class="line">    <span class="attr">gitRepo:</span></span><br><span class="line">      <span class="attr">repository:</span> <span class="string">https://github.com/luksa/kubia-website-example.git</span></span><br><span class="line">      <span class="attr">directory:</span> <span class="string">.</span> </span><br></pre></td></tr></table></figure><h4 id="介绍sidercar容器"><a href="#介绍sidercar容器" class="headerlink" title="介绍sidercar容器"></a>介绍<code>sidercar</code>容器</h4><p><code>sidecar container</code>, 它是一种容器, 增加了对<code>pod</code>主容器的操作. 可以将一个<code>sidecar</code>添加到<code>pod</code>中, 这样就可以使用现有的容器镜像, 而不是将附加逻辑填入主应用程序的代码中, 这会使它过于复杂和不可用. </p><h2 id="访问工作节点文件系统上的文件"><a href="#访问工作节点文件系统上的文件" class="headerlink" title="访问工作节点文件系统上的文件"></a>访问工作节点文件系统上的文件</h2><p>大多数<code>pod</code>应该忽略它们的主机节点, 因此它们不应该访问节点文件系统上的任何文件. 但是某系系统级别的<code>pod</code>(切记, 这些通常由<code>DaemonSet</code>管理)确实需要读取节点的文件或使用节点文件系统来访问节点设备. <code>Kubernetes</code>通过<code>hostPath</code>卷实现了这一点. </p><h3 id="介绍hostPath卷"><a href="#介绍hostPath卷" class="headerlink" title="介绍hostPath卷"></a>介绍<code>hostPath</code>卷</h3><p><code>hostPath</code>卷是持久性存储, 因为<code>gitRepo</code>和<code>emptyDir</code>卷的内容都会在<code>pod</code>被删除时被删除, 而<code>hostPath</code>卷的内容则不会被删除. 如果删除了一个<code>pod</code>, 并且下一个<code>pod</code>使用了指向主机上相同路径的<code>hostPath</code>卷, 则新<code>pod</code>将会发现上一个<code>pod</code>留下的数据, 但前提是必须将其调度到与第一个<code>pod</code>相同的节点上. </p><h2 id="使用持久化存储"><a href="#使用持久化存储" class="headerlink" title="使用持久化存储"></a>使用持久化存储</h2><p>当运行在一个<code>pod</code>中的应用程序需要将数据保存到磁盘上, 并且即使该<code>pod</code>重新调度到另一个节点时也要求具有相同的数据可用. 这就不能使用<code>emptyDir</code>, <code>gitRepo</code>和<code>hostPath</code>, 由于这些数据需要从任何集群节点访问, 因此必须将其存储在某种类型的网络储存中. </p>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具使用 </category>
+          
+          <category> Kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> kubernetes </tag>
+            
+            <tag> kubernetes in Action </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>Kubernetes编排原理</title>
       <link href="/2023/10/02/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Kubernetes/Kubernetes%E7%BC%96%E6%8E%92%E5%8E%9F%E7%90%86/"/>
       <url>/2023/10/02/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/%E6%B7%B1%E5%85%A5%E5%89%96%E6%9E%90Kubernetes/Kubernetes%E7%BC%96%E6%8E%92%E5%8E%9F%E7%90%86/</url>
