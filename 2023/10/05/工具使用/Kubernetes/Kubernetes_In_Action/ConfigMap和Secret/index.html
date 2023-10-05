@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#70B7FD"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-space.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-space.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-space.png">
+  <link rel="mask-icon" href="/images/safari-pinned-tab-space.svg" color="#70B7FD">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Noto+Serif+SC:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha256-AbA177XfpSnFEvgpYu1jMygiLabzPCJCRIBtR5jGc0k=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.13.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ConfigMap和Secret向容器传递命令行参数在Docker中定义命令与参数容器中运行的完整指令由两部分组成, 命令与参数.  了解ENTRYPOINT与CMDENTRYPOINT定义容器启动时被调用的可执行程序.  CMD指定传递给ENTRYPOINT的参数.  了解shell与exec形式的区别shell形式–如ENTRYPOINT node app.js.  exec形式– 如EN">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ConfigMap和Secret">
+<meta property="og:url" content="http://example.com/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/ConfigMap%E5%92%8CSecret/index.html">
+<meta property="og:site_name" content="space">
+<meta property="og:description" content="ConfigMap和Secret向容器传递命令行参数在Docker中定义命令与参数容器中运行的完整指令由两部分组成, 命令与参数.  了解ENTRYPOINT与CMDENTRYPOINT定义容器启动时被调用的可执行程序.  CMD指定传递给ENTRYPOINT的参数.  了解shell与exec形式的区别shell形式–如ENTRYPOINT node app.js.  exec形式– 如EN">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-10-05T13:42:15.000Z">
+<meta property="article:modified_time" content="2023-10-05T16:42:04.174Z">
+<meta property="article:author" content="霄剑">
+<meta property="article:tag" content="kubernetes">
+<meta property="article:tag" content="kubernetes in Action">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/ConfigMap%E5%92%8CSecret/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/ConfigMap%E5%92%8CSecret/","path":"2023/10/05/工具使用/Kubernetes/Kubernetes_In_Action/ConfigMap和Secret/","title":"ConfigMap和Secret"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ConfigMap和Secret | space</title>
+  
+
+
+
+
+
+
+  <script async defer data-website-id="" src=""></script>
+
+  <script defer data-domain="" src=""></script>
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<script async src="/live2d/autoload.js"> </script>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">space</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">9</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">8</span></a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">25</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ConfigMap%E5%92%8CSecret"><span class="nav-number">1.</span> <span class="nav-text">ConfigMap和Secret</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%91%E5%AE%B9%E5%99%A8%E4%BC%A0%E9%80%92%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.</span> <span class="nav-text">向容器传递命令行参数</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Docker%E4%B8%AD%E5%AE%9A%E4%B9%89%E5%91%BD%E4%BB%A4%E4%B8%8E%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.1.</span> <span class="nav-text">在Docker中定义命令与参数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3ENTRYPOINT%E4%B8%8ECMD"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">了解ENTRYPOINT与CMD</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3shell%E4%B8%8Eexec%E5%BD%A2%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">了解shell与exec形式的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8Kubernetes%E4%B8%AD%E8%A6%86%E7%9B%96%E5%91%BD%E4%BB%A4%E5%92%8C%E5%8F%82%E6%95%B0"><span class="nav-number">1.1.2.</span> <span class="nav-text">在Kubernetes中覆盖命令和参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E5%AE%B9%E5%99%A8%E8%AE%BE%E7%BD%AE%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">为容器设置环境变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9C%A8%E5%AE%B9%E5%99%A8%E5%AE%9A%E4%B9%89%E4%B8%AD%E6%8C%87%E5%AE%9A%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">在容器定义中指定环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%86%E8%A7%A3%E7%A1%AC%E7%BC%96%E7%A0%81%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E4%B8%8D%E8%B6%B3%E4%B9%8B%E5%A4%84"><span class="nav-number">1.2.2.</span> <span class="nav-text">了解硬编码环境变量的不足之处</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8ConfigMap%E8%A7%A3%E8%80%A6%E9%85%8D%E7%BD%AE"><span class="nav-number">1.3.</span> <span class="nav-text">利用ConfigMap解耦配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ConfigMap%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.3.1.</span> <span class="nav-text">ConfigMap介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAConfigMap"><span class="nav-number">1.3.2.</span> <span class="nav-text">创建ConfigMap</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E6%8C%87%E4%BB%A4kubectl%E5%88%9B%E5%BB%BAConfigMap"><span class="nav-number">1.3.2.1.</span> <span class="nav-text">使用指令kubectl创建ConfigMap</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E6%96%87%E4%BB%B6%E5%86%85%E5%AE%B9%E5%88%9B%E5%BB%BAConfigMap%E6%9D%A1%E7%9B%AE"><span class="nav-number">1.3.2.2.</span> <span class="nav-text">从文件内容创建ConfigMap条目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E6%96%87%E4%BB%B6%E5%A4%B9%E5%88%9B%E5%BB%BAConfigMap"><span class="nav-number">1.3.2.3.</span> <span class="nav-text">从文件夹创建ConfigMap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%99%E5%AE%B9%E5%99%A8%E4%BC%A0%E9%80%92ConfigMap%E6%9D%A1%E7%9B%AE%E4%BD%9C%E4%B8%BA%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.3.</span> <span class="nav-text">给容器传递ConfigMap条目作为环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E6%AC%A1%E6%80%A7%E4%BC%A0%E9%80%92ConfigMap%E7%9A%84%E6%89%80%E6%9C%89%E6%9D%A1%E7%9B%AE%E4%BD%9C%E4%B8%BA%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.3.4.</span> <span class="nav-text">一次性传递ConfigMap的所有条目作为环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%A0%E9%80%92Configmap%E6%9D%A1%E7%9B%AE%E4%BD%9C%E4%B8%BA%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%8F%82%E6%95%B0"><span class="nav-number">1.3.5.</span> <span class="nav-text">传递Configmap条目作为命令行参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8ConfigMap%E5%8D%B7%E5%B0%86%E6%9D%A1%E7%9B%AE%E6%9A%B4%E9%9C%B2%E4%B8%BA%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.6.</span> <span class="nav-text">使用ConfigMap卷将条目暴露为文件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8D%B7%E5%86%85%E6%9A%B4%E9%9C%B2%E6%8C%87%E5%AE%9A%E7%9A%84ConfigMap%E6%9D%A1%E7%9B%AE"><span class="nav-number">1.3.6.1.</span> <span class="nav-text">卷内暴露指定的ConfigMap条目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConfigMap%E7%8B%AC%E7%AB%8B%E6%9D%A1%E7%9B%AE%E4%BD%9C%E4%B8%BA%E6%96%87%E4%BB%B6%E8%A2%AB%E6%8C%82%E8%BD%BD%E4%B8%94%E4%B8%8D%E9%9A%90%E8%97%8F%E6%96%87%E4%BB%B6%E5%A4%B9%E4%B8%AD%E7%9A%84%E5%85%B6%E4%BB%96%E6%96%87%E4%BB%B6"><span class="nav-number">1.3.6.2.</span> <span class="nav-text">ConfigMap独立条目作为文件被挂载且不隐藏文件夹中的其他文件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%BAconfigMap%E5%8D%B7%E4%B8%AD%E7%9A%84%E6%96%87%E4%BB%B6%E8%AE%BE%E7%BD%AE%E6%9D%83%E9%99%90"><span class="nav-number">1.3.6.3.</span> <span class="nav-text">为configMap卷中的文件设置权限</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E5%BA%94%E7%94%A8%E9%85%8D%E7%BD%AE%E4%B8%94%E4%B8%8D%E9%87%8D%E5%90%AF%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F"><span class="nav-number">1.3.7.</span> <span class="nav-text">更新应用配置且不重启应用程序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E8%87%B3%E5%B7%B2%E5%AD%98%E5%9C%A8%E6%96%87%E4%BB%B6%E5%A4%B9%E7%9A%84%E6%96%87%E4%BB%B6%E4%B8%8D%E4%BC%9A%E6%9B%B4%E6%96%B0"><span class="nav-number">1.3.7.1.</span> <span class="nav-text">挂载至已存在文件夹的文件不会更新</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Secret%E7%BB%99%E5%AE%B9%E5%99%A8%E4%BC%A0%E9%80%92%E6%95%8F%E6%84%9F%E6%95%B0%E6%8D%AE"><span class="nav-number">1.4.</span> <span class="nav-text">使用Secret给容器传递敏感数据</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="霄剑"
+      src="/images/avatar.svg">
+  <p class="site-author-name" itemprop="name">霄剑</p>
+  <div class="site-description" itemprop="description">醉后不知天在水,满船清梦压星河</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/55OX5XO55" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;55OX5XO55" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="/2606863445@qq.com" title="E-Mail → 2606863445@qq.com"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/ConfigMap%E5%92%8CSecret/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.svg">
+      <meta itemprop="name" content="霄剑">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="space">
+      <meta itemprop="description" content="醉后不知天在水,满船清梦压星河">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ConfigMap和Secret | space">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ConfigMap和Secret
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-05 21:42:15" itemprop="dateCreated datePublished" datetime="2023-10-05T21:42:15+08:00">2023-10-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-06 00:42:04" itemprop="dateModified" datetime="2023-10-06T00:42:04+08:00">2023-10-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/" itemprop="url" rel="index"><span itemprop="name">工具使用</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/" itemprop="url" rel="index"><span itemprop="name">Kubernetes</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-break"></span>
+    <span class="post-meta-item" title="本文字数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">本文字数：</span>
+      <span>1.8k</span>
+    </span>
+    <span class="post-meta-item" title="阅读时长">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">阅读时长 &asymp;</span>
+      <span>7 分钟</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <span id="more"></span>
+
+<h1 id="ConfigMap和Secret"><a href="#ConfigMap和Secret" class="headerlink" title="ConfigMap和Secret"></a><code>ConfigMap</code>和<code>Secret</code></h1><h2 id="向容器传递命令行参数"><a href="#向容器传递命令行参数" class="headerlink" title="向容器传递命令行参数"></a>向容器传递命令行参数</h2><h3 id="在Docker中定义命令与参数"><a href="#在Docker中定义命令与参数" class="headerlink" title="在Docker中定义命令与参数"></a>在<code>Docker</code>中定义命令与参数</h3><p>容器中运行的完整指令由两部分组成, 命令与参数. </p>
+<h4 id="了解ENTRYPOINT与CMD"><a href="#了解ENTRYPOINT与CMD" class="headerlink" title="了解ENTRYPOINT与CMD"></a>了解<code>ENTRYPOINT</code>与<code>CMD</code></h4><p><code>ENTRYPOINT</code>定义容器启动时被调用的可执行程序. </p>
+<p><code>CMD</code>指定传递给<code>ENTRYPOINT</code>的参数. </p>
+<h4 id="了解shell与exec形式的区别"><a href="#了解shell与exec形式的区别" class="headerlink" title="了解shell与exec形式的区别"></a>了解<code>shell</code>与<code>exec</code>形式的区别</h4><p><code>shell</code>形式–如<code>ENTRYPOINT node app.js</code>. </p>
+<p><code>exec</code>形式– 如<code>ENTRYPONT [&quot;node&quot;, &quot;app.js&quot;]</code>. </p>
+<p>两者的区别在于指定的命令是否在<code>shell</code>中被调用, 确定<code>PID</code>为1的进程是谁. </p>
+<h3 id="在Kubernetes中覆盖命令和参数"><a href="#在Kubernetes中覆盖命令和参数" class="headerlink" title="在Kubernetes中覆盖命令和参数"></a>在<code>Kubernetes</code>中覆盖命令和参数</h3><p>在<code>Kubernetes</code>中定义容器时, 镜像的<code>ENTRYPOINT</code>和<code>CMD</code>均可以被覆盖, 仅需要在容器定义中设置属性<code>command</code>和<code>args</code>的值. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">some/image</span></span><br><span class="line">    <span class="attr">command:</span> [<span class="string">&quot;/bin/command&quot;</span>]</span><br><span class="line">    <span class="attr">args:</span> [<span class="string">&quot;args1&quot;</span>, <span class="string">&quot;args2&quot;</span>, <span class="string">&quot;args3&quot;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>绝大多数情况下, 只需要设置自定义参数. 命令一般很少被覆盖, 除非针对一些未定义<code>ENTRYPINT</code>的通用镜像, 例如<code>busybox</code>. </p>
+<p><code>command</code>和<code>args</code>字段在<code>pod</code>创建后无法被修改. </p>
+<h2 id="为容器设置环境变量"><a href="#为容器设置环境变量" class="headerlink" title="为容器设置环境变量"></a>为容器设置环境变量</h2><p><code>Kubernetes</code>允许为<code>pod</code>中每一个容器都指定自定义的环境变量集合. </p>
+<p>与容器的命令和参数设置相同, 环境变量列表无法在<code>pod</code>创建后被修改. </p>
+<h3 id="在容器定义中指定环境变量"><a href="#在容器定义中指定环境变量" class="headerlink" title="在容器定义中指定环境变量"></a>在容器定义中指定环境变量</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">luksa/fortune:env</span></span><br><span class="line">    <span class="attr">env:</span> </span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">INTERVAL</span></span><br><span class="line">      <span class="attr">value:</span> <span class="string">&quot;30&quot;</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">html-generator</span></span><br></pre></td></tr></table></figure>
+
+<p>在每个容器中, <code>Kubernetes</code>会自动暴露相同命名空间下每个<code>service</code>对应的黄金变量. 这些环境变量基本上可以被看作自动注入的配置. </p>
+<h3 id="了解硬编码环境变量的不足之处"><a href="#了解硬编码环境变量的不足之处" class="headerlink" title="了解硬编码环境变量的不足之处"></a>了解硬编码环境变量的不足之处</h3><p><code>pod</code>定义硬编码意味着需要有效区分生产环境与开发过程中的<code>pod</code>定义. 为了能在多个环境下复用<code>pod</code>的定义, 需要将配置从<code>pod</code>定义描述中解耦出来. </p>
+<h2 id="利用ConfigMap解耦配置"><a href="#利用ConfigMap解耦配置" class="headerlink" title="利用ConfigMap解耦配置"></a>利用<code>ConfigMap</code>解耦配置</h2><p>应用配置的关键在于能够在多个环境中区分配置选项, 将配置从应用程序源码中分离, 可频繁变更配置值. </p>
+<h3 id="ConfigMap介绍"><a href="#ConfigMap介绍" class="headerlink" title="ConfigMap介绍"></a><code>ConfigMap</code>介绍</h3><p><code>Kubernetes</code>允许将配置选项分离到单独的资源对象<code>ConfigMap</code>中, 本质上就是一个键<code>/</code>值对映射, 值可以是短字面量, 也可以是完整的配置文件. </p>
+<p>应用无须直接读取<code>ConfigMap</code>, 甚至根本不需要知道其是否存在. 映射的内容通过环境变量或者卷文件的形式传递给容器, 而非直接传递给容器. 命令行参数的定义中可以通过<code>$(ENV_VAR)</code>语法引用环境变量, 因而可以达到将<code>ConfigMap</code>条目当作命令行参数传递给进程的效果. </p>
+<p>当然, 应用程序同样可以通过<code>Kubernetes Rest API</code>按需直接读取<code>ConfigMap</code>的内容. 不过除非是需求如此, 应尽可能使你的应用保持对<code>Kubernetes</code>的无感知. </p>
+<h3 id="创建ConfigMap"><a href="#创建ConfigMap" class="headerlink" title="创建ConfigMap"></a>创建<code>ConfigMap</code></h3><h4 id="使用指令kubectl创建ConfigMap"><a href="#使用指令kubectl创建ConfigMap" class="headerlink" title="使用指令kubectl创建ConfigMap"></a>使用指令<code>kubectl</code>创建<code>ConfigMap</code></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap &lt;configMap的名字&gt; --from-literal=&lt;键&gt;=&lt;值&gt;</span><br></pre></td></tr></table></figure>
+
+<p>键只能包含数字, 字母, 破折号, 下画线以及圆点. <code>--from-literal</code>参数用于指定多个条目. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">ConfigMap</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">&lt;configMap的名字&gt;</span></span><br><span class="line"><span class="attr">data:</span></span><br><span class="line">  <span class="string">&lt;键&gt;:</span> <span class="string">&lt;值&gt;</span> </span><br></pre></td></tr></table></figure>
+
+<h4 id="从文件内容创建ConfigMap条目"><a href="#从文件内容创建ConfigMap条目" class="headerlink" title="从文件内容创建ConfigMap条目"></a>从文件内容创建<code>ConfigMap</code>条目</h4><p><code>ConfigMap</code>同样可以存储粗粒度的配置数据, 比如完整的配置文件. </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap &lt;configmap的名字&gt; --from-file=&lt;配置文件名&gt;</span><br></pre></td></tr></table></figure>
+
+<p>运行上述命令时, <code>kubectl</code>会在当前目录下查找配置文件, 并将文件内容存储在<code>ConfigMap</code>中以配置文件名为键名的条目下. 也可以手动指定键名</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap &lt;configmap的名字&gt; --from-file=&lt;键&gt;=&lt;配置文件名&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="从文件夹创建ConfigMap"><a href="#从文件夹创建ConfigMap" class="headerlink" title="从文件夹创建ConfigMap"></a>从文件夹创建<code>ConfigMap</code></h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create configmap &lt;configmap的名字&gt; --from-file=/path/to/dir</span><br></pre></td></tr></table></figure>
+
+<p>这种情况下, <code>kubectl</code>会为文件夹中的每个文件单独创建条目, 仅限于那些文件名可作为合法<code>ConfigMap</code>键名的文件. </p>
+<h3 id="给容器传递ConfigMap条目作为环境变量"><a href="#给容器传递ConfigMap条目作为环境变量" class="headerlink" title="给容器传递ConfigMap条目作为环境变量"></a>给容器传递<code>ConfigMap</code>条目作为环境变量</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Pod</span></span><br><span class="line"><span class="attr">metadata:</span> </span><br><span class="line">  <span class="attr">name:</span> <span class="string">&lt;Pod名称&gt;</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">some/image</span></span><br><span class="line">    <span class="attr">env:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">&lt;环境变量名&gt;</span></span><br><span class="line">      <span class="attr">valueFrom:</span></span><br><span class="line">        <span class="attr">configMapKeyRef:</span></span><br><span class="line">          <span class="attr">name:</span> <span class="string">&lt;configMap的名称&gt;</span></span><br><span class="line">          <span class="attr">key:</span> <span class="string">&lt;configMap的值&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>引用不存在<code>ConfigMap</code>的容器会启动失败. 当之后创建了这个缺失的<code>ConfigMap</code>, 失败的容器会自动启动, 无须重新创建<code>pod</code>. </p>
+<p>可以标记对<code>ConfigMap</code>的引用时可选的(设置<code>configMapKeyRef.optional: true</code>). 这样, 即便<code>ConfigMap</code>不存在, 容器也能正常启动. </p>
+<h3 id="一次性传递ConfigMap的所有条目作为环境变量"><a href="#一次性传递ConfigMap的所有条目作为环境变量" class="headerlink" title="一次性传递ConfigMap的所有条目作为环境变量"></a>一次性传递<code>ConfigMap</code>的所有条目作为环境变量</h3><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">some-image</span></span><br><span class="line">    <span class="attr">envFrom:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">prefix:</span> <span class="string">CONFIG_</span></span><br><span class="line">      <span class="attr">configMapRef:</span></span><br><span class="line">        <span class="attr">name:</span> <span class="string">&lt;configMap的名称&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>前缀设置是可选的, 若不设置前缀值, 环境变量的名称与<code>ConfigMap</code>中的键名相同. </p>
+<h3 id="传递Configmap条目作为命令行参数"><a href="#传递Configmap条目作为命令行参数" class="headerlink" title="传递Configmap条目作为命令行参数"></a>传递<code>Configmap</code>条目作为命令行参数</h3><p>在字段<code>pod.spec.containers.args</code>中无法直接引用<code>ConfigMap</code>的条目, 但是可以利用<code>ConfigMap</code>条目初始化某个环境变量, 然后再在参数字段中引用该环境变量. </p>
+<h3 id="使用ConfigMap卷将条目暴露为文件"><a href="#使用ConfigMap卷将条目暴露为文件" class="headerlink" title="使用ConfigMap卷将条目暴露为文件"></a>使用<code>ConfigMap</code>卷将条目暴露为文件</h3><p>环境变量或者命令行参数值作为配置值通常适用于变量值较短的场景. </p>
+<p><code>configMap</code>卷会将<code>ConfigMap</code>中每个条目均暴露成一个文件. 运行在容器中的进程可通过读取文件内容获得对应的条目值. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config</span></span><br><span class="line">  <span class="attr">configMap:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&lt;configMap的名称&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="卷内暴露指定的ConfigMap条目"><a href="#卷内暴露指定的ConfigMap条目" class="headerlink" title="卷内暴露指定的ConfigMap条目"></a>卷内暴露指定的<code>ConfigMap</code>条目</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config</span></span><br><span class="line">  <span class="attr">configMap:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&lt;configMap的名称&gt;</span>      </span><br><span class="line">    <span class="attr">items:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">key:</span> <span class="string">&lt;configMap中的键&gt;</span></span><br><span class="line">      <span class="attr">path:</span> <span class="string">&lt;cofigMap中键的新名称&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="ConfigMap独立条目作为文件被挂载且不隐藏文件夹中的其他文件"><a href="#ConfigMap独立条目作为文件被挂载且不隐藏文件夹中的其他文件" class="headerlink" title="ConfigMap独立条目作为文件被挂载且不隐藏文件夹中的其他文件"></a>ConfigMap独立条目作为文件被挂载且不隐藏文件夹中的其他文件</h4><p>假设拥有一个包含文件<code>myconfig.conf</code>的<code>configMap</code>卷, 希望能将奇添加为<code>/etc</code>文件夹下的文件<code>someconfig.conf</code>. 通过属性<code>subPath</code>可以将该文件挂载的同时又不影响文件夹中的其他文件. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">containers:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">image:</span> <span class="string">some/image</span></span><br><span class="line">    <span class="attr">volumeMounts:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">myvolume</span></span><br><span class="line">      <span class="attr">mountPath:</span> <span class="string">/etc/someconfig.conf</span></span><br><span class="line">      <span class="attr">subPath:</span> <span class="string">myconfig.conf</span></span><br></pre></td></tr></table></figure>
+
+<p>挂载任意一种卷时均可以使用<code>subPath</code>属性. 可以选择挂载部分卷而不是挂载完整的卷. 捕获这种独立文件的挂载方式会带来文件更新上的缺陷. </p>
+<h4 id="为configMap卷中的文件设置权限"><a href="#为configMap卷中的文件设置权限" class="headerlink" title="为configMap卷中的文件设置权限"></a>为<code>configMap</code>卷中的文件设置权限</h4><p><code>configMap</code>卷中所有文件的权限默认被设置为644. 可以通过卷规格定义中的<code>defaultMode</code>属性改变默认权限. </p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">volumes:</span></span><br><span class="line"><span class="bullet">-</span> <span class="attr">name:</span> <span class="string">config</span></span><br><span class="line">  <span class="attr">configMap:</span></span><br><span class="line">    <span class="attr">name:</span> <span class="string">&lt;configMap的名称&gt;</span></span><br><span class="line">    <span class="attr">defaultMode:</span> <span class="string">&quot;6600&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更新应用配置且不重启应用程序"><a href="#更新应用配置且不重启应用程序" class="headerlink" title="更新应用配置且不重启应用程序"></a>更新应用配置且不重启应用程序</h3><p>使用环境变量或命令行参数作为配置源的弊端在于无法在进程运行时更新配置. 将<code>ConfigMap</code>暴露为卷可以达到配置热更新的效果, 无须重新创建<code>pod</code>或者重启容器. </p>
+<p><code>ConfigMap</code>被更新之后, 卷中引用它的所有文件也会相应更新, 进程发现文件被改变之后进行重载(这要进程自己实现). </p>
+<h4 id="挂载至已存在文件夹的文件不会更新"><a href="#挂载至已存在文件夹的文件不会更新" class="headerlink" title="挂载至已存在文件夹的文件不会更新"></a>挂载至已存在文件夹的文件不会更新</h4><p>如果挂载的是容器中的单个文件而不是完整的卷, <code>ConfigMap</code>更新之后对应的文件不会被更新. </p>
+<p>如果现在你需要挂载单个文件并且在修改源<code>ConfigMap</code>的同时会自动修改这个文件, 一种方案是挂载完整卷至不同的文件夹并创建指向文件的符号链接. 符号链接可以原生创建在容器镜像中, 也可以在容器启动时创建. </p>
+<h2 id="使用Secret给容器传递敏感数据"><a href="#使用Secret给容器传递敏感数据" class="headerlink" title="使用Secret给容器传递敏感数据"></a>使用<code>Secret</code>给容器传递敏感数据</h2>
+    </div>
+
+    
+    
+    
+      <div>
+  <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+</div>
+
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/kubernetes/" rel="tag"><i class="fa fa-tag"></i> kubernetes</a>
+              <a href="/tags/kubernetes-in-Action/" rel="tag"><i class="fa fa-tag"></i> kubernetes in Action</a>
+          </div>
+	  <script type="text/javascript">
+            var tagsall=document.getElementsByClassName("post-tags")
+            for (var i = tagsall.length - 1; i >= 0; i--){
+                var tags=tagsall[i].getElementsByTagName("a");
+                for (var j = tags.length - 1; j >= 0; j--) {
+                    var golden_ratio = 0.618033988749895;
+                    var s = 0.5;
+                    var v = 0.999;
+                    var h = golden_ratio + Math.random()*0.8 - 0.5;
+                    var h_i = parseInt(h * 6);
+                    var f = h * 6 - h_i;
+                    var p = v * (1 - s);
+                    var q = v * (1 - f * s);
+                    var t = v * (1 - (1 - f) * s);
+                    var r, g, b;
+                    switch (h_i) {
+                        case 0:
+                            r = v;
+                            g = t;
+                            b = p;
+                            break;
+                        case 1:
+                            r = q;
+                            g = v;
+                            b = p;
+                            break;
+                        case 2:
+                            r = p;
+                            g = v;
+                            b = t;
+                            break;
+                        case 3 :
+                            r = p;
+                            g = q;
+                            b = v;
+                            break;
+                        case 4:
+                            r = t;
+                            g = p;
+                            b = v;
+                            break;
+                        case 5:
+                            r = v;
+                            g = p;
+                            b = q;
+                            break;
+                        default:
+                            r = 1;
+                            g = 1;
+                            b = 1;
+                      }
+                    tags[j].style.background = "rgba("+parseInt(r*255)+","+parseInt(g*255)+","+parseInt(b*255)+","+0.5+")";
+                }
+            }
+            </script>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E5%8D%B7/" rel="prev" title="卷">
+                  <i class="fa fa-chevron-left"></i> 卷
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-leaf"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">霄剑</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+      <span>站点总字数：</span>
+    <span title="站点总字数">49k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+      <span>站点阅读时长 &asymp;</span>
+    <span title="站点阅读时长">2:58</span>
+  </span>
+</div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/55OX5XO55" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script size="300" alpha="0.6" zIndex="-1" src="https://cdnjs.cloudflare.com/ajax/libs/ribbon.js/1.0.2/ribbon.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
