@@ -4,6 +4,35 @@
   
     
     <entry>
+      <title>从应用访问pod元数据以及其他资源</title>
+      <link href="/2023/10/06/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E4%BB%8E%E5%BA%94%E7%94%A8%E8%AE%BF%E9%97%AEpod%E5%85%83%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90/"/>
+      <url>/2023/10/06/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/%E4%BB%8E%E5%BA%94%E7%94%A8%E8%AE%BF%E9%97%AEpod%E5%85%83%E6%95%B0%E6%8D%AE%E4%BB%A5%E5%8F%8A%E5%85%B6%E4%BB%96%E8%B5%84%E6%BA%90/</url>
+      
+        <content type="html"><![CDATA[<span id="more"></span><h1 id="从应用访问pod元数据以及其他资源"><a href="#从应用访问pod元数据以及其他资源" class="headerlink" title="从应用访问pod元数据以及其他资源"></a>从应用访问<code>pod</code>元数据以及其他资源</h1>]]></content>
+      
+      
+      <categories>
+          
+          <category> 工具使用 </category>
+          
+          <category> Kubernetes </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> kubernetes </tag>
+            
+            <tag> kubernetes in Action </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>ConfigMap和Secret</title>
       <link href="/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/ConfigMap%E5%92%8CSecret/"/>
       <url>/2023/10/05/%E5%B7%A5%E5%85%B7%E4%BD%BF%E7%94%A8/Kubernetes/Kubernetes_In_Action/ConfigMap%E5%92%8CSecret/</url>
